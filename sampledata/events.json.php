@@ -6,8 +6,8 @@
 			"title": "This is warning class event",
 			"url": "http://www.example.com/",
 			"class": "event-warning",
-			"start": "1362938400000",
-			"end":   "1363197686300"
+			"start": "1384491600000",
+			"end":   "1384837200000"
 		},
 		{
 			"id": "294",
