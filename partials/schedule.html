@@ -15,35 +15,113 @@
     </div>
 
     <h3></h3>
-    <small>To see example with events navigate to march 2013</small>
 </div>
 
-<div class="col-md-9">
-    <div id="calendar"></div>
-</div>
+<table class="table table-bordered">
+    <tr><th colspan="2">Large Breed</th></tr>
+    <tr><td width="135"><button type="button" class="btn btn-default" onclick="$('#divCalLargeBreed').collapse('toggle');">Expand/Collapse</button></td>
+        <td>
+            <div id="divCalLargeBreed" class="collapse"><!-- class="col-md-9" > -->
+                <div id="calLargeBreed"></div>
+            </div>
+        </td>
+    </tr>
 
-
-
-<script type="text/javascript">
-    var calendar = $('#calendar').calendar({events_source: '/sampledata/events.json.php',
-        onAfterViewLoad: function(view) {
-        $('.page-header h3').text(this.getTitle());
-        $('.btn-group button').removeClass('active');
-        $('button[data-calendar-view="' + view + '"]').addClass('active');
-    }
-    });
-
-    $('.btn-group button[data-calendar-nav]').each(function() {
-        var $this = $(this);
-        $this.click(function() {
-            calendar.navigate($this.data('calendar-nav'));
+    <script type="text/javascript">
+        var lrgCalendar = $('#calLargeBreed').calendar({events_source: '/sampledata/events.json.php',
+            view: 'week',
+            onAfterViewLoad: function(view) {
+                $('.page-header h3').text(this.getTitle());
+                $('.btn-group button').removeClass('active');
+                $('button[data-calendar-view="' + view + '"]').addClass('active');
+            }
         });
-    });
 
-    $('.btn-group button[data-calendar-view]').each(function() {
-        var $this = $(this);
-        $this.click(function() {
-            calendar.view($this.data('calendar-view'));
+        $('.btn-group button[data-calendar-nav]').each(function() {
+            var $this = $(this);
+            $this.click(function() {
+                lrgCalendar.navigate($this.data('calendar-nav'));
+            });
         });
-    });
-</script>
+
+        $('.btn-group button[data-calendar-view]').each(function() {
+            var $this = $(this);
+            $this.click(function() {
+                lrgCalendar.view($this.data('calendar-view'));
+            });
+        });
+    </script>
+</table>
+
+<table class="table table-bordered">
+    <tr><th colspan="2">Medium Breed</th></tr>
+    <tr><td width="135"><button type="button" class="btn btn-default" onclick="$('#divCalMedBreed').collapse('toggle');">Expand/Collapse</button></td>
+        <td>
+            <div id="divCalMedBreed" class="collapse"><!-- class="col-md-9" > -->
+                <div id="calMedBreed"></div>
+            </div>
+        </td>
+    </tr>
+
+    <script type="text/javascript">
+        var medCalendar = $('#calMedBreed').calendar({events_source: '/sampledata/events.json.php',
+            view: 'week',
+            onAfterViewLoad: function(view) {
+                $('.page-header h3').text(this.getTitle());
+                $('.btn-group button').removeClass('active');
+                $('button[data-calendar-view="' + view + '"]').addClass('active');
+            }
+        });
+
+        $('.btn-group button[data-calendar-nav]').each(function() {
+            var $this = $(this);
+            $this.click(function() {
+                medCalendar.navigate($this.data('calendar-nav'));
+            });
+        });
+
+        $('.btn-group button[data-calendar-view]').each(function() {
+            var $this = $(this);
+            $this.click(function() {
+                medCalendar.view($this.data('calendar-view'));
+            });
+        });
+    </script>
+</table>
+
+
+<table class="table table-bordered">
+    <tr><th colspan="2">Small Breed</th></tr>
+    <tr><td width="135"><button type="button" class="btn btn-default" onclick="$('#divCalSmallBreed').collapse('toggle');">Expand/Collapse</button></td>
+        <td>
+            <div id="divCalSmallBreed" class="collapse"><!-- class="col-md-9" > -->
+                <div id="calSmallBreed"></div>
+            </div>
+        </td>
+    </tr>
+
+    <script type="text/javascript">
+        var smlCalendar = $('#calSmallBreed').calendar({events_source: '/sampledata/events.json.php',
+            view: 'week',
+            onAfterViewLoad: function(view) {
+                $('.page-header h3').text(this.getTitle());
+                $('.btn-group button').removeClass('active');
+                $('button[data-calendar-view="' + view + '"]').addClass('active');
+            }
+        });
+
+        $('.btn-group button[data-calendar-nav]').each(function() {
+            var $this = $(this);
+            $this.click(function() {
+                smlCalendar.navigate($this.data('calendar-nav'));
+            });
+        });
+
+        $('.btn-group button[data-calendar-view]').each(function() {
+            var $this = $(this);
+            $this.click(function() {
+                smlCalendar.view($this.data('calendar-view'));
+            });
+        });
+    </script>
+</table>

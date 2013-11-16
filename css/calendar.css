@@ -72,11 +72,23 @@
   margin-left: 85.71428571428571%;
   *margin-left: 85.60767590618336%;
 }
+.cal-week-box .cal-offset6mid,
+.cal-row-fluid .cal-offset6mid,
+.cal-row-fluid .cal-offset6mid:first-child {
+    margin-left: 92.8571428571428%;
+    *margin-left: 92.7505330490406%;
+}
 .cal-week-box .cal-offset5,
 .cal-row-fluid .cal-offset5,
 .cal-row-fluid .cal-offset5:first-child {
   margin-left: 71.42857142857142%;
   *margin-left: 71.32196162046907%;
+}
+.cal-week-box .cal-offset5mid,
+.cal-row-fluid .cal-offset5mid,
+.cal-row-fluid .cal-offset5mid:first-child {
+    margin-left:78.5714285714286%;
+    *margin-left: 78.4648187633264%;
 }
 .cal-week-box .cal-offset4,
 .cal-row-fluid .cal-offset4,
@@ -84,11 +96,23 @@
   margin-left: 57.14285714285714%;
   *margin-left: 57.03624733475479%;
 }
+.cal-week-box .cal-offset4mid,
+.cal-row-fluid .cal-offset4mid,
+.cal-row-fluid .cal-offset4mid:first-child {
+    margin-left: 64.2857142857142%;
+    *margin-left: 64.1791044776122%;
+}
 .cal-week-box .cal-offset3,
-.cal-row-fluid .cal-offset3,
-.cal-row-fluid .cal-offset3:first-child {
-  margin-left: 42.857142857142854%;
-  *margin-left: 42.750533049040506%;
+ .cal-row-fluid .cal-offset3,
+ .cal-row-fluid .cal-offset3:first-child {
+     margin-left: 42.857142857142854%;
+     *margin-left: 42.750533049040506%;
+ }
+.cal-week-box .cal-offset3mid,
+.cal-row-fluid .cal-offset3mid,
+.cal-row-fluid .cal-offset3mid:first-child {
+    margin-left: 50%;
+    *margin-left: 49.8933901918979%;
 }
 .cal-week-box .cal-offset2,
 .cal-row-fluid .cal-offset2,
@@ -96,11 +120,29 @@
   margin-left: 28.57142857142857%;
   *margin-left: 28.46481876332622%;
 }
+.cal-week-box .cal-offset2mid,
+.cal-row-fluid .cal-offset2mid,
+.cal-row-fluid .cal-offset2mid:first-child {
+    margin-left: 35.7142857142858%;
+    *margin-left: 35.6076759061838%;
+}
 .cal-week-box .cal-offset1,
 .cal-row-fluid .cal-offset1,
 .cal-row-fluid .cal-offset1:first-child {
   margin-left: 14.285714285714285%;
   *margin-left: 14.17910447761194%;
+}
+.cal-week-box .cal-offset1mid,
+.cal-row-fluid .cal-offset1mid,
+.cal-row-fluid .cal-offset1mid:first-child {
+    margin-left: 21.4285714285715%;
+    *margin-left: 21.3219616204696%;
+}
+.cal-week-box .cal-offset0mid,
+.cal-row-fluid .cal-offset0mid,
+.cal-row-fluid .cal-offset0mid:first-child {
+    margin-left: 7.14285714285715%;
+    *margin-left: 7.14285714285715%;
 }
 .cal-row-fluid .cal-cell1 {
   width: 14.285714285714285%;
