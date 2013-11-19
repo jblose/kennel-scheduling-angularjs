@@ -3,9 +3,12 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-  controller('MyCtrl1', [function() {
+    controller('ScheduleCtrl', [function() {
 
-  }])
-  .controller('MyCtrl2', [function() {
+    }])
+    .controller('ClientManCtrl', [function() {
 
-  }]);
+    }])
+    .controller('ReservationCtrl', [function() {
+
+    }]);

@@ -2,22 +2,37 @@
 <html lang="en" ng-app="myApp">
 <head>
     <meta charset="utf-8">
-    <title>RASK - Kennel Manager </title>
+    <title>RSAK - Kennel Manager </title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/calendar.css">
 </head>
 <body>
-
+<!--
 <ul class="nav nav-tabs">
     <li class="active"><a href="#/schedule">Schedule</a></li>
     <li><a href="#/view2">view2</a></li>
 </ul>
+-->
 
-<div class="container">
-    <div class="ng-view"></div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-md-2">
+            <ul class="nav nav-list well">
+                <li class="nav-header">
+                    Actions
+                </li>
+                <li class="divider"></li>
+                <li><a href="#/schedule">Schedule</a></li>
+                <li><a href="#/reservation">Reserve</a></li>
+                <li><a href="#/clientman">Client Management</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <div class="ng-view"></div>
+        </div>
+    </div>
 </div>
-
-<div>RASK - Kennel Manager: v<span app-version></span></div>
+<div>RSAK - Kennel Manager: v<span app-version></span></div>
 
 
 <!-- In production use:
