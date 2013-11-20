@@ -9,6 +9,9 @@ angular.module('myApp.controllers', []).
     .controller('ClientManCtrl', [function() {
 
     }])
+    .controller('DogManCtrl', [function() {
+
+    }])
     .controller('ReservationCtrl', [function() {
 
     }]);
