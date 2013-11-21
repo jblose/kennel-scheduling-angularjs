@@ -32,7 +32,7 @@ $app = new \Slim\Slim();
 
 // GET route
 $app->get(
-    '/',
+    '/get',
     function () {
         $template = <<<EOT
 <!DOCTYPE html>
@@ -159,6 +159,8 @@ $app->delete(
         echo 'This is a DELETE route';
     }
 );
+
+
 
 /**
  * Step 4: Run the Slim application
