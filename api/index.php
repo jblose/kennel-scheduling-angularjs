@@ -29,7 +29,7 @@ $app = new \Slim\Slim();
  * argument for `Slim::get`, `Slim::post`, `Slim::put`, `Slim::patch`, and `Slim::delete`
  * is an anonymous function.
  */
-
+/*
 // GET route
 $app->get(
     '/get',
@@ -159,13 +159,45 @@ $app->delete(
         echo 'This is a DELETE route';
     }
 );
+*/
+
+$app->post('/clientinsert', function () use ($app,$db) {
+    $reqbody = json_decode($app->request()->getBody());
+    var_dump($reqbody);
+    $sql = "insert into rsak.client(last_name, first_name,email,phone,emergency_name,emergency_phone,media_reception)  values (:last_name,:first_name,:email,:phone,:emergency_name,:emergency_phone,:media_reception)";
+   	try {
+   		$db = getConnection();
+   		$stmt = $db->prepare($sql);
+        $stmt->bindParam("last_name",$reqbody->{'last_name'});
+        $stmt->bindParam("first_name",$reqbody->{'first_name'});
+        $stmt->bindParam("email",$reqbody->{'email'});
+        $stmt->bindParam("phone",$reqbody->{'phone'});
+        $stmt->bindParam("emergency_name",$reqbody->{'emergency_name'});
+        $stmt->bindParam("emergency_phone",$reqbody->{'emergency_phone'});
+        $stmt->bindParam("media_reception",$reqbody->{'media_reception'});
+   		$stmt->execute();
+   		$db = null;
+   		echo json_encode($reqbody);
+   	} catch(PDOException $e) {
+   		echo '{"error":{"text":'. $e->getMessage() .'}}';
+   	}
+    //$app->response()->header('Content-Type', 'application/json');
+    //echo '200';
+});
 
 
 
-/**
- * Step 4: Run the Slim application
- *
- * This method should be called last. This executes the Slim application
- * and returns the HTTP response to the HTTP client.
- */
 $app->run();
+
+
+function getConnection() {
+	$dbhost="rsak.db.11594131.hostedresource.com";
+	$dbuser="rsak";
+	$dbpass="Rsak!330";
+	$dbname="rsak";
+	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	return $dbh;
+}
+
+?>

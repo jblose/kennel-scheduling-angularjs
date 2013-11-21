@@ -13,18 +13,21 @@
 </div>
 
 <div>
-    <legend> Client information</legend>
+    <legend> New Client information</legend>
     <table class="table table-bordered">
-        <tr><th colspan="2">Client</th></tr>
-        <tr><th>Customer Name:</th><td><input type="text"></td></tr>
-        <tr><th>Phone:</th><td><input type="text"></td></tr>
-        <tr><th>Email:</th><td><input type="email"></td></tr>
-        <tr><th>Best Way to Receive Media:</th><td><input type="email"></td></tr>
-        <tr><th>Emergency Contact:</th><td></td></tr>
-        <tr><th>Vet Name:</th><td><input type="text"></td></tr>
-        <tr><th>Vet Phone:</th><td><input type="text"></td></tr>
+        <!--<tr><th colspan="2">Client</th></tr> -->
+        <tr><th width="25%">First Name:</th><td><input type="text" class="form-control" ng-model="formData.first_name"></td></tr>
+        <tr><th width="25%">Last Name:</th><td><input type="text" class="form-control"  ng-model="formData.last_name"></td></tr>
+        <tr><th width="25%">Phone:</th><td><input type="text" class="form-control"  ng-model="formData.phone"></td></tr>
+        <tr><th width="25%">Email:</th><td><input type="text"  class="form-control" ng-model="formData.email"></td></tr>
+        <tr><th width="25%">Best Way to Receive Media:</th><td><input type="text" class="form-control"  ng-model="formData.media_reception"></td></tr>
+        <tr><th width="25%">Emergency Contact Name:</th><td><input type="text" class="form-control"  ng-model="formData.emergency_name"></td></tr>
+        <tr><th width="25%">Emergency Contact Phone:</th><td><input type="text"  class="form-control" ng-model="formData.emergency_phone"></td></tr>
+<tr><td colspan="2">
+        <button class="btn btn-primary" ng-click="saveClient()">Save</button>
+        <button class="btn btn-default">Cancel</button>
+</td></tr>
     </table>
-    <button class="btn btn-primary" ng-click="saveClient()">Save</button>
-    <button class="btn btn-danger">Cancel</button>
+
 
 </div>
