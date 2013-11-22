@@ -44,10 +44,10 @@ angular.module('myApp.controllers', []).
         $scope.clientSearch = function() {
             $http({
                     method: 'GET',
-                    url: 'api/index.php/clientsearch/:params'
+                    url: 'api/index.php/clientsearch/'.concat($scope.clientSearchParameter)
                 }
             ).success( function(data) {
-                    $scope.formData.clientid = data.clientid;
+                    $scope.clientList = data;
                     console.log('Success: '.concat(data));
                 })
                 .error( function(data) {
