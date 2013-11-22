@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers']).
+angular.module('myApp', ['ui.utils','myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers']).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/schedule', {templateUrl: 'partials/schedule.html', controller: 'ScheduleCtrl'});
         $routeProvider.when('/reservation', {templateUrl: 'partials/reservation.html', controller: 'ReservationCtrl'})
