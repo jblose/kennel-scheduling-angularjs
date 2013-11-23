@@ -3,13 +3,16 @@
     <legend>Client Search</legend>
     <form class="form-inline">
         <input type="text" ng-model="clientSearchParameter" placeholder="Last Name...">
-        <button  class="btn btn-primary" ng-click="clientSearch()">Search</button>
+        <button  class="btn btn-primary" ng-click="clientSearchFx();">Search</button>
     </form>
 </div>
 
-<div ng-show="clientSelect">
+<div ng-show="clientResults">
     <legend> Select Customer</legend>
-    Results table...
+    <table  class="table table-bordered">
+        <tr><th></th><th>Last</th><th>First</th><th>Dogs</th></tr>
+        <tr ng-repeat="cli in clientList.clients"><td width=70px><button class="btn btn-default" ng-click="selectClient(cli.id)">Select</button></td><td>{{cli.last_name}}</td><td>{{cli.first_name}}</td><td>List of doggers</td></tr>
+    </table>
 </div>
 
 <div ng-show="clientNew">
@@ -24,7 +27,7 @@
         <tr><th width="25%">Emergency Contact Name:</th><td><input type="text" class="form-control"  ng-model="formData.emergency_name"></td></tr>
         <tr><th width="25%">Emergency Contact Phone:</th><td><input type="text" class="form-control" ng-model="formData.emergency_phone" ui-mask="(999) 999-9999"></td></tr>
         <tr><td colspan="2">
-            <button class="btn btn-primary" ng-click="saveClient()">Save</button>
+            <button class="btn btn-primary" ng-click="saveClient();">Save</button>
             <button class="btn btn-default">Cancel</button>
         </td></tr>
     </table>

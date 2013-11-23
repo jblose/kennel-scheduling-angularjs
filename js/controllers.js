@@ -10,6 +10,7 @@ angular.module('myApp.controllers', []).
         $scope.action = $routeParams.action.toString().toLowerCase();
 
         $scope.formData = {};
+        $scope.clientList = {};
 
         $scope.clientIdFetch = function() {
             $http({
@@ -41,40 +42,54 @@ angular.module('myApp.controllers', []).
                 })
         }
 
-        $scope.clientSearch = function() {
+        $scope.clientSearchFx = function() {
+            console.log('1');
             $http({
                     method: 'GET',
                     url: 'api/index.php/clientsearch/'.concat($scope.clientSearchParameter)
                 }
             ).success( function(data) {
+                    console.log('2');
                     $scope.clientList = data;
                     console.log('Success: '.concat(data));
+                    $scope.clientResults = true;
                 })
                 .error( function(data) {
+                    console.log('3');
                     console.log('Failed: '.concat(data));
                 })
         }
+
+        //TODO: implement selectClient
 
         $scope.processAction = function () {
             if ($scope.action.localeCompare('new') == 0){
                 $scope.clientIdFetch();
                 $scope.clientNew = true;
                 $scope.clientSearch = false;
-                $scope.clientSelect = false;
+                $scope.clientResults = false;
                 $scope.clientView = false;
             }
             else if ($scope.action.localeCompare('search') == 0){
                 $scope.clientNew = false;
                 $scope.clientSearch = true;
-                $scope.clientSelect = false;
+                $scope.clientResults = false;
                 $scope.clientView = false;
             }
             else if ($scope.action.localeCompare('view') == 0){
                 $scope.clientNew = false;
                 $scope.clientSearch = false;
-                $scope.clientSelect = false;
+                $scope.clientResults = false;
                 $scope.clientView = true;
             }
+            /*
+            else if ($scope.action.localeCompare('select') == 0){
+                $scope.clientNew = false;
+                $scope.clientSearch = false;
+                $scope.clientResults = true;
+                $scope.clientView = false;
+            }
+            */
         }
 
         $scope.processAction();

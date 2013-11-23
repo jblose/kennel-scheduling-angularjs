@@ -21,15 +21,19 @@ $app->get('/clientidfetch', function () use ($app, $db) {
 });
 
 $app->get('/clientsearch/:param', function ($param) use ($app, $db) {
- $sql = "select last_name,first_name,email from rsak.client where lower(last_name) like lower('%:param%')";
+    $sql = "select id,last_name,first_name,email from rsak.client where lower(last_name) like lower(:param) order by first_name";
+    $param = '%'.$param.'%';
     try{
-    $db = getConnection();
+        $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->bindParam("param",$param);
+
         $stmt->execute();
-        $clients = $stmt->fetchObject();
+        //$clients = $stmt->fetchObject();
+        $clients = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        echo '{"clients" : ' . json_encode($clients) . .'}';
+        //echo '{"clients" : ' . json_encode($clients) .'}';
+         echo '{"clients" : ' . json_encode($clients) .'}';
         } catch(PDOException $e) {
             echo '{"error":{"text":'. $e->getMessage() .'}}';
         }
