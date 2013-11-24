@@ -39,6 +39,40 @@ $app->get('/clientsearch/:param', function ($param) use ($app, $db) {
         }
 });
 
+$app->get('/clientselect/:id', function($id) use ($app,$db) {
+   $sql = "select * from rsak.client where id = :id";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id",$id);
+
+        $stmt->execute();
+        $client = $stmt->fetchObject();
+        $db = null;
+        echo json_encode($client);
+    } catch(PDOException $e) {
+         echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
+
+$app->get('/clientdogs/:id', function($id) use ($app,$db) {
+   $sql = "select d.* from rsak.client_dog_x cdx join rsak.dog d on (cdx.dog_id = d.id) where cdx.client_id = :id";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id",$id);
+
+        $stmt->execute();
+        $clientdogs = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $db = null;
+        echo json_encode($clientdogs);
+    } catch(PDOException $e) {
+         echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
+
+
 $app->post('/clientinsert', function () use ($app,$db) {
     $reqbody = json_decode($app->request()->getBody());
     var_dump($reqbody);

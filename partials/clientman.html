@@ -35,6 +35,7 @@
 
 <div ng-show="clientView">
     <legend>Client information</legend>
+    <!-- CLIENT -->
     <table class="table table-bordered">
         <!--<tr><th colspan="2">Client</th></tr> -->
         <tr><th width="25%">First Name:</th><td>{{formData.first_name}}</td></tr>
@@ -46,11 +47,18 @@
         <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone}}</td></tr>
         <tr></tr>
     </table>
+    <!-- DOGS -->
     <legend>Dog information</legend>
-        <table class="table table-bordered">
-            <tr></tr>
-
-        </table>
+    <table class="table table-bordered">
+        <tr ng-repeat="dog in clientDogs">
+            <td>{{dog.name}}</td>
+            <td>{{dog.sex}}</td>
+            <td>{{dog.breed}}</td>
+            <td>{{dog.color}}</td>
+            <td width="40px"><button class="btn btn-default">...</button></td>
+            <td width="80px"><button class="btn btn-default">Remove</button></td>
+        </tr>
+    </table>
 
 </div>
 

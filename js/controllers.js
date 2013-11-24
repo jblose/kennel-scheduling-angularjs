@@ -43,24 +43,54 @@ angular.module('myApp.controllers', []).
         }
 
         $scope.clientSearchFx = function() {
-            console.log('1');
             $http({
                     method: 'GET',
                     url: 'api/index.php/clientsearch/'.concat($scope.clientSearchParameter)
                 }
             ).success( function(data) {
-                    console.log('2');
                     $scope.clientList = data;
-                    console.log('Success: '.concat(data));
+                    console.log('Succes: '.concat(data));
                     $scope.clientResults = true;
                 })
                 .error( function(data) {
-                    console.log('3');
                     console.log('Failed: '.concat(data));
                 })
         }
 
-        //TODO: implement selectClient
+        $scope.selectClient = function(clientId) {
+            console.log(clientId);
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/clientselect/'.concat(clientId)
+                }
+            ).success( function(data) {
+                    $scope.clientSelected = data;
+                    $scope.formData.first_name = data.first_name;
+                    $scope.formData.last_name = data.last_name;
+                    $scope.formData.phone = data.phone;
+                    $scope.formData.email = data.email;
+                    $scope.formData.media_reception = data.media_reception;
+                    $scope.formData.emergency_name = data.emergency_name;
+                    $scope.formData.emergency_phone = data.emergency_phone;
+                    $scope.action = 'view';
+                    $scope.processAction();
+                    console.log('Success: '.concat(data));
+                })
+                .error( function(data) {
+                    console.log('Failed: '.concat(data));
+                })
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/clientdogs/'.concat(clientId)
+                }
+            ).success( function(data) {
+                    $scope.clientDogs = data;
+                    console.log('Success: '.concat(data));
+                })
+                .error( function(data) {
+                    console.log('Failed: '.concat(data));
+                })
+        }
 
         $scope.processAction = function () {
             if ($scope.action.localeCompare('new') == 0){
@@ -83,13 +113,13 @@ angular.module('myApp.controllers', []).
                 $scope.clientView = true;
             }
             /*
-            else if ($scope.action.localeCompare('select') == 0){
-                $scope.clientNew = false;
-                $scope.clientSearch = false;
-                $scope.clientResults = true;
-                $scope.clientView = false;
-            }
-            */
+             else if ($scope.action.localeCompare('select') == 0){
+             $scope.clientNew = false;
+             $scope.clientSearch = false;
+             $scope.clientResults = true;
+             $scope.clientView = false;
+             }
+             */
         }
 
         $scope.processAction();
