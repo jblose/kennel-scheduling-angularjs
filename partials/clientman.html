@@ -55,9 +55,44 @@
             <td>{{dog.sex}}</td>
             <td>{{dog.breed}}</td>
             <td>{{dog.color}}</td>
-            <td width="40px"><button class="btn btn-default">...</button></td>
+            <td>{{dog.spayed_neutered}}</td>
+            <td>{{dog.behavior}}</td>
+            <td>{{dog.existing_health_conditions}}</td>
+            <td>{{dog.allergies}}</td>
+            <td>{{dog.release_command}}</td>
             <td width="80px"><button class="btn btn-default">Remove</button></td>
         </tr>
+        <tr colspan="9"><button class="btn btn-default" onclick="$('#divAddDogger').collapse('toggle');">Add Dog</button></tr>
+        <tr><td>
+            <div class="collapse well" id="divAddDogger">
+
+                <table class="table table-bordered">
+                    <tr><th colspan="2">Dogger</th></tr>
+                    <tr><th>Name:</th><td><input type="text"></td></tr>
+                    <tr><th>Age:</th><td><input type="text"></td></tr>
+                    <tr><th>Breed:</th><td><input type="text"></td></tr>
+                    <tr><th>Sex:</th><td><input type="text"></td></tr>
+                    <tr><th>Color:</th><td><input type="text"></td></tr>
+                    <tr><th>Kennel Size:</th><td><select><option>small</option><option>medium</option><option>large</option></select></td></tr>
+                    <tr><th>Spayed/Neutered:</th><td><select><option>Yes</option><option>No</option></select></td></tr>
+                    <tr><th>Behavior:</th><td><select>
+                        <option>People & Dog Friendly</option>
+                        <option>Dog Aggressive</option>
+                        <option>People Aggressive</option>
+                        <option>People & Dog Aggressive</option>
+                    </select></td></tr>
+                    <tr><th>Pre-Existing Health Conditions:</th><td><input type="text"></td></tr>
+                    <tr><th>Allergies:</th><td><input type="text"></td></tr>
+                    <tr><th>Release Command:</th><td><input type="text"></td></tr>
+                    <tr colspan="2">
+                        <button class="btn btn-primary" ng-click="saveDog()">Save</button>
+                        <button class="btn btn-danger">Cancel</button>
+                    </tr>
+                    </tr>
+                </table>
+
+            </div>
+        </td></tr>
     </table>
 
 </div>
