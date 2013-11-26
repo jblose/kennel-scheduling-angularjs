@@ -62,38 +62,37 @@
             <td>{{dog.release_command}}</td>
             <td width="80px"><button class="btn btn-default">Remove</button></td>
         </tr>
-        <tr colspan="9"><button class="btn btn-default" onclick="$('#divAddDogger').collapse('toggle');">Add Dog</button></tr>
-        <tr><td>
-            <div class="collapse well" id="divAddDogger">
+        <tr ><td colspan="10"><button class="btn btn-default" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
+        <tr class="collapse well" id="trAddDogger"><td colspan="10">
+            <!--<div class="collapse well" id="divAddDogger"> -->
 
-                <table class="table table-bordered">
-                    <tr><th colspan="2">Dogger</th></tr>
-                    <tr><th>Name:</th><td><input type="text"></td></tr>
-                    <tr><th>Age:</th><td><input type="text"></td></tr>
-                    <tr><th>Breed:</th><td><input type="text"></td></tr>
-                    <tr><th>Sex:</th><td><input type="text"></td></tr>
-                    <tr><th>Color:</th><td><input type="text"></td></tr>
-                    <tr><th>Kennel Size:</th><td><select><option>small</option><option>medium</option><option>large</option></select></td></tr>
-                    <tr><th>Spayed/Neutered:</th><td><select><option>Yes</option><option>No</option></select></td></tr>
-                    <tr><th>Behavior:</th><td><select>
-                        <option>People & Dog Friendly</option>
-                        <option>Dog Aggressive</option>
-                        <option>People Aggressive</option>
-                        <option>People & Dog Aggressive</option>
-                    </select></td></tr>
-                    <tr><th>Pre-Existing Health Conditions:</th><td><input type="text"></td></tr>
-                    <tr><th>Allergies:</th><td><input type="text"></td></tr>
-                    <tr><th>Release Command:</th><td><input type="text"></td></tr>
-                    <tr colspan="2">
+            <table class="table table-bordered">
+                <tr><th colspan="2">Dogger</th></tr>
+                <tr><th width="25%">Name:</th><td><input type="text"></td></tr>
+                <tr><th width="25%">Age:</th><td><input type="text"></td></tr>
+                <tr><th width="25%">Breed:</th><td><input type="text"></td></tr>
+                <tr><th width="25%">Sex:</th><td><input type="text"></td></tr>
+                <tr><th width="25%">Color:</th><td><input type="text"></td></tr>
+                <tr><th width="25%">Kennel Size:</th><td><select><option>small</option><option>medium</option><option>large</option></select></td></tr>
+                <tr><th width="25%">Spayed/Neutered:</th><td><select><option>Yes</option><option>No</option></select></td></tr>
+                <tr><th width="25%">Behavior:</th><td><select>
+                    <option>People & Dog Friendly</option>
+                    <option>Dog Aggressive</option>
+                    <option>People Aggressive</option>
+                    <option>People & Dog Aggressive</option>
+                </select></td></tr>
+                <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input type="text"></td></tr>
+                <tr><th width="25%">Allergies:</th><td><input type="text"></td></tr>
+                <tr><th width="25%">Release Command:</th><td><input type="text"></td></tr>
+                <tr>
+                    <td colspan="2">
                         <button class="btn btn-primary" ng-click="saveDog()">Save</button>
                         <button class="btn btn-danger">Cancel</button>
-                    </tr>
-                    </tr>
-                </table>
-
-            </div>
+                    </td>
+                </tr>
+                </tr>
+            </table>
         </td></tr>
     </table>
-
 </div>
 
