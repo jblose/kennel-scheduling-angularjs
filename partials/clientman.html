@@ -68,22 +68,22 @@
 
             <table class="table table-bordered">
                 <tr><th colspan="2">Dogger</th></tr>
-                <tr><th width="25%">Name:</th><td><input type="text"></td></tr>
-                <tr><th width="25%">Age:</th><td><input type="text"></td></tr>
-                <tr><th width="25%">Breed:</th><td><input type="text"></td></tr>
-                <tr><th width="25%">Sex:</th><td><input type="text"></td></tr>
-                <tr><th width="25%">Color:</th><td><input type="text"></td></tr>
-                <tr><th width="25%">Kennel Size:</th><td><select><option>small</option><option>medium</option><option>large</option></select></td></tr>
-                <tr><th width="25%">Spayed/Neutered:</th><td><select><option>Yes</option><option>No</option></select></td></tr>
-                <tr><th width="25%">Behavior:</th><td><select>
+                <tr><th width="25%">Name:</th><td><input type="text" ng-model="dogFormData.name"></td></tr>
+                <tr><th width="25%">Age:</th><td><input type="text" ng-model="dogFormData.age"></td></tr>
+                <tr><th width="25%">Breed:</th><td><input type="text" ng-model="dogFormData.breed"></td></tr>
+                <tr><th width="25%">Sex:</th><td><select  ng-model="dogFormData.sex"><option>Female</option><option>Male</option></select></td></tr>
+                <tr><th width="25%">Color:</th><td><input type="text" ng-model="dogFormData.color"></td></tr>
+                <tr><th width="25%">Kennel Size:</th><td><select  ng-model="dogFormData.kennel_size"><option>small</option><option>medium</option><option>large</option></select></td></tr>
+                <tr><th width="25%">Spayed/Neutered:</th><td><select  ng-model="dogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
+                <tr><th width="25%">Behavior:</th><td><select  ng-model="dogFormData.behavior">
                     <option>People & Dog Friendly</option>
                     <option>Dog Aggressive</option>
                     <option>People Aggressive</option>
                     <option>People & Dog Aggressive</option>
                 </select></td></tr>
-                <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input type="text"></td></tr>
-                <tr><th width="25%">Allergies:</th><td><input type="text"></td></tr>
-                <tr><th width="25%">Release Command:</th><td><input type="text"></td></tr>
+                <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input type="text" ng-model="dogFormData.name"></td></tr>
+                <tr><th width="25%">Allergies:</th><td><input type="text" ng-model="dogFormData.name"></td></tr>
+                <tr><th width="25%">Release Command:</th><td><input type="text" ng-model="dogFormData.name"></td></tr>
                 <tr>
                     <td colspan="2">
                         <button class="btn btn-primary" ng-click="saveDog()">Save</button>
