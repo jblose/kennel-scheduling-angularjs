@@ -92,6 +92,41 @@ angular.module('myApp.controllers', []).
                 })
         }
 
+        $scope.saveDog = function () {
+            $http({
+                    method: 'POST',
+                    url: 'api/index.php/doginsert',
+                    data: $scope.formData
+                }
+            ).success( function(data) {
+                    $scope.clientSelected = data;
+                    $scope.formData.first_name = data.first_name;
+                    $scope.formData.last_name = data.last_name;
+                    $scope.formData.phone = data.phone;
+                    $scope.formData.email = data.email;
+                    $scope.formData.media_reception = data.media_reception;
+                    $scope.formData.emergency_name = data.emergency_name;
+                    $scope.formData.emergency_phone = data.emergency_phone;
+                    $scope.action = 'view';
+                    $scope.processAction();
+                    console.log('Success: '.concat(data));
+                })
+                .error( function(data) {
+                    console.log('Failed: '.concat(data));
+                })
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/clientdogs/'.concat(clientId)
+                }
+            ).success( function(data) {
+                    $scope.clientDogs = data;
+                    console.log('Success: '.concat(data));
+                })
+                .error( function(data) {
+                    console.log('Failed: '.concat(data));
+                })
+        }
+
         $scope.processAction = function () {
             if ($scope.action.localeCompare('new') == 0){
                 $scope.clientIdFetch();
