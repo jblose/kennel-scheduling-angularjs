@@ -92,6 +92,22 @@ angular.module('myApp.controllers', []).
                 })
         }
 
+        //TODO: Test dogIdFetch
+        $scope.dogIdFetch = function() {
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/dogidfetch'
+                }
+            ).success( function(data) {
+                    $scope.formData.dogid = data.dogid;
+                    console.log('Success: '.concat(data));
+                })
+                .error( function(data) {
+                    console.log('Failed: '.concat(data));
+                })
+        }
+
+        //TODO: Test saveDog
         $scope.saveDog = function () {
             $http({
                     method: 'POST',

@@ -62,10 +62,8 @@
             <td>{{dog.release_command}}</td>
             <td width="80px"><button class="btn btn-default">Remove</button></td>
         </tr>
-        <tr ><td colspan="10"><button class="btn btn-default" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
+        <tr ><td colspan="10"><button class="btn btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
         <tr class="collapse well" id="trAddDogger"><td colspan="10">
-            <!--<div class="collapse well" id="divAddDogger"> -->
-
             <table class="table table-bordered">
                 <tr><th colspan="2">Dogger</th></tr>
                 <tr><th width="25%">Name:</th><td><input type="text" ng-model="dogFormData.name"></td></tr>
