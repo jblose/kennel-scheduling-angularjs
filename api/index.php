@@ -100,7 +100,7 @@ $app->post('/doginsert', function () use ($app, $db) {
       $reqbody = json_decode($app->request()->getBody());
       var_dump($reqbody);
       //TODO: Implementation for the correct sql
-      //$sql = "insert into rsak.client(id,last_name, first_name,email,phone,emergency_name,emergency_phone,media_reception) values (:id,:last_name,:first_name,:email,:phone,:emergency_name,:emergency_phone,:media_reception)";
+      sql = "INSERT INTO rsak.dog (id,name,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,allergies,release_command) VALUES ( :id,:name,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command)";
      	/**
      	try {
      		$db = getConnection();
