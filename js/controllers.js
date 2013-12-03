@@ -20,10 +20,9 @@ angular.module('myApp.controllers', []).
                 }
             ).success( function(data) {
                     $scope.formData.clientid = data.clientid;
-                    console.log('Success: '.concat(data));
                 })
                 .error( function(data) {
-                    console.log('Failed: '.concat(data));
+                    console.log('Error: '.concat(data));
                 })
         }
 
@@ -34,12 +33,11 @@ angular.module('myApp.controllers', []).
                     data: $scope.formData
                 }
             ).success( function(data) {
-                    console.log('Success: '.concat(data));
                     $scope.action = "view";
                     $scope.processAction();
                 })
                 .error( function(data) {
-                    console.log('Failed: '.concat(data));
+                    console.log('Error: '.concat(data));
                 })
         }
 
@@ -50,11 +48,10 @@ angular.module('myApp.controllers', []).
                 }
             ).success( function(data) {
                     $scope.clientList = data;
-                    console.log('Succes: '.concat(data));
                     $scope.clientResults = true;
                 })
                 .error( function(data) {
-                    console.log('Failed: '.concat(data));
+                    console.log('Error: '.concat(data));
                 })
         }
 
@@ -75,10 +72,9 @@ angular.module('myApp.controllers', []).
                     $scope.formData.emergency_phone = data.emergency_phone;
                     $scope.action = 'view';
                     $scope.processAction();
-                    console.log('Success: '.concat(data));
                 })
                 .error( function(data) {
-                    console.log('Failed: '.concat(data));
+                    console.log('Error: '.concat(data));
                 })
             $http({
                     method: 'GET',
@@ -86,10 +82,9 @@ angular.module('myApp.controllers', []).
                 }
             ).success( function(data) {
                     $scope.clientDogs = data;
-                    console.log('Success: '.concat(data));
                 })
                 .error( function(data) {
-                    console.log('Failed: '.concat(data));
+                    console.log('Error: '.concat(data));
                 })
         }
 
@@ -100,10 +95,9 @@ angular.module('myApp.controllers', []).
                 }
             ).success( function(data) {
                     $scope.dogFormData.dogid = data.dogid;
-                    console.log('Success: '.concat(data));
                 })
                 .error( function(data) {
-                    console.log('Failed: '.concat(data));
+                    console.log('Error: '.concat(data));
                 })
         }
 
@@ -115,32 +109,29 @@ angular.module('myApp.controllers', []).
                     data: $scope.dogFormData
                 }
             ).success( function(data) {
-                    console.log('Success: inserted dog '.concat(data));
                     console.log('url: api/index.php/clientdogassign/'.concat($scope.clientid).concat('/').concat($scope.dogid));
                     $http({
                             method: 'POST',
                             url: 'api/index.php/clientdogassign/'.concat($scope.clientSelected.id).concat('/').concat($scope.dogFormData.dogid)
                         }
                     ).success( function (data) {
-                            console.log('Success: assigned dog: '.concat(data));
                             $http({
                                     method: 'GET',
                                     url: 'api/index.php/clientdogs/'.concat($scope.clientSelected.id)
                                 }
                             ).success( function(data) {
                                     $scope.clientDogs = data;
-                                    console.log('Success: '.concat(data));
                                 })
                                 .error( function(data) {
-                                    console.log('Failed: '.concat(data));
+                                    console.log('Error: '.concat(data));
                                 });
                         }
                     ).error( function (data) {
-                            console.log('Failed: '.concat(data));
+                            console.log('Error: '.concat(data));
                         });
                 })
                 .error( function(data) {
-                    console.log('Failed: '.concat(data));
+                    console.log('Error: '.concat(data));
                 });
         }
 
