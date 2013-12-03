@@ -116,29 +116,28 @@ angular.module('myApp.controllers', []).
                 }
             ).success( function(data) {
                     console.log('Success: inserted dog '.concat(data));
-                })
-                .error( function(data) {
-                    console.log('Failed: '.concat(data));
-                });
-            //TODO: BUG Fix issue with customer assignment here.
-            $http({
-                    method: 'POST',
-                    url: 'api/index.php/clientdogassign?clientid='.concat($scope.clientid).concat('&dogid=').concat($scope.dogid)
-                }
-            ).success( function (data) {
-                    console.log('Success: assigned dog: '.concat(data));
-                }
-            ).error( function (data) {
-                    console.log('Failed: '.concat(data));
-                });
-
-            $http({
-                    method: 'GET',
-                    url: 'api/index.php/clientdogs/'.concat(clientId)
-                }
-            ).success( function(data) {
-                    $scope.clientDogs = data;
-                    console.log('Success: '.concat(data));
+                    console.log('url: api/index.php/clientdogassign/'.concat($scope.clientid).concat('/').concat($scope.dogid));
+                    $http({
+                            method: 'POST',
+                            url: 'api/index.php/clientdogassign/'.concat($scope.clientSelected.id).concat('/').concat($scope.dogFormData.dogid)
+                        }
+                    ).success( function (data) {
+                            console.log('Success: assigned dog: '.concat(data));
+                            $http({
+                                    method: 'GET',
+                                    url: 'api/index.php/clientdogs/'.concat($scope.clientSelected.id)
+                                }
+                            ).success( function(data) {
+                                    $scope.clientDogs = data;
+                                    console.log('Success: '.concat(data));
+                                })
+                                .error( function(data) {
+                                    console.log('Failed: '.concat(data));
+                                });
+                        }
+                    ).error( function (data) {
+                            console.log('Failed: '.concat(data));
+                        });
                 })
                 .error( function(data) {
                     console.log('Failed: '.concat(data));

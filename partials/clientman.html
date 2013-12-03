@@ -11,7 +11,7 @@
     <legend> Select Customer</legend>
     <table  class="table table-bordered">
         <tr><th></th><th>Last</th><th>First</th><th>Dogs</th></tr>
-        <tr ng-repeat="cli in clientList.clients"><td width=70px><button class="btn btn-default" ng-click="selectClient(cli.id)">Select</button></td><td>{{cli.last_name}}</td><td>{{cli.first_name}}</td><td>List of doggers</td></tr>
+        <tr ng-repeat="cli in clientList.clients"><td width=70px><button class="btn btn-xs" ng-click="selectClient(cli.id)">Select</button></td><td>{{cli.last_name}}</td><td>{{cli.first_name}}</td><td>List of doggers</td></tr>
     </table>
 </div>
 
@@ -27,8 +27,8 @@
         <tr><th width="25%">Emergency Contact Name:</th><td><input type="text" class="form-control"  ng-model="formData.emergency_name"></td></tr>
         <tr><th width="25%">Emergency Contact Phone:</th><td><input type="text" class="form-control" ng-model="formData.emergency_phone" ui-mask="(999) 999-9999"></td></tr>
         <tr><td colspan="2">
-            <button class="btn btn-primary" ng-click="saveClient();">Save</button>
-            <button class="btn btn-default">Cancel</button>
+            <button class="btn btn-sm btn-primary" ng-click="saveClient();">Save</button>
+            <button class="btn btn-sm btn-default">Cancel</button>
         </td></tr>
     </table>
 </div>
@@ -60,9 +60,10 @@
             <td>{{dog.existing_health_conditions}}</td>
             <td>{{dog.allergies}}</td>
             <td>{{dog.release_command}}</td>
-            <td width="80px"><button class="btn btn-default">Remove</button></td>
+            <td width="80px"><button class="btn btn-sm btn-default">Remove</button></td>
+            <!-- TODO: Implement Remove dog above -->
         </tr>
-        <tr ><td colspan="10"><button class="btn btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
+        <tr ><td colspan="10"><button class="btn  btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
         <tr class="collapse well" id="trAddDogger"><td colspan="10">
             <table class="table table-bordered">
                 <tr><th colspan="2">Dogger</th></tr>
@@ -84,8 +85,8 @@
                 <tr><th width="25%">Release Command:</th><td><input type="text" ng-model="dogFormData.release_command"></td></tr>
                 <tr>
                     <td colspan="2">
-                        <button class="btn btn-primary" ng-click="saveDog()">Save</button>
-                        <button class="btn btn-danger">Cancel</button>
+                        <button class="btn btn-sm btn-primary" ng-click="saveDog()" onclick="$('#trAddDogger').collapse('toggle');">Save</button>
+                        <button class="btn btn-sm btn-danger" onclick="$('#trAddDogger').collapse('toggle');">Cancel</button>
                     </td>
                 </tr>
                 </tr>
