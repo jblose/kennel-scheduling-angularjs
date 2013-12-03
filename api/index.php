@@ -99,26 +99,43 @@ $app->post('/clientinsert', function () use ($app,$db) {
 $app->post('/doginsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
     var_dump($reqbody);
-    sql = "insert into rsak.dog (id,name,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,allergies,release_command) VALUES ( :id,:name,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command)";
-        try {
-     		$db = getConnection();
-     		$stmt = $db->prepare($sql);
-     		$stmt->bindParam("id",$reqbody->{'dogid'});
-            $stmt->bindParam("name",$reqbody->{'name'});
-            $stmt->bindParam("breed",$reqbody->{'breed'});
-            $stmt->bindParam("sex",$reqbody->{'sex'});
-            $stmt->bindParam("color",$reqbody->{'color'});
-            $stmt->bindParam("spayed_neutered",$reqbody->{'spayed_neutered'});
-            $stmt->bindParam("behavior",$reqbody->{'behavior'});
-            $stmt->bindParam("existing_health_conditions",$reqbody->{'existing_health_conditions'});
-            $stmt->bindParam("allergies",$reqbody->{'allergies'});
-            $stmt->bindParam("release_command",$reqbody->{'release_command'});
-            $stmt->execute();
-            $db = null;
-            echo json_encode($reqbody);
-     	} catch(PDOException $e) {
-     		echo '{"error":{"text":'. $e->getMessage() .'}}';
-     	}
+    $sql = "insert into rsak.dog (id,name,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,allergies,release_command) VALUES ( :id,:name,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command)";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id",$reqbody->{'dogid'});
+        $stmt->bindParam("name",$reqbody->{'name'});
+        $stmt->bindParam("breed",$reqbody->{'breed'});
+        $stmt->bindParam("sex",$reqbody->{'sex'});
+        $stmt->bindParam("color",$reqbody->{'color'});
+        $stmt->bindParam("spayed_neutered",$reqbody->{'spayed_neutered'});
+        $stmt->bindParam("behavior",$reqbody->{'behavior'});
+        $stmt->bindParam("existing_health_conditions",$reqbody->{'existing_health_conditions'});
+        $stmt->bindParam("allergies",$reqbody->{'allergies'});
+        $stmt->bindParam("release_command",$reqbody->{'release_command'});
+        $stmt->execute();
+        $db = null;
+        echo json_encode($reqbody);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
+
+$app->post('/clientdogassign', function () use ($app, $db) {
+    $clientidpar = $app->request()->post('clientid');
+    $dogidpar = $app->request()->post('dogid');
+    $sql = "insert into rsak.client_dog_x (dog_id,client_id) VALUES ( :clientid,:dogid)";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("clientid",$clientidpar);
+        $stmt->bindParam("dogid",$dogidpar);
+        $stmt->execute();
+        $db = null;
+        echo $clientidpar . ' ' . $dogidpar;
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
 });
 
 $app->get('/dogidfetch', function () use ($app, $db) {
@@ -127,9 +144,9 @@ $app->get('/dogidfetch', function () use ($app, $db) {
     $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->execute();
-        $clientid = $stmt->fetchObject();
+        $dogid = $stmt->fetchObject();
         $db = null;
-        echo json_encode($clientid);
+        echo json_encode($dogid);
         } catch(PDOException $e) {
             echo '{"error":{"text":'. $e->getMessage() .'}}';
         }
