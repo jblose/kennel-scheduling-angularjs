@@ -102,6 +102,7 @@ angular.module('myApp.controllers', []).
         }
 
         $scope.saveDog = function () {
+            // TODO: Once added blank dogFormData
             $http({
                     method: 'POST',
                     url: 'api/index.php/doginsert',
@@ -190,6 +191,7 @@ angular.module('myApp.controllers', []).
         }
 
         $scope.processAction();
+
     }
     ])
     .controller('DogManCtrl', [function() {
