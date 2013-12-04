@@ -15,9 +15,9 @@ $app->get('/clientidfetch', function () use ($app, $db) {
         $clientid = $stmt->fetchObject();
         $db = null;
         echo json_encode($clientid);
-        } catch(PDOException $e) {
-            echo '{"error":{"text":'. $e->getMessage() .'}}';
-        }
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
 });
 
 $app->get('/clientsearch/:param', function ($param) use ($app, $db) {
@@ -29,14 +29,12 @@ $app->get('/clientsearch/:param', function ($param) use ($app, $db) {
         $stmt->bindParam("param",$param);
 
         $stmt->execute();
-        //$clients = $stmt->fetchObject();
         $clients = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        //echo '{"clients" : ' . json_encode($clients) .'}';
-         echo '{"clients" : ' . json_encode($clients) .'}';
-        } catch(PDOException $e) {
-            echo '{"error":{"text":'. $e->getMessage() .'}}';
-        }
+        echo '{"clients" : ' . json_encode($clients) .'}';
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
 });
 
 $app->get('/clientselect/:id', function($id) use ($app,$db) {
@@ -51,7 +49,7 @@ $app->get('/clientselect/:id', function($id) use ($app,$db) {
         $db = null;
         echo json_encode($client);
     } catch(PDOException $e) {
-         echo '{"error":{"text":'. $e->getMessage() .'}}';
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
@@ -68,7 +66,7 @@ $app->get('/clientdogs/:id', function($id) use ($app,$db) {
         $db = null;
         echo json_encode($clientdogs);
     } catch(PDOException $e) {
-         echo '{"error":{"text":'. $e->getMessage() .'}}';
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
@@ -94,7 +92,7 @@ $app->post('/clientinsert', function () use ($app,$db) {
         $stmt->bindParam("media_reception",$reqbody->{'media_reception'});
    		$stmt->execute();
    		$db = null;
-   		echo json_encode($reqbody);
+   		echo '{"success":{"clientid":'. $reqbody->{'clientid'} .'}}';
    	} catch(PDOException $e) {
    		echo '{"error":{"text":'. $e->getMessage() .'}}';
    	}
@@ -118,7 +116,7 @@ $app->post('/doginsert', function () use ($app, $db) {
         $stmt->bindParam("release_command",$reqbody->{'release_command'});
         $stmt->execute();
         $db = null;
-        echo json_encode($reqbody);
+        echo '{"success":{"dogid":'. $reqbody->{'dogid'} .'}}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -164,15 +162,15 @@ $app->post('/removedog/:clientid/:dogid', function ($clientid,$dogid) use ($app,
 $app->get('/dogidfetch', function () use ($app, $db) {
  $sql = "select max(id)+1 as dogid from rsak.dog";
     try{
-    $db = getConnection();
+        $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $dogid = $stmt->fetchObject();
         $db = null;
         echo json_encode($dogid);
-        } catch(PDOException $e) {
-            echo '{"error":{"text":'. $e->getMessage() .'}}';
-        }
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
 });
 
 $app->run();
