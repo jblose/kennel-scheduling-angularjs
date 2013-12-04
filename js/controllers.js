@@ -25,7 +25,7 @@ angular.module('myApp.controllers', []).
                     console.log('Error: '.concat(data));
                 })
         }
-
+        //TODO: Save client phone number in correct format
         $scope.saveClient = function() {
             $http({
                     method: 'POST',
@@ -63,6 +63,7 @@ angular.module('myApp.controllers', []).
                 }
             ).success( function(data) {
                     $scope.clientSelected = data;
+                    $scope.formData.clientid = $scope.clientSelected.id;
                     $scope.formData.first_name = data.first_name;
                     $scope.formData.last_name = data.last_name;
                     $scope.formData.phone = data.phone;
@@ -101,7 +102,6 @@ angular.module('myApp.controllers', []).
                 })
         }
 
-        //TODO: BUG Fix Spayed setting to 0 and not meaningful value.
         $scope.saveDog = function () {
             $http({
                     method: 'POST',
@@ -109,15 +109,15 @@ angular.module('myApp.controllers', []).
                     data: $scope.dogFormData
                 }
             ).success( function(data) {
-                    console.log('url: api/index.php/clientdogassign/'.concat($scope.clientid).concat('/').concat($scope.dogid));
+                    console.log('url: api/index.php/clientdogassign/'.concat($scope.formData.clientid).concat('/').concat($scope.dogFormData.dogid));
                     $http({
                             method: 'POST',
-                            url: 'api/index.php/clientdogassign/'.concat($scope.clientSelected.id).concat('/').concat($scope.dogFormData.dogid)
+                            url: 'api/index.php/clientdogassign/'.concat($scope.formData.clientid).concat('/').concat($scope.dogFormData.dogid)
                         }
                     ).success( function (data) {
                             $http({
                                     method: 'GET',
-                                    url: 'api/index.php/clientdogs/'.concat($scope.clientSelected.id)
+                                    url: 'api/index.php/clientdogs/'.concat($scope.formData.clientid)
                                 }
                             ).success( function(data) {
                                     $scope.clientDogs = data;
