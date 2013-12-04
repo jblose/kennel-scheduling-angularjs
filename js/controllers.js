@@ -132,15 +132,14 @@ angular.module('myApp.controllers', []).
                 });
         };
 
-        $scope.removeDog = function(idx) {
-            //TODO:Implement the remove Dog.
-            $scope.clientDogs.slice(idx,1);
+        $scope.removeDog = function(idx,dogid) {
+            $scope.clientDogs.splice(idx,1);
+
             $http({
                     method: 'POST',
-                    url: 'api/index.php/removedog/'.concat($scope.formData.clientid).concat('/').concat($scope.dogFormData.dogid)
+                    url: 'api/index.php/removedog/'.concat($scope.formData.clientid).concat('/').concat(dogid)
                 }
             ).success( function (data) {
-        /*
                     $http({
                             method: 'GET',
                             url: 'api/index.php/clientdogs/'.concat($scope.formData.clientid)
@@ -151,14 +150,13 @@ angular.module('myApp.controllers', []).
                         .error( function(data) {
                             console.log('Error: '.concat(data));
                         });
-        */
+
                     console.log('Success Removal!');
                 }
             ).error( function (data) {
                     console.log('Error: '.concat(data));
                 }
             );
-
         }
 
         $scope.processAction = function () {

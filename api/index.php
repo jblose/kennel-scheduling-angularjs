@@ -100,12 +100,13 @@ $app->post('/clientinsert', function () use ($app,$db) {
 
 $app->post('/doginsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
-    $sql = "insert into rsak.dog (id,name,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,allergies,release_command) VALUES ( :id,:name,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command)";
+    $sql = "insert into rsak.dog (id,name,age,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,allergies,release_command) VALUES ( :id,:name,:age,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->bindParam("id",$reqbody->{'dogid'});
         $stmt->bindParam("name",$reqbody->{'name'});
+        $stmt->bindParam("age",$reqbody->{'age'});
         $stmt->bindParam("breed",$reqbody->{'breed'});
         $stmt->bindParam("sex",$reqbody->{'sex'});
         $stmt->bindParam("color",$reqbody->{'color'});

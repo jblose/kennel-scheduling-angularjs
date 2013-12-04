@@ -3,13 +3,14 @@
     <legend>Client Search</legend>
     <form class="form-inline">
         <input type="text" ng-model="clientSearchParameter" placeholder="Last Name...">
-        <button  class="btn btn-primary" ng-click="clientSearchFx();">Search</button>
+        <button  class="btn btn-sm btn-primary" ng-click="clientSearchFx();">Search</button>
     </form>
 </div>
 
 <div ng-show="clientResults">
     <legend> Select Customer</legend>
     <table  class="table table-bordered">
+        <!-- TODO: Implement concat of dog names for 3rd column. -->
         <tr><th></th><th>Last</th><th>First</th><th>Dogs</th></tr>
         <tr ng-repeat="cli in clientList.clients"><td width=70px><button class="btn btn-xs" ng-click="selectClient(cli.id)">Select</button></td><td>{{cli.last_name}}</td><td>{{cli.first_name}}</td><td>List of doggers</td></tr>
     </table>
@@ -53,6 +54,7 @@
         <tr>
             <th>Name</th>
             <th>Sex</th>
+            <th>Age</th>
             <th>Breed</th>
             <th>Color</th>
             <th>Spayed/Neutered</th>
@@ -63,9 +65,9 @@
             <th></th>
         </tr>
         <tr ng-repeat="dog in clientDogs">
-            <!-- TODO: Add age -->
             <td>{{dog.name}}</td>
             <td>{{dog.sex}}</td>
+            <td>{{dog.age}}</td>
             <td>{{dog.breed}}</td>
             <td>{{dog.color}}</td>
             <td>{{dog.spayed_neutered}}</td>
@@ -73,8 +75,7 @@
             <td>{{dog.existing_health_conditions}}</td>
             <td>{{dog.allergies}}</td>
             <td>{{dog.release_command}}</td>
-            <td width="80px"><button class="btn btn-sm btn-default" ng-click="removeDog($index);">Remove</button></td>
-            <!-- TODO: Implement Remove dog above -->
+            <td width="80px"><button class="btn btn-sm btn-danger" ng-click="removeDog($index,dog.id);">Remove</button></td>
         </tr>
         <tr ><td colspan="10"><button class="btn  btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
         <tr class="collapse well" id="trAddDogger"><td colspan="10">
