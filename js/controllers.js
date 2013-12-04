@@ -25,7 +25,7 @@ angular.module('myApp.controllers', []).
                     console.log('Error: '.concat(data));
                 })
         }
-        //TODO: Save client phone number in correct format
+
         $scope.saveClient = function() {
             $http({
                     method: 'POST',
@@ -56,7 +56,6 @@ angular.module('myApp.controllers', []).
         }
 
         $scope.selectClient = function(clientId) {
-            console.log(clientId);
             $http({
                     method: 'GET',
                     url: 'api/index.php/clientselect/'.concat(clientId)
@@ -99,7 +98,7 @@ angular.module('myApp.controllers', []).
                 })
                 .error( function(data) {
                     console.log('Error: '.concat(data));
-                })
+                });
         }
 
         $scope.saveDog = function () {
@@ -109,7 +108,6 @@ angular.module('myApp.controllers', []).
                     data: $scope.dogFormData
                 }
             ).success( function(data) {
-                    console.log('url: api/index.php/clientdogassign/'.concat($scope.formData.clientid).concat('/').concat($scope.dogFormData.dogid));
                     $http({
                             method: 'POST',
                             url: 'api/index.php/clientdogassign/'.concat($scope.formData.clientid).concat('/').concat($scope.dogFormData.dogid)
@@ -129,10 +127,38 @@ angular.module('myApp.controllers', []).
                     ).error( function (data) {
                             console.log('Error: '.concat(data));
                         });
-                })
-                .error( function(data) {
+                }).error( function(data) {
                     console.log('Error: '.concat(data));
                 });
+        };
+
+        $scope.removeDog = function(idx) {
+            //TODO:Implement the remove Dog.
+            $scope.clientDogs.slice(idx,1);
+            $http({
+                    method: 'POST',
+                    url: 'api/index.php/removedog/'.concat($scope.formData.clientid).concat('/').concat($scope.dogFormData.dogid)
+                }
+            ).success( function (data) {
+        /*
+                    $http({
+                            method: 'GET',
+                            url: 'api/index.php/clientdogs/'.concat($scope.formData.clientid)
+                        }
+                    ).success( function(data) {
+                            $scope.clientDogs = data;
+                        })
+                        .error( function(data) {
+                            console.log('Error: '.concat(data));
+                        });
+        */
+                    console.log('Success Removal!');
+                }
+            ).error( function (data) {
+                    console.log('Error: '.concat(data));
+                }
+            );
+
         }
 
         $scope.processAction = function () {

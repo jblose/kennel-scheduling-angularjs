@@ -40,11 +40,11 @@
         <!--<tr><th colspan="2">Client</th></tr> -->
         <tr><th width="25%">First Name:</th><td>{{formData.first_name}}</td></tr>
         <tr><th width="25%">Last Name:</th><td>{{formData.last_name}}</td></tr>
-        <tr><th width="25%">Phone:</th><td>{{formData.phone}}</td></tr>
+        <tr><th width="25%">Phone:</th><td>{{formData.phone | tel}}</td></tr>
         <tr><th width="25%">Email:</th><td>{{formData.email}}</td></tr>
         <tr><th width="25%">Best Way to Receive Media:</th><td>{{formData.media_reception}}</td></tr>
         <tr><th width="25%">Emergency Contact Name:</th><td>{{formData.emergency_name}}</td></tr>
-        <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone}}</td></tr>
+        <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone | tel}}</td></tr>
         <tr></tr>
     </table>
     <!-- DOGS -->
@@ -63,6 +63,7 @@
             <th></th>
         </tr>
         <tr ng-repeat="dog in clientDogs">
+            <!-- TODO: Add age -->
             <td>{{dog.name}}</td>
             <td>{{dog.sex}}</td>
             <td>{{dog.breed}}</td>
@@ -72,7 +73,7 @@
             <td>{{dog.existing_health_conditions}}</td>
             <td>{{dog.allergies}}</td>
             <td>{{dog.release_command}}</td>
-            <td width="80px"><button class="btn btn-sm btn-default">Remove</button></td>
+            <td width="80px"><button class="btn btn-sm btn-default" ng-click="removeDog($index);">Remove</button></td>
             <!-- TODO: Implement Remove dog above -->
         </tr>
         <tr ><td colspan="10"><button class="btn  btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>

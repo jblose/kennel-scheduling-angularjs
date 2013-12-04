@@ -77,6 +77,10 @@ $app->post('/clientinsert', function () use ($app,$db) {
     $reqbody = json_decode($app->request()->getBody());
     var_dump($reqbody);
     $sql = "insert into rsak.client(id,last_name, first_name,email,phone,emergency_name,emergency_phone,media_reception) values (:id,:last_name,:first_name,:email,:phone,:emergency_name,:emergency_phone,:media_reception)";
+
+    $frmt_phone = '('.substr($reqbody->{'phone'},0,3).') '.substr($reqbody->{'phone'},3,3).'-'.substr($reqbody->{'phone'},6);
+    $frmt_emergency_phone = '('.substr($reqbody->{'emergency_phone'},0,3).') '.substr($reqbody->{'emergency_phone'},3,3).'-'.substr($reqbody->{'emergency_phone'},6);
+
    	try {
    		$db = getConnection();
    		$stmt = $db->prepare($sql);
@@ -84,9 +88,9 @@ $app->post('/clientinsert', function () use ($app,$db) {
         $stmt->bindParam("last_name",$reqbody->{'last_name'});
         $stmt->bindParam("first_name",$reqbody->{'first_name'});
         $stmt->bindParam("email",$reqbody->{'email'});
-        $stmt->bindParam("phone",$reqbody->{'phone'});
+        $stmt->bindParam("phone",$frmt_phone);
         $stmt->bindParam("emergency_name",$reqbody->{'emergency_name'});
-        $stmt->bindParam("emergency_phone",$reqbody->{'emergency_phone'});
+        $stmt->bindParam("emergency_phone",$frmt_emergency_phone);
         $stmt->bindParam("media_reception",$reqbody->{'media_reception'});
    		$stmt->execute();
    		$db = null;
@@ -129,7 +133,29 @@ $app->post('/clientdogassign/:clientid/:dogid', function ($clientid,$dogid) use 
         $stmt->bindParam("clientid",$clientid);
         $stmt->execute();
         $db = null;
-        echo json_encode($clientid);
+        echo '{"success":{"clientid":' . $clientid . ',"dogid":' . $dogid . '}}';
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
+
+$app->post('/removedog/:clientid/:dogid', function ($clientid,$dogid) use ($app, $db) {
+    try {
+        $db = getConnection();
+        $sql = "delete from rsak.dog where id = :dogid";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("dogid",$dogid);
+        $stmt->execute();
+
+        $sql = "delete from rsak.client_dog_x where client_id = :clientid and dog_id = :dogid";
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam("dogid",$dogid);
+        $stmt->bindParam("clientid",$clientid);
+        $stmt->execute();
+
+        $db = null;
+        echo '{"success":{"clientid":' . $clientid . ',"dogid":' . $dogid . '}}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
