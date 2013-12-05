@@ -174,6 +174,22 @@ $app->get('/dogidfetch', function () use ($app, $db) {
     }
 });
 
+$app->get('/reservfetch', function () use ($app, $db) {
+   //TODO: Implement to match the sampledata.php
+   $sql = "";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute();
+        $reservs = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $db = null;
+        echo json_encode($reservs);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
 $app->run();
 
 function getConnection() {
