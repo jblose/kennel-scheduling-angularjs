@@ -1,3 +1,49 @@
 <div>
-    <!-- TODO: Implement reservation page to accept client details -->
+    <!-- TODO: Better Date formatting for the datepicker. -->
+    <form role="form">
+        <div class="form-group">
+            <table>
+                <tr>
+                    <td>
+                        <label>Kennel Size</label>
+                        <div>
+                            <select class="form-control" ng-model="kennel_size"><option>Small</option><option>Medium</option><option>Large</option></select>
+                        </div>
+                    </td>
+                    <td>
+                        <label>Check-in</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle my-toggle-select" id="checkin" role="button" data-toggle="dropdown" >
+                                <div class="input-append"><input type="text" class="form-control" data-ng-model="checkin.date"><span class="add-on"><i
+                                        class="icon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="checkin">
+                                <datetimepicker data-ng-model="checkin.date"
+                                                data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td><label>Check-out</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle my-toggle-select" id="checkout" role="button" data-toggle="dropdown" >
+                                <div class="input-append"><input type="text" class="form-control" data-ng-model="checkout.date"><span class="add-on"><i
+                                        class="icon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="checkout">
+                                <datetimepicker data-ng-model="checkout.date"
+                                                data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                        <label> </label>
+                        <button class="form-control btn-primary btn-sm">Search</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
 </div>

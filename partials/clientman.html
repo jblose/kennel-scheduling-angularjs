@@ -2,7 +2,7 @@
 <div ng-show="clientSearch">
     <legend>Client Search</legend>
     <form class="form-inline">
-        <input type="text" ng-model="clientSearchParameter" placeholder="Last Name...">
+        <input type="search" class="form-control" ng-model="clientSearchParameter" placeholder="Last Name...">
         <button  class="btn btn-sm btn-primary" ng-click="clientSearchFx();">Search</button>
     </form>
 </div>
@@ -81,22 +81,22 @@
         <tr class="collapse well" id="trAddDogger"><td colspan="10">
             <table class="table table-bordered">
                 <tr><th colspan="2">Dogger</th></tr>
-                <tr><th width="25%">Name:</th><td><input type="text" ng-model="dogFormData.name"></td></tr>
-                <tr><th width="25%">Age:</th><td><input type="text" ng-model="dogFormData.age"></td></tr>
-                <tr><th width="25%">Breed:</th><td><input type="text" ng-model="dogFormData.breed"></td></tr>
-                <tr><th width="25%">Sex:</th><td><select  ng-model="dogFormData.sex"><option>Female</option><option>Male</option></select></td></tr>
-                <tr><th width="25%">Color:</th><td><input type="text" ng-model="dogFormData.color"></td></tr>
-                <tr><th width="25%">Kennel Size:</th><td><select  ng-model="dogFormData.kennel_size"><option>small</option><option>medium</option><option>large</option></select></td></tr>
-                <tr><th width="25%">Spayed/Neutered:</th><td><select  ng-model="dogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
-                <tr><th width="25%">Behavior:</th><td><select  ng-model="dogFormData.behavior">
+                <tr><th width="25%">Name:</th><td><input class="form-control" type="text" ng-model="dogFormData.name"></td></tr>
+                <tr><th width="25%">Age:</th><td><input  class="form-control" type="text" ng-model="dogFormData.age"></td></tr>
+                <tr><th width="25%">Breed:</th><td><input  class="form-control" type="text" ng-model="dogFormData.breed"></td></tr>
+                <tr><th width="25%">Sex:</th><td><select   class="form-control" ng-model="dogFormData.sex"><option>Female</option><option>Male</option></select></td></tr>
+                <tr><th width="25%">Color:</th><td><input  class="form-control" type="text" ng-model="dogFormData.color"></td></tr>
+                <tr><th width="25%">Kennel Size:</th><td><select   class="form-control" ng-model="dogFormData.kennel_size"><option>Small</option><option>Medium</option><option>Large</option></select></td></tr>
+                <tr><th width="25%">Spayed/Neutered:</th><td><select  class="form-control"  ng-model="dogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
+                <tr><th width="25%">Behavior:</th><td><select   class="form-control" ng-model="dogFormData.behavior">
                     <option>People & Dog Friendly</option>
                     <option>Dog Aggressive</option>
                     <option>People Aggressive</option>
                     <option>People & Dog Aggressive</option>
                 </select></td></tr>
-                <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input type="text" ng-model="dogFormData.existing_health_conditions"></td></tr>
-                <tr><th width="25%">Allergies:</th><td><input type="text" ng-model="dogFormData.allergies"></td></tr>
-                <tr><th width="25%">Release Command:</th><td><input type="text" ng-model="dogFormData.release_command"></td></tr>
+                <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input  class="form-control" type="text" ng-model="dogFormData.existing_health_conditions"></td></tr>
+                <tr><th width="25%">Allergies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.allergies"></td></tr>
+                <tr><th width="25%">Release Command:</th><td><input  class="form-control" type="text" ng-model="dogFormData.release_command"></td></tr>
                 <tr>
                     <td colspan="2">
                         <button class="btn btn-sm btn-primary" ng-click="saveDog()" onclick="$('#trAddDogger').collapse('toggle');">Save</button>
