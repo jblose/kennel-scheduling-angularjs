@@ -190,6 +190,22 @@ $app->get('/reservfetch', function () use ($app, $db) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
+
+$app->get('/availkennels', function () use ($app, $db) {
+    //TODO: Will eventually need a where clause based on availabiltiy.
+    $sql = "select kennel_id,name,size from rsak.kennel";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute();
+        $avkens = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($avkens);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
 $app->run();
 
 function getConnection() {

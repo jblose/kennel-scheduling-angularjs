@@ -78,7 +78,9 @@
             <td width="80px"><button class="btn btn-sm btn-danger" ng-click="removeDog($index,dog.id);">Remove</button></td>
         </tr>
         <tr ><td colspan="10"><button class="btn  btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
-        <tr class="collapse well" id="trAddDogger"><td colspan="10">
+        <tr class="collapse well" id="trAddDogger"><td colspan="11">
+            <!-- TODO: Addition of medication. Boolean -->
+            <!-- TODO: Addition of vaccination list and dates. Vet log tables? -->
             <table class="table table-bordered">
                 <tr><th colspan="2">Dogger</th></tr>
                 <tr><th width="25%">Name:</th><td><input class="form-control" type="text" ng-model="dogFormData.name"></td></tr>

@@ -40,10 +40,34 @@
                     </td>
                     <td>
                         <label> </label>
-                        <button class="form-control btn-primary btn-sm">Search</button>
+                        <button class="form-control btn-primary btn-sm" ng-click="availKennels();" onclick="$('#availKennelDiv').collapse('toggle');">Search</button>
                     </td>
                 </tr>
             </table>
         </div>
     </form>
+    <div ng-show="hasResults" class="collapse" id="availKennelDiv">
+        <table class="table table-bordered table-condensed">
+            <tr><th></th><th>Kennel</th><th>Size</th></tr>
+            <tr ng-repeat="ak in avk"><td width="60px"><button class="btn btn-sm" onclick="$('#availKennelDiv').collapse('toggle');">Select</button></td><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
+        </table>
+    </div>
+    <div id="clientReservation">
+        <!-- NOTE: Some dogs will share a kennel -->
+        <!-- NOTE: Addition of medication. Boolean -->
+        <legend>Reservation</legend>
+
+        <label>Boarding Option</label>
+        <select class="form-control" ng-model="training">
+            <option>Boarding</option>
+            <option>Board & Tune</option>
+            <option>Board & Train</option>
+            <option>Board/Board & Tune Mix</option>
+            <option></option>
+        </select>
+
+    </div>
+
+
+
 </div>

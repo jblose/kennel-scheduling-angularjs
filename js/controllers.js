@@ -6,6 +6,7 @@ angular.module('myApp.controllers', []).
     controller('ScheduleCtrl', [function() {
 
     }])
+
     .controller('ClientManCtrl', ['$scope','$http','$routeParams', function($scope,$http,$routeParams) {
         $scope.action = $routeParams.action.toString().toLowerCase();
 
@@ -194,9 +195,25 @@ angular.module('myApp.controllers', []).
 
     }
     ])
+
     .controller('DogManCtrl', [function() {
-
+        //FIXME: Needed or not?
     }])
-    .controller('ReservationCtrl', [function() {
 
+    .controller('ReservationCtrl', ['$scope','$http','$routeParams', function($scope,$http,$routeParams) {
+        $scope.hasResults = false;
+
+        $scope.availKennels = function () {
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/availkennels'
+                }
+            ).success( function(data) {
+                    $scope.avk = data;
+                    $scope.hasResults = true;
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        };
     }]);
