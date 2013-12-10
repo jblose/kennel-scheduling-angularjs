@@ -209,7 +209,14 @@ $app->get('/availkennels', function () use ($app, $db) {
 });
 
 $app->get('/fetchclients', function () use ($app, $db) {
-     $sql = "select id, concat(last_name,', ',first_name) as full_name from rsak.client where id > 0 order by concat(last_name,', ',first_name) ";
+     //$sql = "select id, concat(last_name,', ',first_name) as full_name from rsak.client where id > 0 order by concat(last_name,', ',first_name) ";
+    $sql = "select c.id, concat(c.last_name,', ',c.first_name, ' - ', group_concat( d.name separator ', ')) as full_name " .
+            "from rsak.client c " .
+            "join rsak.client_dog_x cdx on (c.id = cdx.client_id) " .
+            "join rsak.dog d on (cdx.dog_id = d.id) " .
+            "where c.id > 0 " .
+            "group by c.id " .
+            "order by concat(c.last_name,', ',c.first_name)";
      try{
          $db = getConnection();
          $stmt = $db->prepare($sql);
