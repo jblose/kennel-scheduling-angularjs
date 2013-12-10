@@ -20,10 +20,10 @@ order by c.last_name,c.first_name
 
 
 
-select c.id, concat(c.last_name,', ',c.first_name, ' - ', group_concat( d.name separator ', ')) as full_name  
-from rsak.client c
-join rsak.client_dog_x cdx on (c.id = cdx.client_id)
-join rsak.dog d on (cdx.dog_id = d.id)
-where c.id > 0 
-group by c.id
-order by concat(c.last_name,', ',c.first_name) ;
+	select c.id, concat(c.last_name,', ',c.first_name, ' - ', group_concat( d.name separator ', ')) as full_name  
+	from rsak.client c
+	join rsak.client_dog_x cdx on (c.id = cdx.client_id)
+	join rsak.dog d on (cdx.dog_id = d.id)
+	where c.id > 0 
+	group by c.id
+	order by concat(c.last_name,', ',c.first_name);
