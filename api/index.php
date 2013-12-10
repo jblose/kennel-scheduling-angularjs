@@ -21,7 +21,8 @@ $app->get('/clientidfetch', function () use ($app, $db) {
 });
 
 $app->get('/clientsearch/:param', function ($param) use ($app, $db) {
-    $sql = "select id,last_name,first_name,email from rsak.client where lower(last_name) like lower(:param) order by first_name";
+    //$sql = "select id,last_name,first_name,email from rsak.client where lower(last_name) like lower(:param) order by first_name";
+    $sql = "select c.id,c.last_name,c.first_name,c.email,group_concat( d.name separator ', ')  as dognames from rsak.client c join rsak.client_dog_x cdx on (c.id = cdx.client_id) join rsak.dog d on (cdx.dog_id = d.id) where lower(c.last_name) like lower('%blose%') order by c.last_name,c.first_name";
     $param = '%'.$param.'%';
     try{
         $db = getConnection();

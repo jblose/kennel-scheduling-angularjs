@@ -196,10 +196,6 @@ angular.module('myApp.controllers', []).
     }
     ])
 
-    .controller('DogManCtrl', [function() {
-        //FIXME: Needed or not?
-    }])
-
     .controller('ReservationCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
         $scope.hasResults = false;
         $scope.makeReservation = false;

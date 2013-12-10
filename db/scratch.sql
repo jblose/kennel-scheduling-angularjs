@@ -9,3 +9,11 @@ select person_id, group_concat(hobbies separator ', ')
 select d.id, d.name from rsak.dog d 
 join rsak.client_dog_x cdx on (d.id = cdx.dog_id)
 where cdx.client_id = 2;
+
+
+select c.id,c.last_name,c.first_name,c.email,group_concat( d.name separator ', ')  as dognames
+from rsak.client c
+join rsak.client_dog_x cdx on (c.id = cdx.client_id)
+join rsak.dog d on (cdx.dog_id = d.id)
+where lower(c.last_name) like lower('%blose%')
+order by c.last_name,c.first_name

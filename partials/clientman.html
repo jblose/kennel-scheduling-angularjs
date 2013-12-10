@@ -10,9 +10,8 @@
 <div ng-show="clientResults">
     <legend> Select Customer</legend>
     <table  class="table table-bordered">
-        <!-- TODO: Implement concat of dog names for 3rd column. -->
-        <tr><th></th><th>Last</th><th>First</th><th>Dogs</th><th></th></tr>
-        <tr ng-repeat="cli in clientList.clients"><td width=70px><button class="btn btn-xs" ng-click="selectClient(cli.id)">Select/Edit</button></td><td>{{cli.last_name}}</td><td>{{cli.first_name}}</td><td>List of doggers</td></tr>
+        <tr><th></th><th>Last</th><th>First</th><th>Dogs</th></tr>
+        <tr ng-repeat="cli in clientList.clients"><td width=70px><button class="btn btn-xs" ng-click="selectClient(cli.id)">Select/Edit</button></td><td>{{cli.last_name}}</td><td>{{cli.first_name}}</td><td>{{cli.dognames}}</td></tr>
     </table>
 </div>
 
