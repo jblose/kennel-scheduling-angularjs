@@ -4,7 +4,21 @@
 
 angular.module('myApp.controllers', []).
     controller('ScheduleCtrl', [function() {
+        $scope.hasResults = false;
 
+        $scope.availKennels = function () {
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/availkennels'
+                }
+            ).success( function(data) {
+                    $scope.avk = data;
+                    $scope.hasResults = true;
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        }
     }])
 
     .controller('ClientManCtrl', ['$scope','$http','$routeParams', function($scope,$http,$routeParams) {
@@ -200,6 +214,7 @@ angular.module('myApp.controllers', []).
         $scope.hasResults = false;
         $scope.makeReservation = false;
         $scope.clientName = {};
+        $scope.kennelname = {};
 
         $scope.availKennels = function () {
             $http({
@@ -209,27 +224,23 @@ angular.module('myApp.controllers', []).
             ).success( function(data) {
                     $scope.avk = data;
                     $scope.hasResults = true;
+                    $scope.makeReservation = true;
+
+                    $http({
+                        method: 'GET',
+                        url: 'api/index.php/fetchclients'
+                    })
+                        .success( function(data) {
+                            $scope.clientList = data;
+                        })
+                        .error( function(data) {
+                            console.log('Error: '.concat(data));
+                        })
                 })
                 .error( function(data) {
                     console.log('Error: '.concat(data));
                 })
         }
-
-        $scope.primeReservation = function (avkname) {
-            $scope.makeReservation = true;
-            $scope.kennelname = avkname;
-
-            $http({
-                    method: 'GET',
-                    url: 'api/index.php/fetchclients'
-                })
-                .success( function(data) {
-                    $scope.clientList = data;
-                })
-                .error( function(data) {
-                    console.log('Error: '.concat(data));
-                })
-        };
 
         $scope.clientAdd = function () {
             $location.path('#/clientman/new');

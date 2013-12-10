@@ -194,6 +194,7 @@ $app->get('/reservfetch', function () use ($app, $db) {
 
 $app->get('/availkennels', function () use ($app, $db) {
     //TODO: Will eventually need a where clause based on availabiltiy.
+    //TODO: Drop Down Search Kennels available by size increasing
     $sql = "select kennel_id,name,size from rsak.kennel";
     try{
         $db = getConnection();
@@ -232,7 +233,7 @@ $app->get('/fetchclients', function () use ($app, $db) {
 
 
 $app->get('/fetchclientdog/:clientid', function ($clientid) use ($app, $db) {
-    $sql = "select d.id, d.name from rsak.dog d join rsak.client_dog_x cdx on (d.id = cdx.dog_id) where cdx.client_id = :clientid";
+    $sql = "select d.* from rsak.dog d join rsak.client_dog_x cdx on (d.id = cdx.dog_id) where cdx.client_id = :clientid";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
