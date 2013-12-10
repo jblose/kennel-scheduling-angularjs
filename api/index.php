@@ -206,6 +206,39 @@ $app->get('/availkennels', function () use ($app, $db) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
+
+$app->get('/fetchclients', function () use ($app, $db) {
+     $sql = "select id, concat(last_name,', ',first_name) as full_name from rsak.client where id > 0 order by concat(last_name,', ',first_name) ";
+     try{
+         $db = getConnection();
+         $stmt = $db->prepare($sql);
+
+         $stmt->execute();
+         $clients = $stmt->fetchAll(PDO::FETCH_OBJ);
+         $db = null;
+         echo json_encode($clients);
+     } catch(PDOException $e) {
+         echo '{"error":{"text":'. $e->getMessage() .'}}';
+     }
+});
+
+
+$app->get('/fetchclientdog/:clientid', function ($clientid) use ($app, $db) {
+    $sql = "select d.id, d.name from rsak.dog d join rsak.client_dog_x cdx on (d.id = cdx.dog_id) where cdx.client_id = :clientid";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam("clientid",$clientid);
+        $stmt->execute();
+        $dogs = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($dogs);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
+
 $app->run();
 
 function getConnection() {

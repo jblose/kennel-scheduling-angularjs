@@ -103,7 +103,6 @@ angular.module('myApp.controllers', []).
         }
 
         $scope.saveDog = function () {
-            // TODO: Once added blank dogFormData
             $http({
                     method: 'POST',
                     url: 'api/index.php/doginsert',
@@ -121,6 +120,7 @@ angular.module('myApp.controllers', []).
                                 }
                             ).success( function(data) {
                                     $scope.clientDogs = data;
+                                    $scope.dogFormData = {};
                                 })
                                 .error( function(data) {
                                     console.log('Error: '.concat(data));
@@ -200,8 +200,10 @@ angular.module('myApp.controllers', []).
         //FIXME: Needed or not?
     }])
 
-    .controller('ReservationCtrl', ['$scope','$http','$routeParams', function($scope,$http,$routeParams) {
+    .controller('ReservationCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
         $scope.hasResults = false;
+        $scope.makeReservation = false;
+        $scope.clientName = {};
 
         $scope.availKennels = function () {
             $http({
@@ -211,6 +213,39 @@ angular.module('myApp.controllers', []).
             ).success( function(data) {
                     $scope.avk = data;
                     $scope.hasResults = true;
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        }
+
+        $scope.primeReservation = function (avkname) {
+            $scope.makeReservation = true;
+            $scope.kennelname = avkname;
+
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/fetchclients'
+                })
+                .success( function(data) {
+                    $scope.clientList = data;
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        };
+
+        $scope.clientAdd = function () {
+            $location.path('#/clientman/new');
+        };
+
+        $scope.loadDogs = function () {
+            $http({
+                method: 'GET',
+                url: 'api/index.php/fetchclientdog/'.concat($scope.clientName.id)
+            })
+                .success( function(data) {
+                    $scope.dogList = data;
                 })
                 .error( function(data) {
                     console.log('Error: '.concat(data));

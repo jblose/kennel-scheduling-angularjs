@@ -49,14 +49,28 @@
     <div ng-show="hasResults" class="collapse" id="availKennelDiv">
         <table class="table table-bordered table-condensed">
             <tr><th></th><th>Kennel</th><th>Size</th></tr>
-            <tr ng-repeat="ak in avk"><td width="60px"><button class="btn btn-sm" onclick="$('#availKennelDiv').collapse('toggle');">Select</button></td><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
+            <tr ng-repeat="ak in avk"><td width="60px"><button class="btn btn-sm" onclick="$('#availKennelDiv').collapse('toggle');" ng-click="primeReservation(ak.name);">Select</button></td><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
         </table>
     </div>
-    <div id="clientReservation">
+    <div id="clientReservation" ng-show="makeReservation">
         <!-- NOTE: Some dogs will share a kennel -->
         <!-- NOTE: Addition of medication. Boolean -->
         <legend>Reservation</legend>
+        <table class="table table-bordered table-condensed">
+            <tr><th>In</th><td colspan="2">{{checkin.date}}</td></tr>
+            <tr><th>Out</th><td colspan="2">{{checkout.date}}</td></tr>
 
+            <tr><th>Client</th><td>
+                <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs()"></select>
+
+            </td><td width="55px"><button class="btn btn-sm" ng-click="clientAdd()">Add...</button></td></tf></tr>
+
+            <tr><th>Kennel</th><td colspan="2">{{kennelname}}</td></tr>
+        </table>
+        <!-- TODO: Addition of the kennel selection -->
+        <table class="table table-bordered table-condensed">
+            <tr ng-repeat="dog in dogList"><td>{{dog.name}}</td></tr>
+        </table>
         <label>Boarding Option</label>
         <select class="form-control" ng-model="training">
             <option>Boarding</option>
@@ -65,9 +79,5 @@
             <option>Board/Board & Tune Mix</option>
             <option></option>
         </select>
-
     </div>
-
-
-
 </div>
