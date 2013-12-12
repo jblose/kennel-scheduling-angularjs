@@ -258,4 +258,12 @@ angular.module('myApp.controllers', []).
                     console.log('Error: '.concat(data));
                 })
         };
+
+        $scope.saveDogRes = function (dogId,kennelId,training,notes){
+            console.log('dogId: '.concat(dogId));
+            console.log('kennelId: '.concat(kennelId));
+            console.log('training: '.concat(training));
+            console.log('notes: '.concat(notes));
+            <!-- TODO: Implement storing of reservation -->
+        };
     }]);
