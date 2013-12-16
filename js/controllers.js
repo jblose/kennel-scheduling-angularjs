@@ -264,6 +264,24 @@ angular.module('myApp.controllers', []).
             console.log('kennelId: '.concat(kennelId));
             console.log('training: '.concat(training));
             console.log('notes: '.concat(notes));
+
+            var resObj = {};
+            resObj.dog_id = dogId;
+            resObj.kennel_id = kennelId;
+            resObj.training = training;
+            resObj.notes = notes;
             <!-- TODO: Implement storing of reservation -->
+            /*
+            $http({
+                    method: 'POST',
+                    url: 'api/index.php/reserveinsert',
+                    data: resObj
+                }
+            ).success( function(data) {
+                    console.log(data);
+            }).error( function(data) {
+                    console.log('Error: '.concat(data));
+            });
+            */
         };
     }]);

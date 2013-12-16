@@ -27,3 +27,6 @@ order by c.last_name,c.first_name
 	where c.id > 0 
 	group by c.id
 	order by concat(c.last_name,', ',c.first_name);
+
+
+select * from rsak.reservation;
