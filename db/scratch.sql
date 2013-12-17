@@ -25,7 +25,7 @@ select c.id, concat(c.last_name,', ',c.first_name, ' - ', group_concat( d.name s
 	join rsak.dog d on (cdx.dog_id = d.id)
 	where c.id > 0 
 	group by c.id
-order by concat(c.last_name,', ',c.first_name);
+order by concat(c.last_name,', ',c.first_name);	
 
 
 

@@ -260,18 +260,12 @@ angular.module('myApp.controllers', []).
         };
 
         $scope.saveDogRes = function (dogId,kennelId,training,notes){
-            console.log('dogId: '.concat(dogId));
-            console.log('kennelId: '.concat(kennelId));
-            console.log('training: '.concat(training));
-            console.log('notes: '.concat(notes));
-
             var resObj = {};
             resObj.client_id    = $scope.clientName.id;
             resObj.dog_id       = dogId;
             resObj.kennel_id    = kennelId;
-            <!-- TODO: Translate Date objects to milliseconds -->
-            resObj.check_in     = 'FIXME';  <!-- FIXME -->
-            resObj.check_out    = 'FIXME'; <!-- FIXME -->
+            resObj.check_in     = Date.parse($scope.checkin.date);
+            resObj.check_out    = Date.parse($scope.checkout.date);
             resObj.status       = 'FIXME'; <!-- FIXME -->
             resObj.title        = 'FIXME'; <!-- FIXME -->
             resObj.url          = 'FIXME'; <!-- FIXME -->
@@ -290,6 +284,5 @@ angular.module('myApp.controllers', []).
             }).error( function(data) {
                     console.log('Error: '.concat(data));
             });
-
         };
     }]);

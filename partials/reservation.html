@@ -57,12 +57,10 @@
         <!-- NOTE: Addition of medication. Boolean -->
         <legend>Reservation</legend>
         <table class="table table-bordered table-condensed">
-            <tr><th>In</th><td colspan="2">{{checkin.date}}</td></tr>
-            <tr><th>Out</th><td colspan="2">{{checkout.date}}</td></tr>
-
+            <tr><th>In</th><td colspan="2">{{checkin.date | date: 'yyyy-MM-dd HH:mm' }}</td></tr>
+            <tr><th>Out</th><td colspan="2">{{checkout.date | date: 'yyyy-MM-dd HH:mm'}}</td></tr>
             <tr><th>Client</th><td>
                 <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs()"></select>
-
             </td><td width="55px"><button class="btn btn-sm" ng-click="clientAdd()">Add...</button></td></tf></tr>
 
             <!--
