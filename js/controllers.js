@@ -266,12 +266,20 @@ angular.module('myApp.controllers', []).
             console.log('notes: '.concat(notes));
 
             var resObj = {};
-            resObj.dog_id = dogId;
-            resObj.kennel_id = kennelId;
-            resObj.training = training;
-            resObj.notes = notes;
-            <!-- TODO: Implement storing of reservation -->
-            /*
+            resObj.client_id    = $scope.clientName.id;
+            resObj.dog_id       = dogId;
+            resObj.kennel_id    = kennelId;
+            <!-- TODO: Translate Date objects to milliseconds -->
+            resObj.check_in     = 'FIXME';  <!-- FIXME -->
+            resObj.check_out    = 'FIXME'; <!-- FIXME -->
+            resObj.status       = 'FIXME'; <!-- FIXME -->
+            resObj.title        = 'FIXME'; <!-- FIXME -->
+            resObj.url          = 'FIXME'; <!-- FIXME -->
+            resObj.cost         = 'FIXME'; <!-- FIXME -->
+            resObj.training     = training;
+            resObj.training_amt = 'FIXME'; <!-- FIXME -->
+            resObj.notes        = notes;
+
             $http({
                     method: 'POST',
                     url: 'api/index.php/reserveinsert',
@@ -282,6 +290,6 @@ angular.module('myApp.controllers', []).
             }).error( function(data) {
                     console.log('Error: '.concat(data));
             });
-            */
+
         };
     }]);

@@ -250,24 +250,25 @@ $app->get('/fetchclientdog/:clientid', function ($clientid) use ($app, $db) {
 
 $app->post('/reserveinsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
-    $sql = "insert into rsak.dog (id,name,age,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,allergies,release_command) VALUES ( :id,:name,:age,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command)";
+    $sql = "insert into rsak.reservation (client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes) values (:client_id, :dog_id, :kennel_id, :check_in, :check_out, :status, :title, :url, :cost, :training, :training_amt, :notes)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam("id",$reqbody->{'dogid'});
-        $stmt->bindParam("name",$reqbody->{'name'});
-        $stmt->bindParam("age",$reqbody->{'age'});
-        $stmt->bindParam("breed",$reqbody->{'breed'});
-        $stmt->bindParam("sex",$reqbody->{'sex'});
-        $stmt->bindParam("color",$reqbody->{'color'});
-        $stmt->bindParam("spayed_neutered",$reqbody->{'spayed_neutered'});
-        $stmt->bindParam("behavior",$reqbody->{'behavior'});
-        $stmt->bindParam("existing_health_conditions",$reqbody->{'existing_health_conditions'});
-        $stmt->bindParam("allergies",$reqbody->{'allergies'});
-        $stmt->bindParam("release_command",$reqbody->{'release_command'});
+        $stmt->bindParam("client_id",$reqbody->{'client_id'});
+        $stmt->bindParam("dog_id",$reqbody->{'dog_id'});
+        $stmt->bindParam("kennel_id",$reqbody->{'kennel_id'});
+        $stmt->bindParam("check_in",$reqbody->{'check_in'});
+        $stmt->bindParam("check_out",$reqbody->{'check_out'});
+        $stmt->bindParam("status",$reqbody->{'status'});
+        $stmt->bindParam("title",$reqbody->{'title'});
+        $stmt->bindParam("url",$reqbody->{'url'});
+        $stmt->bindParam("cost",$reqbody->{'cost'});
+        $stmt->bindParam("training",$reqbody->{'training'});
+        $stmt->bindParam("training_amt",$reqbody->{'training_amt'});
+        $stmt->bindParam("notes",$reqbody->{'notes'});
         $stmt->execute();
         $db = null;
-        echo '{"success":{"dogid":'. $reqbody->{'dogid'} .'}}';
+        echo '{"success":{"dog_id":'. $reqbody->{'dog_id'} .',"client_id":'. $reqbody->{'client_id'} . ',"kennel_id":'. $reqbody->{'kennel_id'} . '}}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
