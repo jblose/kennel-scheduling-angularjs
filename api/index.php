@@ -275,10 +275,14 @@ $app->post('/reserveinsert', function () use ($app, $db) {
 });
 
 $app->get('/fetchreservelist/:size', function ($size) use ($app, $db) {
-    $sql = "select reservation_id as id, title,url,status as class, check_in as start, check_out as end " .
-        "from rsak.reservation r " .
-        "join rsak.kennel k on (r.kennel_id = k.kennel_id) " .
-        "where k.size = :size";
+    //$sql = "select reservation_id as id, title,url,status as class, check_in as start, check_out as end " .
+    //        "from rsak.reservation r " .
+    //    "join rsak.kennel k on (r.kennel_id = k.kennel_id) " .
+    //    "where k.size = :size";
+    $sql =  "select reservation_id as id,title,url,ifnull(status,'event-inverse') as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end " .
+            "from rsak.kennel k " .
+            "left join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
+            "where k.size = :size";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);

@@ -1,6 +1,7 @@
+<!-- TODO: Better Date formatting for the datepicker. -->
+<!-- TODO: Do not need more than :00,:15,:30, and :45 for Hour Pick -->
 <div>
-    <!-- TODO: Better Date formatting for the datepicker. -->
-    <!-- TODO: Do not need more than :00,:15,:30, and :45 for Hour Pick -->
+<!--
     <form role="form">
         <div class="form-group">
             <table>
@@ -50,20 +51,46 @@
 
     <div ng-show="hasResults" class="collapse" id="availKennelDiv">
         <table class="table table-bordered table-condensed">
-            <tr><!--<th></th>--><th>Kennel</th><th>Size</th></tr>
-            <tr ng-repeat="ak in avk"><!-- <td width="60px"><button class="btn btn-sm" onclick="$('#availKennelDiv').collapse('toggle');" ng-click="primeReservation(ak.name);">Select</button></td>--><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
+            <tr><th>Kennel</th><th>Size</th></tr>
+            <tr ng-repeat="ak in avk"><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
         </table>
     </div>
-
-    <div id="clientReservation" ng-show="makeReservation">
+-->
+    <div id="clientReservation" ng-init="fetchClients()">
         <!-- NOTE: Some dogs will share a kennel -->
         <!-- NOTE: Addition of medication. Boolean -->
         <legend>Reservation</legend>
         <table class="table table-bordered table-condensed">
-            <tr><th>In</th><td colspan="2">{{checkin.date | date: 'yyyy-MM-dd HH:mm' }}</td></tr>
-            <tr><th>Out</th><td colspan="2">{{checkout.date | date: 'yyyy-MM-dd HH:mm'}}</td></tr>
+            <tr><th>In</th>
+                <td colspan="2" ng-show="checkinDone" ng-click="checkinEdit()">{{checkin.date | date: 'yyyy-MM-dd HH:mm' }}</td>
+                <td colspan="2" ng-show="checkinNeed">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle my-toggle-select" id="checkin" role="button" data-toggle="dropdown" >
+                            <input type="text" class="form-control" data-ng-model="checkin.date">
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="checkin">
+                            <datetimepicker data-ng-model="checkin.date"
+                                            data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr><th>Out</th>
+                <td colspan="2" ng-show="checkoutDone" ng-click="checkoutEdit()">{{checkout.date | date: 'yyyy-MM-dd HH:mm'}}</td>
+                <td colspan="2" ng-show="checkoutNeed">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle my-toggle-select" id="checkout" role="button" data-toggle="dropdown" >
+                            <input type="text" class="form-control" data-ng-model="checkout.date" ng-focus="checkoutFocus();">
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="checkout">
+                            <datetimepicker data-ng-model="checkout.date"
+                                            data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
             <tr><th>Client</th><td>
-                <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs()"></select>
+                <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs();" ng-focus="clientSelectFocus();availKennels();"></select>
             </td><td width="55px"><button class="btn btn-sm" ng-click="clientAdd()">Add...</button></td></tf></tr>
 
             <!--

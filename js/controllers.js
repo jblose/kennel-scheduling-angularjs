@@ -211,10 +211,49 @@ angular.module('myApp.controllers', []).
     ])
 
     .controller('ReservationCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
-        $scope.hasResults = false;
-        $scope.makeReservation = false;
         $scope.clientName = {};
         $scope.kennelname = {};
+
+        $scope.checkinDone = false;
+        $scope.checkinNeed = true;
+        $scope.checkoutDone = false;
+        $scope.checkoutNeed = true;
+
+        $scope.checkoutFocus = function () {
+            console.log('checkoutFocus!!');
+            $scope.checkinDone = true;
+            $scope.checkinNeed = false;
+        };
+
+        $scope.clientSelectFocus = function () {
+            console.log('clientSelectFocus!!');
+            $scope.checkoutDone = true;
+            $scope.checkoutNeed = false;
+        };
+
+        $scope.checkinEdit = function () {
+            $scope.checkinDone = false;
+            $scope.checkinNeed = true;
+        };
+
+        $scope.checkoutEdit = function () {
+            $scope.checkoutDone = false;
+            $scope.checkoutNeed = true;
+
+        };
+
+        $scope.fetchClients = function () {
+            $http({
+                method: 'GET',
+                url: 'api/index.php/fetchclients'
+            })
+                .success( function(data) {
+                    $scope.clientList = data;
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        };
 
         $scope.availKennels = function () {
             $http({
@@ -223,23 +262,11 @@ angular.module('myApp.controllers', []).
                 }
             ).success( function(data) {
                     $scope.avk = data;
-                    $scope.makeReservation = true;
-
-                    $http({
-                        method: 'GET',
-                        url: 'api/index.php/fetchclients'
-                    })
-                        .success( function(data) {
-                            $scope.clientList = data;
-                        })
-                        .error( function(data) {
-                            console.log('Error: '.concat(data));
-                        })
                 })
                 .error( function(data) {
                     console.log('Error: '.concat(data));
                 })
-        }
+        };
 
         $scope.clientAdd = function () {
             $location.path('#/clientman/new');
@@ -287,4 +314,31 @@ angular.module('myApp.controllers', []).
     }])
     .controller('ResViewCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
         <!-- TODO: Implement the receiving of id and display of details -->
+    }])
+    .controller('VacSearchCtrl', ['$scope','$http', function($scope,$http) {
+
+        $scope.availKennels = function () {
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/availkennels'
+                }
+            ).success( function(data) {
+                    $scope.avk = data;
+                    $scope.hasResults = "true";
+
+                    $http({
+                        method: 'GET',
+                        url: 'api/index.php/fetchclients'
+                    })
+                        .success( function(data) {
+                            $scope.clientList = data;
+                        })
+                        .error( function(data) {
+                            console.log('Error: '.concat(data));
+                        })
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        }
     }]);
