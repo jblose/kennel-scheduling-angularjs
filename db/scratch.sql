@@ -28,7 +28,18 @@ select c.id, concat(c.last_name,', ',c.first_name, ' - ', group_concat( d.name s
 order by concat(c.last_name,', ',c.first_name);	
 
 
+/*	
+			"id": "293",
+			"title": "Dogger 1",
+			"url": "http://www.example.com/",
+			"class": "event-warning",
+			"start": "1384491600000",
+			"end":   "1384837200000"
+*/
+select reservation_id as id, title,url,status as class, check_in as start, check_out as end 
+from rsak.reservation r 
+join rsak.kennel k on (r.kennel_id = k.kennel_id)
+where k.size = 'small'
 
-select * from rsak.reservation;
 
 /* insert into rsak.reservation (client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes) values ( */

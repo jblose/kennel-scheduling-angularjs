@@ -274,6 +274,25 @@ $app->post('/reserveinsert', function () use ($app, $db) {
     }
 });
 
+$app->get('/fetchreservelist/:size', function ($size) use ($app, $db) {
+    $sql = "select reservation_id as id, title,url,status as class, check_in as start, check_out as end " .
+        "from rsak.reservation r " .
+        "join rsak.kennel k on (r.kennel_id = k.kennel_id) " .
+        "where k.size = :size";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam("size",$size);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo '{"success": 1,"result":' . json_encode($result) . '}';
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() . '}}';
+    }
+});
+
 
 $app->run();
 

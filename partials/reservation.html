@@ -1,5 +1,6 @@
 <div>
     <!-- TODO: Better Date formatting for the datepicker. -->
+    <!-- TODO: Do not need more than :00,:15,:30, and :45 for Hour Pick -->
     <form role="form">
         <div class="form-group">
             <table>
@@ -46,12 +47,14 @@
             </table>
         </div>
     </form>
+
     <div ng-show="hasResults" class="collapse" id="availKennelDiv">
         <table class="table table-bordered table-condensed">
             <tr><!--<th></th>--><th>Kennel</th><th>Size</th></tr>
             <tr ng-repeat="ak in avk"><!-- <td width="60px"><button class="btn btn-sm" onclick="$('#availKennelDiv').collapse('toggle');" ng-click="primeReservation(ak.name);">Select</button></td>--><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
         </table>
     </div>
+
     <div id="clientReservation" ng-show="makeReservation">
         <!-- NOTE: Some dogs will share a kennel -->
         <!-- NOTE: Addition of medication. Boolean -->
@@ -78,7 +81,7 @@
                     <option>Board/Board & Tune Mix</option>
                 </select></td>
                 <td><input class="form-control" type="text" ng-model="notes" placeholder="Notes..." multiple></td>
-                <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,notes);">Save</button></button></td>
+                <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,notes);">Save</button></td>
             </tr>
         </table>
     <!-- <label>Boarding Option</label> -->

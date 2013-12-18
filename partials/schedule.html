@@ -1,3 +1,5 @@
+<!-- TODO: Establish Color coding: Scheduled, Checked-in, No-Show, See-Notes, Complete(Checked-out) -->
+
 <div class="page-header">
     <div class="pull-left form-inline">
         <div class="btn-group">
@@ -81,14 +83,14 @@
     <tr><th colspan="2">Large Breed</th></tr>
     <tr><td width="135"><button type="button" class="btn btn-default" onclick="$('#divCalLargeBreed').collapse('toggle');">Expand/Collapse</button></td>
         <td>
-            <div id="divCalLargeBreed" class="collapse"><!-- class="col-md-9" > -->
+            <div id="divCalLargeBreed" class="collapse">
                 <div id="calLargeBreed"></div>
             </div>
         </td>
     </tr>
 
     <script type="text/javascript">
-        var lrgCalendar = $('#calLargeBreed').calendar({events_source: '/sampledata/events.json.php',
+        var lrgCalendar = $('#calLargeBreed').calendar({events_source: '/api/index.php/fetchreservelist/large',
             view: 'week',
             onAfterViewLoad: function(view) {
                 $('.page-header h3').text(this.getTitle());
@@ -117,14 +119,14 @@
     <tr><th colspan="2">Medium Breed</th></tr>
     <tr><td width="135"><button type="button" class="btn btn-default" onclick="$('#divCalMedBreed').collapse('toggle');">Expand/Collapse</button></td>
         <td>
-            <div id="divCalMedBreed" class="collapse"><!-- class="col-md-9" > -->
+            <div id="divCalMedBreed" class="collapse">
                 <div id="calMedBreed"></div>
             </div>
         </td>
     </tr>
 
     <script type="text/javascript">
-        var medCalendar = $('#calMedBreed').calendar({events_source: '/sampledata/events.json.php',
+        var medCalendar = $('#calMedBreed').calendar({events_source: '/api/index.php/fetchreservelist/medium',
             view: 'week',
             onAfterViewLoad: function(view) {
                 $('.page-header h3').text(this.getTitle());
@@ -149,19 +151,19 @@
     </script>
 </table>
 
-
 <table class="table table-bordered">
     <tr><th colspan="2">Small Breed</th></tr>
     <tr><td width="135"><button type="button" class="btn btn-default" onclick="$('#divCalSmallBreed').collapse('toggle');">Expand/Collapse</button></td>
         <td>
-            <div id="divCalSmallBreed" class="collapse"><!-- class="col-md-9" > -->
+            <div id="divCalSmallBreed" class="collapse">
                 <div id="calSmallBreed"></div>
             </div>
         </td>
     </tr>
 
     <script type="text/javascript">
-        var smlCalendar = $('#calSmallBreed').calendar({events_source: '/sampledata/events.json.php',
+
+        var smlCalendar = $('#calSmallBreed').calendar({events_source: '/api/index.php/fetchreservelist/small',
             view: 'week',
             onAfterViewLoad: function(view) {
                 $('.page-header h3').text(this.getTitle());

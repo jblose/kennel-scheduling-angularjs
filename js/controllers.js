@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-    controller('ScheduleCtrl', [function() {
+    controller('ScheduleCtrl', ['$scope','$http', function($scope,$http) {
         $scope.hasResults = false;
 
         $scope.availKennels = function () {
@@ -18,7 +18,7 @@ angular.module('myApp.controllers', []).
                 .error( function(data) {
                     console.log('Error: '.concat(data));
                 })
-        }
+        };
     }])
 
     .controller('ClientManCtrl', ['$scope','$http','$routeParams', function($scope,$http,$routeParams) {
@@ -223,7 +223,6 @@ angular.module('myApp.controllers', []).
                 }
             ).success( function(data) {
                     $scope.avk = data;
-                    $scope.hasResults = true;
                     $scope.makeReservation = true;
 
                     $http({
@@ -267,8 +266,8 @@ angular.module('myApp.controllers', []).
             resObj.check_in     = Date.parse($scope.checkin.date);
             resObj.check_out    = Date.parse($scope.checkout.date);
             resObj.status       = 'FIXME'; <!-- FIXME -->
-            resObj.title        = 'FIXME'; <!-- FIXME -->
-            resObj.url          = 'FIXME'; <!-- FIXME -->
+            resObj.title        = 'FIXME'; <!-- FIXME: Dog Name - Owner -->
+            resObj.url          = '#/reservation/number'; <!-- FIXME: Need to prefetch reservation number and use  -->
             resObj.cost         = 'FIXME'; <!-- FIXME -->
             resObj.training     = training;
             resObj.training_amt = 'FIXME'; <!-- FIXME -->
@@ -281,8 +280,11 @@ angular.module('myApp.controllers', []).
                 }
             ).success( function(data) {
                     console.log(data);
-            }).error( function(data) {
+                }).error( function(data) {
                     console.log('Error: '.concat(data));
-            });
+                });
         };
+    }])
+    .controller('ResViewCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
+        <!-- TODO: Implement the receiving of id and display of details -->
     }]);
