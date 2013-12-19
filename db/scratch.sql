@@ -1,3 +1,37 @@
+select from_unixtime((1357016400000+(3600000*2))/1000);
+
+select from_unixtime((1357016400000)/1000);
+
+truncate table rsak.rsak_date;
+insert into rsak.rsak_date(millidate,readable)
+values('1357016400000',from_unixtime((1357016400000+(3600000*2))/1000));
+insert into rsak.rsak_date(millidate,readable)values('1357016400000',from_unixtime((1357016400000+(3600000*2))/1000));
+
+
+select reservation_id as id, title,url,status as class, check_in as start, check_out as end 
+from rsak.reservation r 
+join rsak.kennel k on (r.kennel_id = k.kennel_id)
+where k.size = 'small';
+
+select reservation_id as id, title,url,status as class, check_in as start, check_out as end 
+from rsak.reservation r 
+join rsak.kennel k on (r.kennel_id = k.kennel_id)
+where k.size = 'small';
+
+
+SELECT unix_timestamp(FROM_UNIXTIME((1384491600000 - (2628000000 * 6)) / 1000)); /* ago: 1368723600 */
+SELECT unix_timestamp(FROM_UNIXTIME((1384491600000 + (2628000000 * 6)) / 1000)); /* thn: 1400259600 */
+select unix_timestamp(UTC_date()); /*//1387403705 */
+select from_unixtime(1387350000);
+
+/* HERE I AM */	
+select 
+reservation_id as id,ifnull(title,'Vacant'),url,status as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end  
+from rsak.kennel k
+left join rsak.reservation r on (k.kennel_id = r.kennel_id)
+where k.size = 'small';
+
+
 select id, concat(last_name,', ',first_name) as full_name from rsak.client where id > 0
 order by concat(last_name,', ',first_name);
 
@@ -43,26 +77,3 @@ where k.size = 'small';
 
 
 /* insert into rsak.reservation (client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes) values ( */
-
-select reservation_id as id, title,url,status as class, check_in as start, check_out as end 
-from rsak.reservation r 
-join rsak.kennel k on (r.kennel_id = k.kennel_id)
-where k.size = 'small';
-
-select reservation_id as id, title,url,status as class, check_in as start, check_out as end 
-from rsak.reservation r 
-join rsak.kennel k on (r.kennel_id = k.kennel_id)
-where k.size = 'small';
-
-
-SELECT unix_timestamp(FROM_UNIXTIME((1384491600000 - (2628000000 * 6)) / 1000)); /* ago: 1368723600 */
-SELECT unix_timestamp(FROM_UNIXTIME((1384491600000 + (2628000000 * 6)) / 1000)); /* thn: 1400259600 */
-select unix_timestamp(UTC_date()); /*//1387403705 */
-select from_unixtime(1387350000);
-
-	
-select 
-reservation_id as id,ifnull(title,'Vacant'),url,status as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end  
-from rsak.kennel k
-left join rsak.reservation r on (k.kennel_id = r.kennel_id)
-where k.size = 'small';
