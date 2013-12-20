@@ -1,5 +1,3 @@
-<!-- TODO: Better Date formatting for the datepicker. -->
-<!-- TODO: Do not need more than :00,:15,:30, and :45 for Hour Pick -->
 <div>
 <!--
     <form role="form">
@@ -70,7 +68,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="checkin">
                             <datetimepicker data-ng-model="checkin.date"
-                                            data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                                            data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minuteStep: 15 }"></datetimepicker>
                         </ul>
                     </div>
                 </td>
@@ -84,19 +82,23 @@
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="checkout">
                             <datetimepicker data-ng-model="checkout.date"
-                                            data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                                            data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minuteStep: 15 }"></datetimepicker>
                         </ul>
                     </div>
                 </td>
             </tr>
-            <tr><th>Client</th><td>
+            <tr>
+                <th>Client</th><td>
                 <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs();" ng-focus="clientSelectFocus();availKennels();"></select>
-            </td><td width="55px"><button class="btn btn-sm" ng-click="clientAdd()">Add...</button></td></tf></tr>
+            </td><td width="55px"><button class="btn btn-sm" ng-click="clientAdd()">Add...</button></td></tf>
+            </tr>
+            <tr> </tr>
 
             <!--
             <tr><th>Kennel</th><td colspan="2">{{kennelname}}</td></tr>
             -->
         </table>
+        <!-- Dogger List -->
         <table class="table table-bordered table-condensed">
             <tr ng-repeat="dog in dogList">
                 <td>{{dog.name}}</td>
@@ -107,10 +109,14 @@
                     <option>Board & Train</option>
                     <option>Board/Board & Tune Mix</option>
                 </select></td>
+                <td><input class="form-control" type="text" ng-model="training_amt" placeholder="Training Amount"></td>
                 <td><input class="form-control" type="text" ng-model="notes" placeholder="Notes..." multiple></td>
-                <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,notes);">Save</button></td>
+                <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,$index);">Save</button></td>
             </tr>
         </table>
-    <!-- <label>Boarding Option</label> -->
+     <label>Costing</label>
+        <table class="table table-bordered table-condensed">
+            <tr><th> </th></tr>
+        </table>
     </div>
 </div>

@@ -285,21 +285,22 @@ angular.module('myApp.controllers', []).
                 })
         };
 
-        $scope.saveDogRes = function (dogId,kennelId,training,notes){
+        $scope.saveDogRes = function (dogId,kennelId,training,training_amt,notes,idx){
             var resObj = {};
             resObj.client_id    = $scope.clientName.id;
             resObj.dog_id       = dogId;
             resObj.kennel_id    = kennelId;
             resObj.check_in     = Date.parse($scope.checkin.date);
             resObj.check_out    = Date.parse($scope.checkout.date);
-            resObj.status       = 'FIXME'; <!-- FIXME -->
-            resObj.title        = 'FIXME'; <!-- FIXME: Dog Name - Owner -->
+            resObj.status       = 'Scheduled';
+            resObj.title        = $scope.dogList[idx].name.concat('-',$scope.clientName); <!-- FIXME: Dog Name - Owner -->
             resObj.url          = '#/reservation/number'; <!-- FIXME: Need to prefetch reservation number and use  -->
             resObj.cost         = 'FIXME'; <!-- FIXME -->
             resObj.training     = training;
-            resObj.training_amt = 'FIXME'; <!-- FIXME -->
+            resObj.training_amt = training_amt;
             resObj.notes        = notes;
 
+            /*
             $http({
                     method: 'POST',
                     url: 'api/index.php/reserveinsert',
@@ -310,6 +311,7 @@ angular.module('myApp.controllers', []).
                 }).error( function(data) {
                     console.log('Error: '.concat(data));
                 });
+                */
         };
     }])
     .controller('ResViewCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
