@@ -18,7 +18,7 @@ from rsak.reservation r
 join rsak.kennel k on (r.kennel_id = k.kennel_id)
 where k.size = 'small';
 
-
+select utc_date();
 SELECT unix_timestamp(FROM_UNIXTIME((1384491600000 - (2628000000 * 6)) / 1000)); /* ago: 1368723600 */
 SELECT unix_timestamp(FROM_UNIXTIME((1384491600000 + (2628000000 * 6)) / 1000)); /* thn: 1400259600 */
 select unix_timestamp(UTC_date()); /*//1387403705 */

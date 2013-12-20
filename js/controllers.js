@@ -213,11 +213,13 @@ angular.module('myApp.controllers', []).
     .controller('ReservationCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
         $scope.clientName = {};
         $scope.kennelname = {};
+        $scope.reservationId = {};
 
         $scope.checkinDone = false;
         $scope.checkinNeed = true;
         $scope.checkoutDone = false;
         $scope.checkoutNeed = true;
+
 
         $scope.checkoutFocus = function () {
             console.log('checkoutFocus!!');
@@ -242,6 +244,18 @@ angular.module('myApp.controllers', []).
 
         };
 
+$scope.fetchReservationId = function () {
+    $http({
+            method: 'GET',
+            url: 'api/index.php/clientresid'
+        }
+    ).success( function(data) {
+            $scope.reservationId = data.reservationId;
+        })
+        .error( function(data) {
+            console.log('Error: '.concat(data));
+        })
+};
         $scope.fetchClients = function () {
             $http({
                 method: 'GET',
@@ -286,21 +300,23 @@ angular.module('myApp.controllers', []).
         };
 
         $scope.saveDogRes = function (dogId,kennelId,training,training_amt,notes,idx){
+            var cliname = $scope.clientName.full_name;
+            cliname =  cliname.substr(0,cliname.indexOf(' - '));
             var resObj = {};
+            resObj.reservation_id = $scope.reservationId;
             resObj.client_id    = $scope.clientName.id;
             resObj.dog_id       = dogId;
             resObj.kennel_id    = kennelId;
             resObj.check_in     = Date.parse($scope.checkin.date);
             resObj.check_out    = Date.parse($scope.checkout.date);
             resObj.status       = 'Scheduled';
-            resObj.title        = $scope.dogList[idx].name.concat('-',$scope.clientName); <!-- FIXME: Dog Name - Owner -->
-            resObj.url          = '#/reservation/number'; <!-- FIXME: Need to prefetch reservation number and use  -->
-            resObj.cost         = 'FIXME'; <!-- FIXME -->
+            resObj.title        = $scope.dogList[idx].name.concat(' - ',cliname);
+            resObj.url          = '#/resview/'.concat($scope.reservationId);
+            resObj.cost         = $scope.train_cost;
             resObj.training     = training;
             resObj.training_amt = training_amt;
             resObj.notes        = notes;
 
-            /*
             $http({
                     method: 'POST',
                     url: 'api/index.php/reserveinsert',
@@ -311,7 +327,6 @@ angular.module('myApp.controllers', []).
                 }).error( function(data) {
                     console.log('Error: '.concat(data));
                 });
-                */
         };
     }])
     .controller('ResViewCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {

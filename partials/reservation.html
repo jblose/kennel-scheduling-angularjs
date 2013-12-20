@@ -1,60 +1,5 @@
 <div>
-<!--
-    <form role="form">
-        <div class="form-group">
-            <table>
-                <tr>
-                    <td>
-                        <label>Kennel Size</label>
-                        <div>
-                            <select class="form-control" ng-model="kennel_size"><option>Small</option><option>Medium</option><option>Large</option></select>
-                        </div>
-                    </td>
-                    <td>
-                        <label>Check-in</label>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle my-toggle-select" id="checkin" role="button" data-toggle="dropdown" >
-                                <div class="input-append"><input type="text" class="form-control" data-ng-model="checkin.date"><span class="add-on"><i
-                                        class="icon-calendar"></i></span>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="checkin">
-                                <datetimepicker data-ng-model="checkin.date"
-                                                data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
-                            </ul>
-                        </div>
-                    </td>
-
-                    <td><label>Check-out</label>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle my-toggle-select" id="checkout" role="button" data-toggle="dropdown" >
-                                <div class="input-append"><input type="text" class="form-control" data-ng-model="checkout.date"><span class="add-on"><i
-                                        class="icon-calendar"></i></span>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="checkout">
-                                <datetimepicker data-ng-model="checkout.date"
-                                                data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>
-                        <label> </label>
-                        <button class="form-control btn-primary btn-sm" ng-click="availKennels();" onclick="$('#availKennelDiv').collapse('toggle');">Search</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </form>
-
-    <div ng-show="hasResults" class="collapse" id="availKennelDiv">
-        <table class="table table-bordered table-condensed">
-            <tr><th>Kennel</th><th>Size</th></tr>
-            <tr ng-repeat="ak in avk"><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
-        </table>
-    </div>
--->
-    <div id="clientReservation" ng-init="fetchClients()">
+    <div id="clientReservation" ng-init="fetchClients();">
         <!-- NOTE: Some dogs will share a kennel -->
         <!-- NOTE: Addition of medication. Boolean -->
         <legend>Reservation</legend>
@@ -92,7 +37,7 @@
                 <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs();" ng-focus="clientSelectFocus();availKennels();"></select>
             </td><td width="55px"><button class="btn btn-sm" ng-click="clientAdd()">Add...</button></td></tf>
             </tr>
-            <tr> </tr>
+            <tr><th>Cost:</th><td colspan="2"><input class="form-control" ng-model="train_cost" type="text"></td></tr>
 
             <!--
             <tr><th>Kennel</th><td colspan="2">{{kennelname}}</td></tr>
@@ -111,12 +56,8 @@
                 </select></td>
                 <td><input class="form-control" type="text" ng-model="training_amt" placeholder="Training Amount"></td>
                 <td><input class="form-control" type="text" ng-model="notes" placeholder="Notes..." multiple></td>
-                <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,$index);">Save</button></td>
+                <td><button class="btn btn-sm btn-default" ng-click="fetchReservationId();saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,$index);">Save</button></td>
             </tr>
-        </table>
-     <label>Costing</label>
-        <table class="table table-bordered table-condensed">
-            <tr><th> </th></tr>
         </table>
     </div>
 </div>

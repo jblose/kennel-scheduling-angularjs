@@ -248,12 +248,27 @@ $app->get('/fetchclientdog/:clientid', function ($clientid) use ($app, $db) {
     }
 });
 
+$app->get('/clientresid', function () use ($app, $db) {
+    $sql = "select max(reservation_id)+1 as reservationId from rsak.reservation";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $reservationId = $stmt->fetchObject();
+        $db = null;
+        echo json_encode($reservationId);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
+
 $app->post('/reserveinsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
-    $sql = "insert into rsak.reservation (client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes) values (:client_id, :dog_id, :kennel_id, :check_in, :check_out, :status, :title, :url, :cost, :training, :training_amt, :notes)";
+    $sql = "insert into rsak.reservation (reservation_id, client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes) values (:reservation_id, :client_id, :dog_id, :kennel_id, :check_in, :check_out, :status, :title, :url, :cost, :training, :training_amt, :notes)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
+        $stmt->bindParam("reservation_id",$reqbody->{'reservation_id'});
         $stmt->bindParam("client_id",$reqbody->{'client_id'});
         $stmt->bindParam("dog_id",$reqbody->{'dog_id'});
         $stmt->bindParam("kennel_id",$reqbody->{'kennel_id'});
