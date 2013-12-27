@@ -1,12 +1,39 @@
+select ifnull(reservation_id,0) as id,ifnull(title,'Vacant') as title,ifnull(url,'null') as url ,ifnull(status,'event-inverse') as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end 
+            from rsak.kennel k 
+            join rsak.reservation r on (k.kennel_id = r.kennel_id) 
+            where k.size = 'large';
+
+
+select reservation_Id as id, title as title from  rsak.kennel k
+join rsak.reservation r on (k.kennel_id = r.kennel_id) 
+where k.size = 'large';
+
+
+select ifnull(reservation_id,0) as id,ifnull(title,'') as title,ifnull(url,'null') as url ,ifnull(status,'event-inverse') as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end 
+from rsak.kennel k 
+left join rsak.reservation r on (k.kennel_id = r.kennel_id) 
+where k.size = 'large'
+
+select reservation_Id as id, title as title from  rsak.kennel k
+join rsak.reservation r on (k.kennel_id = r.kennel_id) 
+where k.size = 'large'
+
+
+
+
+
+
 select from_unixtime((1357016400000+(3600000*2))/1000);
 
 select from_unixtime((1357016400000)/1000);
 
+/*
 truncate table rsak.rsak_date;
 insert into rsak.rsak_date(millidate,readable)
 values('1357016400000',from_unixtime((1357016400000+(3600000*2))/1000));
 insert into rsak.rsak_date(millidate,readable)values('1357016400000',from_unixtime((1357016400000+(3600000*2))/1000));
-
+*/
+*/
 
 select reservation_id as id, title,url,status as class, check_in as start, check_out as end 
 from rsak.reservation r 
