@@ -277,6 +277,7 @@ $app->post('/reserveinsert', function () use ($app, $db) {
         $stmt->bindParam("status",$reqbody->{'status'});
         $stmt->bindParam("title",$reqbody->{'title'});
         $stmt->bindParam("url",$reqbody->{'url'});
+        //FIXME: Cost contains issue when receiving decimal points.
         $stmt->bindParam("cost",$reqbody->{'cost'});
         $stmt->bindParam("training",$reqbody->{'training'});
         $stmt->bindParam("training_amt",$reqbody->{'training_amt'});
@@ -294,9 +295,9 @@ $app->get('/fetchreservelist/:size', function ($size) use ($app, $db) {
     //        "from rsak.reservation r " .
     //    "join rsak.kennel k on (r.kennel_id = k.kennel_id) " .
     //    "where k.size = :size";
-    $sql =  "select reservation_id as id,title,url,ifnull(status,'event-inverse') as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end " .
+    $sql =  "select ifnull(reservation_id,0) as id, ifnull(title,'vacant') as title, ifnull(url,'nullurl') as url ,ifnull(status,'event-vacant') as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end  " .
             "from rsak.kennel k " .
-            "left join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
+            "join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
             "where k.size = :size";
     try{
         $db = getConnection();

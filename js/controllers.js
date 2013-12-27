@@ -4,22 +4,7 @@
 
 angular.module('myApp.controllers', []).
     controller('ScheduleCtrl', ['$scope','$http', function($scope,$http) {
-        $scope.hasResults = false;
-
-        $scope.availKennels = function () {
-            $http({
-                    method: 'GET',
-                    url: 'api/index.php/availkennels'
-                }
-            ).success( function(data) {
-                    $scope.avk = data;
-                    $scope.hasResults = true;
-                })
-                .error( function(data) {
-                    console.log('Error: '.concat(data));
-                })
-        };
-    }])
+     }])
 
     .controller('ClientManCtrl', ['$scope','$http','$routeParams', function($scope,$http,$routeParams) {
         $scope.action = $routeParams.action.toString().toLowerCase();
@@ -220,17 +205,12 @@ angular.module('myApp.controllers', []).
         $scope.checkoutDone = false;
         $scope.checkoutNeed = true;
 
-
-        $scope.checkoutFocus = function () {
-            console.log('checkoutFocus!!');
-            $scope.checkinDone = true;
-            $scope.checkinNeed = false;
-        };
-
         $scope.clientSelectFocus = function () {
             console.log('clientSelectFocus!!');
             $scope.checkoutDone = true;
             $scope.checkoutNeed = false;
+            $scope.checkinDone = true;
+            $scope.checkinNeed = false;
         };
 
         $scope.checkinEdit = function () {
