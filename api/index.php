@@ -281,6 +281,10 @@ $app->get('/clientresid', function () use ($app, $db) {
 
 $app->post('/reserveinsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
+
+//TODO: SQL for inserting into reservation x table and bindings.
+    $sql =  "";
+
     $sql = "insert into rsak.reservation (reservation_id, client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes) values (:reservation_id, :client_id, :dog_id, :kennel_id, :check_in, :check_out, :status, :title, :url, :cost, :training, :training_amt, :notes)";
     try {
         $db = getConnection();

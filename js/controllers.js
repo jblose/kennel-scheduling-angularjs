@@ -199,6 +199,7 @@ angular.module('myApp.controllers', []).
         $scope.clientName = {};
         $scope.kennelname = {};
         $scope.reservationId = {};
+        $scope.masterReservationId = {};
 
         $scope.checkinDone = false;
         $scope.checkinNeed = true;
@@ -299,6 +300,7 @@ angular.module('myApp.controllers', []).
             var cliname = $scope.clientName.full_name;
             cliname =  cliname.substr(0,cliname.indexOf(' - '));
             var resObj = {};
+            resObj.masterReservationId = $scope.masterReservationId;
             resObj.reservation_id = $scope.reservationId;
             resObj.client_id    = $scope.clientName.id;
             resObj.dog_id       = dogId;
