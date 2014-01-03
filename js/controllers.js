@@ -4,7 +4,7 @@
 
 angular.module('myApp.controllers', []).
     controller('ScheduleCtrl', ['$scope','$http', function($scope,$http) {
-     }])
+    }])
 
     .controller('ClientManCtrl', ['$scope','$http','$routeParams', function($scope,$http,$routeParams) {
         $scope.action = $routeParams.action.toString().toLowerCase();
@@ -224,18 +224,32 @@ angular.module('myApp.controllers', []).
 
         };
 
-$scope.fetchReservationId = function () {
-    $http({
-            method: 'GET',
-            url: 'api/index.php/clientresid'
-        }
-    ).success( function(data) {
-            $scope.reservationId = data.reservationId;
-        })
-        .error( function(data) {
-            console.log('Error: '.concat(data));
-        })
-};
+        $scope.fetchMasterReservationId = function (){
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/masterresid'
+                }
+            ).success( function(data) {
+                    $scope.masterReservationId = data.masterReservationId;
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        };
+
+        $scope.fetchReservationId = function () {
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/clientresid'
+                }
+            ).success( function(data) {
+                    $scope.reservationId = data.reservationId;
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        };
+
         $scope.fetchClients = function () {
             $http({
                 method: 'GET',
@@ -264,6 +278,8 @@ $scope.fetchReservationId = function () {
 
         $scope.clientAdd = function () {
             $location.path('#/clientman/new');
+            $scope.$apply();
+
         };
 
         $scope.loadDogs = function () {

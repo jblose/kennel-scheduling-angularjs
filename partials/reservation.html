@@ -35,7 +35,7 @@
             <tr>
                 <th>Client</th><td>
                 <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs();" ng-focus="clientSelectFocus();availKennels();"></select>
-            </td><td width="55px"><button class="btn btn-sm" ng-click="clientAdd()">Add...</button></td></tf>
+            </td><td width="55px"><button class="btn btn-sm btn-warning" ng-click="clientAdd()">Add...</button></td></tf>
             </tr>
             <tr><th>Cost:</th><td colspan="2"><input class="form-control" ng-model="train_cost" type="text"></td></tr>
 
@@ -56,6 +56,8 @@
                 </select></td>
                 <td><input class="form-control" type="text" ng-model="training_amt" placeholder="Training Amount"></td>
                 <td><input class="form-control" type="text" ng-model="notes" placeholder="Notes..." multiple></td>
+                <!-- TODO: Slice out the dog from the list and put into a new table with an Edit button -->
+                <!-- TODO: Addition of a transfer section to move a dog from one kennel to another -->
                 <td><button class="btn btn-sm btn-default" ng-click="fetchReservationId();saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,$index);">Save</button></td>
             </tr>
         </table>

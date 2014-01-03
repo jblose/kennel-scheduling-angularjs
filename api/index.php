@@ -101,7 +101,7 @@ $app->post('/clientinsert', function () use ($app,$db) {
 
 $app->post('/doginsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
-    $sql = "insert into rsak.dog (id,name,age,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,allergies,release_command) VALUES ( :id,:name,:age,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command)";
+    $sql = "insert into rsak.dog (id,name,age,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,medication,allergies,release_command,notes) VALUES ( :id,:name,:age,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:medication,:allergies,:release_command,:notes)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -114,8 +114,10 @@ $app->post('/doginsert', function () use ($app, $db) {
         $stmt->bindParam("spayed_neutered",$reqbody->{'spayed_neutered'});
         $stmt->bindParam("behavior",$reqbody->{'behavior'});
         $stmt->bindParam("existing_health_conditions",$reqbody->{'existing_health_conditions'});
+        $stmt->bindParam("medication", $reqbody->{'medication'});
         $stmt->bindParam("allergies",$reqbody->{'allergies'});
         $stmt->bindParam("release_command",$reqbody->{'release_command'});
+        $stmt->bindParam("notes",$reqbody->{'notes'});
         $stmt->execute();
         $db = null;
         echo '{"success":{"dogid":'. $reqbody->{'dogid'} .'}}';
@@ -176,7 +178,6 @@ $app->get('/dogidfetch', function () use ($app, $db) {
 });
 
 $app->get('/reservfetch', function () use ($app, $db) {
-   //TODO: Implement to match the sampledata.php
    $sql = "";
     try{
         $db = getConnection();
@@ -247,6 +248,22 @@ $app->get('/fetchclientdog/:clientid', function ($clientid) use ($app, $db) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
+
+$app->get('/masterresid', function () use ($app, $db) {
+    $sql = "select max(master_id)+1 as masterReservationId from rsak.reservation_id_x;";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $masterReservationId = $stmt->fetchObject();
+        $db = null;
+        echo json_encode($masterReservationId);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
+
+
 
 $app->get('/clientresid', function () use ($app, $db) {
     $sql = "select max(reservation_id)+1 as reservationId from rsak.reservation";
