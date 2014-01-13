@@ -61,5 +61,12 @@
                 <td><button class="btn btn-sm btn-default" ng-click="fetchReservationId();saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,$index);">Save</button></td>
             </tr>
         </table>
+        <table>
+            <tr><th>Confirmed Reservation</th></tr>
+            <tr ng-repeat="dog in dogListConfirmed">
+                <td>{{dog.name}}</td>
+
+            </tr>
+        </table>
     </div>
 </div>

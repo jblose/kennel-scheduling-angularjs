@@ -281,9 +281,17 @@ $app->get('/clientresid', function () use ($app, $db) {
 
 $app->post('/reserveinsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
-
-//TODO: SQL for inserting into reservation x table and bindings.
-    $sql =  "";
+    $sql =  "insert into rsak.reservation_id_x (master_id, reservation_id) values (:master_id,:reservation_id)";
+     try {
+             $db = getConnection();
+             $stmt = $db->prepare($sql);
+             $stmt->bindParam("master_id",$reqbody->{'master_reservation_id'});
+             $stmt->bindParam("reservation_id",$reqbody->{'reservation_id'});
+             $stmt->execute();
+             $db = null;
+         } catch(PDOException $e) {
+             echo '{"error":{"text":'. $e->getMessage() .'}}';
+         }
 
     $sql = "insert into rsak.reservation (reservation_id, client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes) values (:reservation_id, :client_id, :dog_id, :kennel_id, :check_in, :check_out, :status, :title, :url, :cost, :training, :training_amt, :notes)";
     try {
@@ -308,6 +316,26 @@ $app->post('/reserveinsert', function () use ($app, $db) {
         echo '{"success":{"dog_id":'. $reqbody->{'dog_id'} .',"client_id":'. $reqbody->{'client_id'} . ',"kennel_id":'. $reqbody->{'kennel_id'} . '}}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
+
+$app->get('/fetchresconfirm/:masterid', function ($masterid) use ($app, $db) {
+    $sql = "select d.name as dog_name, k.name as kennel_name, concat(r.training,' : ', r.training_amt) as training, r.notes as notes from rsak.reservation_id_x rix " .
+        "join rsak.reservation r on (rix.reservation_id = r.reservation_id) " .
+        "join rsak.dog d on (r.dog_id = d.id) " .
+        "join rsak.kennel k on (r.kennel_id = k.kennel_id) " .
+        "where rix.master_id = :master_id";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam("master_id",$masterid);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo '{"success": 1,"result":' . json_encode($result) . '}';
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() . '}}';
     }
 });
 

@@ -300,7 +300,7 @@ angular.module('myApp.controllers', []).
             var cliname = $scope.clientName.full_name;
             cliname =  cliname.substr(0,cliname.indexOf(' - '));
             var resObj = {};
-            resObj.masterReservationId = $scope.masterReservationId;
+            resObj.master_reservation_id = $scope.masterReservationId;
             resObj.reservation_id = $scope.reservationId;
             resObj.client_id    = $scope.clientName.id;
             resObj.dog_id       = dogId;
@@ -321,7 +321,19 @@ angular.module('myApp.controllers', []).
                     data: resObj
                 }
             ).success( function(data) {
-                    console.log(data);
+                    <!-- console.log(data); -->
+                    $http({
+                            method: 'GET',
+                            url: 'api/index.php/fetchresconfirm/'.concat($scope.masterReservationId)
+                        }
+                    ).success( function(data) {
+                            <!-- console.log(data); -->
+                            $scope.dogListConfirmed = data;
+
+                        }).error( function(data) {
+                            console.log('Error: '.concat(data));
+                        });
+
                 }).error( function(data) {
                     console.log('Error: '.concat(data));
                 });

@@ -1,11 +1,15 @@
-select max(master_id)+1 as masterReservationId from rsak.reservation_id_x;
+select d.name as dog_name, k.name as kennel_name, concat(r.training,' - ', r.training_amt) as training, r.notes as notes from rsak.reservation_id_x rix 
+join rsak.reservation r on (rix.reservation_id = r.reservation_id)
+join rsak.dog d on (r.dog_id = d.id)
+join rsak.kennel k on (r.kennel_id = k.kennel_id)
+where rix.master_id = '1';
 
+select max(master_id)+1 as masterReservationId from rsak.reservation_id_x;
 
 select ifnull(reservation_id,0) as id,ifnull(title,'Vacant') as title,ifnull(url,'null') as url ,ifnull(status,'event-inverse') as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end 
             from rsak.kennel k 
             join rsak.reservation r on (k.kennel_id = r.kennel_id) 
             where k.size = 'large';
-
 
 select reservation_Id as id, title as title from  rsak.kennel k
 join rsak.reservation r on (k.kennel_id = r.kennel_id) 
@@ -15,16 +19,12 @@ where k.size = 'large';
 select ifnull(reservation_id,0) as id,ifnull(title,'') as title,ifnull(url,'null') as url ,ifnull(status,'event-inverse') as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end 
 from rsak.kennel k 
 left join rsak.reservation r on (k.kennel_id = r.kennel_id) 
-where k.size = 'large'
+where k.size = 'large';
+
 
 select reservation_Id as id, title as title from  rsak.kennel k
 join rsak.reservation r on (k.kennel_id = r.kennel_id) 
-where k.size = 'large'
-
-
-
-
-
+where k.size = 'large';
 
 select from_unixtime((1357016400000+(3600000*2))/1000);
 
@@ -35,7 +35,6 @@ truncate table rsak.rsak_date;
 insert into rsak.rsak_date(millidate,readable)
 values('1357016400000',from_unixtime((1357016400000+(3600000*2))/1000));
 insert into rsak.rsak_date(millidate,readable)values('1357016400000',from_unixtime((1357016400000+(3600000*2))/1000));
-*/
 */
 
 select reservation_id as id, title,url,status as class, check_in as start, check_out as end 
