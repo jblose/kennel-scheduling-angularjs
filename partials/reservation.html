@@ -58,10 +58,10 @@
                 <td><input class="form-control" type="text" ng-model="notes" placeholder="Notes..." multiple></td>
                 <!-- TODO: Slice out the dog from the list and put into a new table with an Edit button -->
                 <!-- TODO: Addition of a transfer section to move a dog from one kennel to another -->
-                <td><button class="btn btn-sm btn-default" ng-click="fetchReservationId();saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,$index);">Save</button></td>
+                <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,$index);">Save</button></td>
             </tr>
         </table>
-        <table>
+        <table >
             <tr><th>Confirmed Reservation</th></tr>
             <tr ng-repeat="dog in dogListConfirmed">
                 <td>{{dog.name}}</td>

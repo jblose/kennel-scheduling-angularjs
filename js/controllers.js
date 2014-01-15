@@ -249,6 +249,7 @@ angular.module('myApp.controllers', []).
                 .error( function(data) {
                     console.log('Error: '.concat(data));
                 })
+            return $scope.reservationId;
         };
 
         $scope.fetchClients = function () {
@@ -299,9 +300,10 @@ angular.module('myApp.controllers', []).
         $scope.saveDogRes = function (dogId,kennelId,training,training_amt,notes,idx){
             var cliname = $scope.clientName.full_name;
             cliname =  cliname.substr(0,cliname.indexOf(' - '));
+
             var resObj = {};
             resObj.master_reservation_id = $scope.masterReservationId;
-            resObj.reservation_id = $scope.reservationId;
+            resObj.reservation_id = $scope.fetchReservationId();
             resObj.client_id    = $scope.clientName.id;
             resObj.dog_id       = dogId;
             resObj.kennel_id    = kennelId;
@@ -314,6 +316,8 @@ angular.module('myApp.controllers', []).
             resObj.training     = training;
             resObj.training_amt = training_amt;
             resObj.notes        = notes;
+
+
 
             $http({
                     method: 'POST',

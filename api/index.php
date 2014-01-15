@@ -250,7 +250,7 @@ $app->get('/fetchclientdog/:clientid', function ($clientid) use ($app, $db) {
 });
 
 $app->get('/masterresid', function () use ($app, $db) {
-    $sql = "select max(master_id)+1 as masterReservationId from rsak.reservation_id_x;";
+    $sql = "select max(master_id)+1 as masterReservationId from rsak.reservation_id_x";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -281,6 +281,7 @@ $app->get('/clientresid', function () use ($app, $db) {
 
 $app->post('/reserveinsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
+    var_dump($reqbody);
     $sql =  "insert into rsak.reservation_id_x (master_id, reservation_id) values (:master_id,:reservation_id)";
      try {
              $db = getConnection();
@@ -306,7 +307,6 @@ $app->post('/reserveinsert', function () use ($app, $db) {
         $stmt->bindParam("status",$reqbody->{'status'});
         $stmt->bindParam("title",$reqbody->{'title'});
         $stmt->bindParam("url",$reqbody->{'url'});
-        //FIXME: Cost contains issue when receiving decimal points.
         $stmt->bindParam("cost",$reqbody->{'cost'});
         $stmt->bindParam("training",$reqbody->{'training'});
         $stmt->bindParam("training_amt",$reqbody->{'training_amt'});
@@ -333,7 +333,7 @@ $app->get('/fetchresconfirm/:masterid', function ($masterid) use ($app, $db) {
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        echo '{"success": 1,"result":' . json_encode($result) . '}';
+        echo '{"success": 1,"dog":' . json_encode($result) . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() . '}}';
     }
