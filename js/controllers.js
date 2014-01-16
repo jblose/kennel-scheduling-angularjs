@@ -206,6 +206,8 @@ angular.module('myApp.controllers', []).
         $scope.checkoutDone = false;
         $scope.checkoutNeed = true;
 
+        $scope.confirmedRes = false;
+
         $scope.clientSelectFocus = function () {
             console.log('clientSelectFocus!!');
             $scope.checkoutDone = true;
@@ -303,7 +305,7 @@ angular.module('myApp.controllers', []).
 
             var resObj = {};
             resObj.master_reservation_id = $scope.masterReservationId;
-            resObj.reservation_id = $scope.fetchReservationId();
+            resObj.reservation_id = $scope.reservationId;
             resObj.client_id    = $scope.clientName.id;
             resObj.dog_id       = dogId;
             resObj.kennel_id    = kennelId;
@@ -317,23 +319,21 @@ angular.module('myApp.controllers', []).
             resObj.training_amt = training_amt;
             resObj.notes        = notes;
 
-
-
             $http({
                     method: 'POST',
                     url: 'api/index.php/reserveinsert',
                     data: resObj
                 }
             ).success( function(data) {
-                    <!-- console.log(data); -->
+                    $scope.reservationId = parseInt($scope.reservationId) + 1;
                     $http({
                             method: 'GET',
                             url: 'api/index.php/fetchresconfirm/'.concat($scope.masterReservationId)
                         }
                     ).success( function(data) {
-                            <!-- console.log(data); -->
                             $scope.dogListConfirmed = data;
-
+                            $scope.dogList.splice(idx);
+                            $scope.confirmedRes = true;
                         }).error( function(data) {
                             console.log('Error: '.concat(data));
                         });

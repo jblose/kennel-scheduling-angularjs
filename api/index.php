@@ -101,7 +101,7 @@ $app->post('/clientinsert', function () use ($app,$db) {
 
 $app->post('/doginsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
-    $sql = "insert into rsak.dog (id,name,age,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,medication,allergies,release_command,notes) VALUES ( :id,:name,:age,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:medication,:allergies,:release_command,:notes)";
+    $sql = "insert into rsak.dog (id,name,age,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,allergies,release_command,notes,rabies_exp,distemper_exp,parvo_exp,bordetella_exp) VALUES ( :id,:name,:age,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command,:notes,:rabies_exp,:distemper_exp,:parvo_exp,:bordetella_exp)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -114,10 +114,13 @@ $app->post('/doginsert', function () use ($app, $db) {
         $stmt->bindParam("spayed_neutered",$reqbody->{'spayed_neutered'});
         $stmt->bindParam("behavior",$reqbody->{'behavior'});
         $stmt->bindParam("existing_health_conditions",$reqbody->{'existing_health_conditions'});
-        $stmt->bindParam("medication", $reqbody->{'medication'});
         $stmt->bindParam("allergies",$reqbody->{'allergies'});
         $stmt->bindParam("release_command",$reqbody->{'release_command'});
         $stmt->bindParam("notes",$reqbody->{'notes'});
+        $stmt->bindParam("rabies_exp", $reqbody->{'rabies'});
+        $stmt->bindParam("distemper_exp",$reqbody->{'distemper'});
+        $stmt->bindParam("parvo_exp",$reqbody->{'parvo'});
+        $stmt->bindParam("bordetella_exp",$reqbody->{'bordetella'});
         $stmt->execute();
         $db = null;
         echo '{"success":{"dogid":'. $reqbody->{'dogid'} .'}}';
@@ -333,7 +336,7 @@ $app->get('/fetchresconfirm/:masterid', function ($masterid) use ($app, $db) {
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        echo '{"success": 1,"dog":' . json_encode($result) . '}';
+        echo json_encode($result);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() . '}}';
     }

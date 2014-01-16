@@ -26,6 +26,8 @@
         <tr><th width="25%">Best Way to Receive Media:</th><td><input type="text" class="form-control"  ng-model="formData.media_reception"></td></tr>
         <tr><th width="25%">Emergency Contact Name:</th><td><input type="text" class="form-control"  ng-model="formData.emergency_name"></td></tr>
         <tr><th width="25%">Emergency Contact Phone:</th><td><input type="text" class="form-control" ng-model="formData.emergency_phone" ui-mask="(999) 999-9999"></td></tr>
+        <!-- TODO: On Jan 1, reset all clients to NO for Boarding Agreements. -->
+        <tr><th width="25%">Current Boarding Agreement:</th><td><select  class="form-control"  ng-model="dogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
         <tr><td colspan="2">
             <button class="btn btn-sm btn-primary" ng-click="saveClient();">Save</button>
             <button class="btn btn-sm btn-default">Cancel</button>
@@ -45,6 +47,7 @@
         <tr><th width="25%">Best Way to Receive Media:</th><td>{{formData.media_reception}}</td></tr>
         <tr><th width="25%">Emergency Contact Name:</th><td>{{formData.emergency_name}}</td></tr>
         <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone | tel}}</td></tr>
+        <!-- TODO: Add in the missing Contract select -->
         <tr></tr>
     </table>
     <!-- DOGS -->
@@ -95,7 +98,14 @@
                     <option>People & Dog Aggressive</option>
                 </select></td></tr>
                 <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input  class="form-control" type="text" ng-model="dogFormData.existing_health_conditions"></td></tr>
-                <tr><th width="25%">Medication:</th><td><select  class="form-control"  ng-model="dogFormData.medication"><option>Yes</option><option>No</option></select></td></tr>
+                <!-- TODO: Modify the input mask to accept dates only  -->
+                <tr><th width="25%">Vacinations:</th><td><table class="table table-bordered">
+                    <tr><th>Rabies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.rabies"></td></tr>
+                    <tr><th>Distemper:</th><td><input  class="form-control" type="text" ng-model="dogFormData.distemper"></td></tr>
+                    <tr><th>Parvo:</th><td><input  class="form-control" type="text" ng-model="dogFormData.parvo"></td></tr>
+                    <tr><th>Bordetella:</th><td><input  class="form-control" type="text" ng-model="dogFormData.bordetella"></td></tr>
+                    </table>
+                </td></tr>
                 <tr><th width="25%">Allergies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.allergies"></td></tr>
                 <tr><th width="25%">Release Command:</th><td><input  class="form-control" type="text" ng-model="dogFormData.release_command"></td></tr>
                 <tr><th>Notes:</th><td><textarea rows="4" class="form-control" type="text" ng-model="dogFormData.notes"></textarea></td></tr>

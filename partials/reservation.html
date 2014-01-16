@@ -1,7 +1,7 @@
 <div>
-    <div id="clientReservation" ng-init="fetchClients();fetchMasterReservationId();">
+    <div id="clientReservation" ng-init="fetchClients();fetchMasterReservationId();fetchReservationId();">
         <!-- NOTE: Some dogs will share a kennel -->
-        <!-- NOTE: Addition of medication. Boolean -->
+        <!--- TODO: Check out can not be less than Check in -->
         <legend>Reservation</legend>
         <table class="table table-bordered table-condensed">
             <tr><th>In</th>
@@ -55,17 +55,26 @@
                     <option>Board/Board & Tune Mix</option>
                 </select></td>
                 <td><input class="form-control" type="text" ng-model="training_amt" placeholder="Training Amount"></td>
+                <!-- TODO: Addition of medication. Text Notes -->
+                <td><input class="form-control" type="text" ng-model="medication" placeholder="Medication Info"></td>
                 <td><input class="form-control" type="text" ng-model="notes" placeholder="Notes..." multiple></td>
                 <!-- TODO: Slice out the dog from the list and put into a new table with an Edit button -->
                 <!-- TODO: Addition of a transfer section to move a dog from one kennel to another -->
                 <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,$index);">Save</button></td>
             </tr>
+            <!-- TODO: Need an add-a-dog button, with quick add -->
         </table>
-        <table >
+        <table class="table table-bordered table-condensed" ng-show="confirmedRes">
             <tr><th>Confirmed Reservation</th></tr>
-            <tr ng-repeat="dog in dogListConfirmed">
-                <td>{{dog.name}}</td>
-
+            <tr ng-repeat="dogConf in dogListConfirmed">
+                <td>{{dogConf.dog_name}}</td>
+                <td>{{dogConf.kennel_name}}</td>
+                <td>{{dogConf.training}}</td>
+                <td>{{dogConf.notes}}</td>
+                <!-- TODO: Functionality -->
+                <td><button class="btn btn-sm">Edit</button></td>
+                <!-- TODO: Functionality -->
+                <td><button class="btn btn-sm">Transfer</button></td>
             </tr>
         </table>
     </div>
