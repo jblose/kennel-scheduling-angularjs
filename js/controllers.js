@@ -299,7 +299,7 @@ angular.module('myApp.controllers', []).
                 })
         };
 
-        $scope.saveDogRes = function (dogId,kennelId,training,training_amt,notes,idx){
+        $scope.saveDogRes = function (dogId,kennelId,training,training_amt,notes,medication,idx){
             var cliname = $scope.clientName.full_name;
             cliname =  cliname.substr(0,cliname.indexOf(' - '));
 
@@ -318,6 +318,7 @@ angular.module('myApp.controllers', []).
             resObj.training     = training;
             resObj.training_amt = training_amt;
             resObj.notes        = notes;
+            resObj.medication   = medication;
 
             $http({
                     method: 'POST',

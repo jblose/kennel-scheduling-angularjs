@@ -297,7 +297,7 @@ $app->post('/reserveinsert', function () use ($app, $db) {
              echo '{"error":{"text":'. $e->getMessage() .'}}';
          }
 
-    $sql = "insert into rsak.reservation (reservation_id, client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes) values (:reservation_id, :client_id, :dog_id, :kennel_id, :check_in, :check_out, :status, :title, :url, :cost, :training, :training_amt, :notes)";
+    $sql = "insert into rsak.reservation (reservation_id, client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes, medication) values (:reservation_id, :client_id, :dog_id, :kennel_id, :check_in, :check_out, :status, :title, :url, :cost, :training, :training_amt, :notes, :medication)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -314,6 +314,7 @@ $app->post('/reserveinsert', function () use ($app, $db) {
         $stmt->bindParam("training",$reqbody->{'training'});
         $stmt->bindParam("training_amt",$reqbody->{'training_amt'});
         $stmt->bindParam("notes",$reqbody->{'notes'});
+        $stmt->bindParam("medication",$reqbody->{'medication'});
         $stmt->execute();
         $db = null;
         echo '{"success":{"dog_id":'. $reqbody->{'dog_id'} .',"client_id":'. $reqbody->{'client_id'} . ',"kennel_id":'. $reqbody->{'kennel_id'} . '}}';
