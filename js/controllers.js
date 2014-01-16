@@ -208,12 +208,14 @@ angular.module('myApp.controllers', []).
 
         $scope.confirmedRes = false;
 
-        $scope.clientSelectFocus = function () {
-            console.log('clientSelectFocus!!');
-            $scope.checkoutDone = true;
-            $scope.checkoutNeed = false;
+        $scope.checkinDoneFx = function (newDate, oldDate) {
             $scope.checkinDone = true;
             $scope.checkinNeed = false;
+        };
+
+        $scope.checkoutDoneFx = function (newDate, oldDate) {
+            $scope.checkoutDone = true;
+            $scope.checkoutNeed = false;
         };
 
         $scope.checkinEdit = function () {

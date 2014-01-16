@@ -100,10 +100,10 @@
                 <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input  class="form-control" type="text" ng-model="dogFormData.existing_health_conditions"></td></tr>
                 <!-- TODO: Modify the input mask to accept dates only  -->
                 <tr><th width="25%">Vacinations:</th><td><table class="table table-bordered">
-                    <tr><th>Rabies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.rabies"></td></tr>
-                    <tr><th>Distemper:</th><td><input  class="form-control" type="text" ng-model="dogFormData.distemper"></td></tr>
-                    <tr><th>Parvo:</th><td><input  class="form-control" type="text" ng-model="dogFormData.parvo"></td></tr>
-                    <tr><th>Bordetella:</th><td><input  class="form-control" type="text" ng-model="dogFormData.bordetella"></td></tr>
+                    <tr><th>Rabies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.rabies" ui-mask="99/99/9999"></td></tr>
+                    <tr><th>Distemper:</th><td><input  class="form-control" type="text" ng-model="dogFormData.distemper" ui-mask="99/99/9999"></td></tr>
+                    <tr><th>Parvo:</th><td><input  class="form-control" type="text" ng-model="dogFormData.parvo" ui-mask="99/99/9999"></td></tr>
+                    <tr><th>Bordetella:</th><td><input  class="form-control" type="text" ng-model="dogFormData.bordetella" ui-mask="99/99/9999"></td></tr>
                     </table>
                 </td></tr>
                 <tr><th width="25%">Allergies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.allergies"></td></tr>
