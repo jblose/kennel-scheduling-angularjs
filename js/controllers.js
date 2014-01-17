@@ -208,14 +208,26 @@ angular.module('myApp.controllers', []).
 
         $scope.confirmedRes = false;
 
+        $scope.checkin = {};
+        $scope.checkout = {};
+
         $scope.checkinDoneFx = function (newDate, oldDate) {
             $scope.checkinDone = true;
             $scope.checkinNeed = false;
         };
 
         $scope.checkoutDoneFx = function (newDate, oldDate) {
-            $scope.checkoutDone = true;
-            $scope.checkoutNeed = false;
+            var dateIn = new Date($scope.checkin.date);
+            var dateOut = new Date(newDate);
+            console.log (dateIn);console.log (dateOut);
+            if ( dateIn >= dateOut ) {
+                alert('Check-out date earlier than Check-in date');
+                $scope.checkout.date = '';
+            }
+            else {
+                $scope.checkoutDone = true;
+                $scope.checkoutNeed = false;
+            }
         };
 
         $scope.checkinEdit = function () {
