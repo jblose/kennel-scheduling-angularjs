@@ -38,8 +38,9 @@
             <tr>
                 <th>Client</th><td>
                 <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs();" ng-focus="availKennels();"></select>
-            </td><td width="55px"><button class="btn btn-sm btn-warning" ng-click="clientAdd()">Add...</button></td></tf>
-            </tr>
+            </td><td width="55px"><button class="btn btn-sm btn-warning" onclick="$('#divClientAdd').collapse('toggle');">Add...</button></td></tr>
+            <!-- TODO: Functionality -->
+            <div id="divClientAdd" class="collapse"><tr><td colspan="2">TODO: Client Addition goes here.</td></tr></div>
             <tr><th>Cost:</th><td colspan="2"><input class="form-control" ng-model="train_cost" type="text"></td></tr>
 
             <!--
@@ -66,7 +67,9 @@
                 <!-- TODO: Addition of a transfer section to move a dog from one kennel to another -->
                 <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,medication,$index);">Save</button></td>
             </tr>
-            <tr><td colspan="7"><button class="btn btn-sm btn-default">Add a pup-e-roni...</button></td></tr>
+            <tr><td colspan="7"><button class="btn btn-sm btn-default" onclick="$('#divDogAdd').collapse('toggle');">Add a pup-e-roni...</button></td></tr>
+            <!-- TODO: Functionality -->
+            <div id="divDogAdd" class="collapse"><tr><td colspan="2">TODO: Dog Addition goes here. </td></tr></div>
         </table>
         <table class="table table-bordered table-condensed" ng-show="confirmedRes">
             <tr><th colspan="7">Confirmed Reservation</th></tr>

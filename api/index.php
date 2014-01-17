@@ -324,7 +324,7 @@ $app->post('/reserveinsert', function () use ($app, $db) {
 });
 
 $app->get('/fetchresconfirm/:masterid', function ($masterid) use ($app, $db) {
-    $sql = "select d.name as dog_name, k.name as kennel_name, concat(r.training,' : ', r.training_amt) as training, r.notes as notes from rsak.reservation_id_x rix " .
+    $sql = "select d.name as dog_name, k.name as kennel_name, concat(r.training,' : ', r.training_amt) as training, r.medication as medication, r.notes as notes from rsak.reservation_id_x rix " .
         "join rsak.reservation r on (rix.reservation_id = r.reservation_id) " .
         "join rsak.dog d on (r.dog_id = d.id) " .
         "join rsak.kennel k on (r.kennel_id = k.kennel_id) " .
