@@ -211,6 +211,11 @@ angular.module('myApp.controllers', []).
         $scope.checkin = {};
         $scope.checkout = {};
 
+        $scope.formData = {};
+        $scope.dogFormData = {};
+        $scope.clientList = {};
+
+
         $scope.checkinDoneFx = function (newDate, oldDate) {
             $scope.checkinDone = true;
             $scope.checkinNeed = false;
@@ -357,6 +362,127 @@ angular.module('myApp.controllers', []).
                     console.log('Error: '.concat(data));
                 });
         };
+
+        $scope.inlineClientDogInsert = function () {
+            if (!$scope.clientName.id){
+                $scope.clientNew = true;
+                $scope.clientView = false;
+            }
+            else {
+                $scope.clientNew = false;
+                $scope.clientView = true;
+            }
+        };
+
+        $scope.clientIdFetch = function() {
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/clientidfetch'
+                }
+            ).success( function(data) {
+                    $scope.formData.clientid = data.clientid;
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        }
+
+        $scope.saveClient = function() {
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/clientidfetch'
+                }
+            ).success( function(data) {
+                    $scope.formData.clientid = data.clientid;
+                    $http({
+                            method: 'POST',
+                            url: 'api/index.php/clientinsert',
+                            data: $scope.formData
+                        }
+                    ).success( function(data) {
+                            $scope.action = "view";
+                            $scope.processAction();
+                        })
+                        .error( function(data) {
+                            console.log('Error: '.concat(data));
+                        })
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
+        }
+
+        $scope.dogIdFetch = function() {
+            $http({
+                    method: 'GET',
+                    url: 'api/index.php/dogidfetch'
+                }
+            ).success( function(data) {
+                    $scope.dogFormData.dogid = data.dogid;
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                });
+        }
+
+        $scope.saveDog = function () {
+            $http({
+                    method: 'POST',
+                    url: 'api/index.php/doginsert',
+                    data: $scope.dogFormData
+                }
+            ).success( function(data) {
+                    $http({
+                            method: 'POST',
+                            url: 'api/index.php/clientdogassign/'.concat($scope.formData.clientid).concat('/').concat($scope.dogFormData.dogid)
+                        }
+                    ).success( function (data) {
+                            $http({
+                                    method: 'GET',
+                                    url: 'api/index.php/clientdogs/'.concat($scope.formData.clientid)
+                                }
+                            ).success( function(data) {
+                                    $scope.clientDogs = data;
+                                    $scope.dogFormData = {};
+                                })
+                                .error( function(data) {
+                                    console.log('Error: '.concat(data));
+                                });
+                        }
+                    ).error( function (data) {
+                            console.log('Error: '.concat(data));
+                        });
+                }).error( function(data) {
+                    console.log('Error: '.concat(data));
+                });
+        };
+
+        $scope.removeDog = function(idx,dogid) {
+            $scope.clientDogs.splice(idx,1);
+
+            $http({
+                    method: 'POST',
+                    url: 'api/index.php/removedog/'.concat($scope.formData.clientid).concat('/').concat(dogid)
+                }
+            ).success( function (data) {
+                    $http({
+                            method: 'GET',
+                            url: 'api/index.php/clientdogs/'.concat($scope.formData.clientid)
+                        }
+                    ).success( function(data) {
+                            $scope.clientDogs = data;
+                        })
+                        .error( function(data) {
+                            console.log('Error: '.concat(data));
+                        });
+
+                    console.log('Success Removal!');
+                }
+            ).error( function (data) {
+                    console.log('Error: '.concat(data));
+                }
+            );
+        }
     }])
     .controller('ResViewCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
         <!-- TODO: Implement the receiving of id and display of details -->

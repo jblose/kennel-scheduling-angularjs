@@ -81,7 +81,6 @@
         </tr>
         <tr ><td colspan="11"><button class="btn  btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
         <tr class="collapse well" id="trAddDogger"><td colspan="11">
-            <!-- TODO: Addition of vaccination list and dates. Vet log tables? -->
             <table class="table table-bordered">
                 <tr><th colspan="2">Dog Information</th></tr>
                 <tr><th width="25%">Name:</th><td><input class="form-control" type="text" ng-model="dogFormData.name"></td></tr>
@@ -98,7 +97,6 @@
                     <option>People & Dog Aggressive</option>
                 </select></td></tr>
                 <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input  class="form-control" type="text" ng-model="dogFormData.existing_health_conditions"></td></tr>
-                <!-- TODO: Modify the input mask to accept dates only  -->
                 <tr><th width="25%">Vacinations:</th><td><table class="table table-bordered">
                     <tr><th>Rabies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.rabies" ui-mask="99/99/9999"></td></tr>
                     <tr><th>Distemper:</th><td><input  class="form-control" type="text" ng-model="dogFormData.distemper" ui-mask="99/99/9999"></td></tr>
