@@ -215,6 +215,8 @@ angular.module('myApp.controllers', []).
         $scope.dogFormData = {};
         $scope.clientList = {};
 
+        $scope.divClientAdd = false;
+
 
         $scope.checkinDoneFx = function (newDate, oldDate) {
             $scope.checkinDone = true;
@@ -224,7 +226,6 @@ angular.module('myApp.controllers', []).
         $scope.checkoutDoneFx = function (newDate, oldDate) {
             var dateIn = new Date($scope.checkin.date);
             var dateOut = new Date(newDate);
-            console.log (dateIn);console.log (dateOut);
             if ( dateIn >= dateOut ) {
                 alert('Check-out date earlier than Check-in date');
                 $scope.checkout.date = '';
@@ -369,6 +370,7 @@ angular.module('myApp.controllers', []).
                 $scope.clientView = false;
             }
             else {
+                <!-- TODO: Fetch Customer and load form -->
                 $scope.clientNew = false;
                 $scope.clientView = true;
             }
@@ -481,8 +483,32 @@ angular.module('myApp.controllers', []).
             ).error( function (data) {
                     console.log('Error: '.concat(data));
                 }
+
             );
         }
+
+        $scope.processAction = function () {
+            if ($scope.action.localeCompare('new') == 0){
+                $scope.clientIdFetch();
+                $scope.clientNew = true;
+                $scope.clientSearch = false;
+                $scope.clientResults = false;
+                $scope.clientView = false;
+            }
+            else if ($scope.action.localeCompare('search') == 0){
+                $scope.clientNew = false;
+                $scope.clientSearch = true;
+                $scope.clientResults = false;
+                $scope.clientView = false;
+            }
+            else if ($scope.action.localeCompare('view') == 0){
+                $scope.clientNew = false;
+                $scope.clientSearch = false;
+                $scope.clientResults = false;
+                $scope.clientView = true;
+            }
+        }
+
     }])
     .controller('ResViewCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
         <!-- TODO: Implement the receiving of id and display of details -->

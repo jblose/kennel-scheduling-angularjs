@@ -40,113 +40,117 @@
                 <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs();" ng-focus="availKennels();">
                     <option value="addNew">-- New Client --</option>
                 </select>
-            </td><td width="55px"><button type="button" class="btn btn-sm btn-warning" ng-click="$('#divClientAdd').collapse('toggle');inlineClientDogInsert();">Add Client/Dog</button></td></tr>
+            </td><td width="55px"><button type="button" class="btn btn-sm btn-warning" ng-click="divClientAdd=true;inlineClientDogInsert();">Add Client/Dog</button></td></tr>
             <!-- TODO: Functionality -->
-            <tr><div id="divClientAdd" class="collapse"><td colspan="3">
-                <div ng-show="clientNew">
-                    <legend> New Client information</legend>
-                    <table class="table table-bordered">
-                        <!--<tr><th colspan="2">Client</th></tr> -->
-                        <tr><th width="25%">First Name:</th><td><input type="text" class="form-control" ng-model="formData.first_name"></td></tr>
-                        <tr><th width="25%">Last Name:</th><td><input type="text" class="form-control"  ng-model="formData.last_name"></td></tr>
-                        <tr><th width="25%">Phone:</th><td><input type="text" class="form-control"  ng-model="formData.phone" ui-mask="(999) 999-9999"></td></tr>
-                        <tr><th width="25%">Email:</th><td><input type="text"  class="form-control" ng-model="formData.email" ></td></tr>
-                        <tr><th width="25%">Best Way to Receive Media:</th><td><input type="text" class="form-control"  ng-model="formData.media_reception"></td></tr>
-                        <tr><th width="25%">Emergency Contact Name:</th><td><input type="text" class="form-control"  ng-model="formData.emergency_name"></td></tr>
-                        <tr><th width="25%">Emergency Contact Phone:</th><td><input type="text" class="form-control" ng-model="formData.emergency_phone" ui-mask="(999) 999-9999"></td></tr>
-                        <!-- TODO: On Jan 1, reset all clients to NO for Boarding Agreements. -->
-                        <tr><th width="25%">Current Boarding Agreement:</th><td><select  class="form-control"  ng-model="dogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
-                        <tr><td colspan="2">
-                            <button class="btn btn-sm btn-primary" ng-click="saveClient();">Save</button>
-                            <button class="btn btn-sm btn-default">Cancel</button>
-                        </td></tr>
-                    </table>
-                </div>
+            <tr ng-show="divClientAdd">
+                <td colspan="3">
+                    <div ng-show="clientNew">
+                        <legend> New Client information</legend>
+                        <table class="table table-bordered">
+                            <!--<tr><th colspan="2">Client</th></tr> -->
+                            <tr><th width="25%">First Name:</th><td><input type="text" class="form-control" ng-model="formData.first_name"></td></tr>
+                            <tr><th width="25%">Last Name:</th><td><input type="text" class="form-control"  ng-model="formData.last_name"></td></tr>
+                            <tr><th width="25%">Phone:</th><td><input type="text" class="form-control"  ng-model="formData.phone" ui-mask="(999) 999-9999"></td></tr>
+                            <tr><th width="25%">Email:</th><td><input type="text"  class="form-control" ng-model="formData.email" ></td></tr>
+                            <tr><th width="25%">Best Way to Receive Media:</th><td><input type="text" class="form-control"  ng-model="formData.media_reception"></td></tr>
+                            <tr><th width="25%">Emergency Contact Name:</th><td><input type="text" class="form-control"  ng-model="formData.emergency_name"></td></tr>
+                            <tr><th width="25%">Emergency Contact Phone:</th><td><input type="text" class="form-control" ng-model="formData.emergency_phone" ui-mask="(999) 999-9999"></td></tr>
+                            <!-- TODO: On Jan 1, reset all clients to NO for Boarding Agreements. -->
+                            <tr><th width="25%">Current Boarding Agreement:</th><td><select  class="form-control"  ng-model="dogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
+                            <tr><td colspan="2">
+                                <button class="btn btn-sm btn-primary" ng-click="saveClient();">Save</button>
+                                <button class="btn btn-sm btn-danger" ng-click="divClientAdd=false;">Cancel</button>
+                            </td></tr>
+                        </table>
+                    </div>
 
-                <div ng-show="clientView">
-                    <legend>Client information</legend>
-                    <!-- CLIENT -->
-                    <table class="table table-bordered">
-                        <!--<tr><th colspan="2">Client</th></tr> -->
-                        <tr><th width="25%">First Name:</th><td>{{formData.first_name}}</td></tr>
-                        <tr><th width="25%">Last Name:</th><td>{{formData.last_name}}</td></tr>
-                        <tr><th width="25%">Phone:</th><td>{{formData.phone | tel}}</td></tr>
-                        <tr><th width="25%">Email:</th><td>{{formData.email}}</td></tr>
-                        <tr><th width="25%">Best Way to Receive Media:</th><td>{{formData.media_reception}}</td></tr>
-                        <tr><th width="25%">Emergency Contact Name:</th><td>{{formData.emergency_name}}</td></tr>
-                        <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone | tel}}</td></tr>
-                        <!-- TODO: Add in the missing Contract select -->
-                        <tr></tr>
-                    </table>
-                    <!-- DOGS -->
-                    <legend>Dog information</legend>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>Name</th>
-                            <th>Sex</th>
-                            <th>Age</th>
-                            <th>Breed</th>
-                            <th>Color</th>
-                            <th>Spayed/Neutered</th>
-                            <th>Behavior</th>
-                            <th>Existing Health Cond.</th>
-                            <th>Allergies</th>
-                            <th>Release</th>
-                            <th></th>
-                        </tr>
-                        <tr ng-repeat="dog in clientDogs">
-                            <td>{{dog.name}}</td>
-                            <td>{{dog.sex}}</td>
-                            <td>{{dog.age}}</td>
-                            <td>{{dog.breed}}</td>
-                            <td>{{dog.color}}</td>
-                            <td>{{dog.spayed_neutered}}</td>
-                            <td>{{dog.behavior}}</td>
-                            <td>{{dog.existing_health_conditions}}</td>
-                            <td>{{dog.allergies}}</td>
-                            <td>{{dog.release_command}}</td>
-                            <td width="80px"><button class="btn btn-sm btn-danger" ng-click="removeDog($index,dog.id);">Remove</button></td>
-                        </tr>
-                        <tr ><td colspan="11"><button class="btn  btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
-                        <tr class="collapse well" id="trAddDogger"><td colspan="11">
-                            <table class="table table-bordered">
-                                <tr><th colspan="2">Dog Information</th></tr>
-                                <tr><th width="25%">Name:</th><td><input class="form-control" type="text" ng-model="dogFormData.name"></td></tr>
-                                <tr><th width="25%">Age:</th><td><input  class="form-control" type="text" ng-model="dogFormData.age"></td></tr>
-                                <tr><th width="25%">Breed:</th><td><input  class="form-control" type="text" ng-model="dogFormData.breed"></td></tr>
-                                <tr><th width="25%">Sex:</th><td><select   class="form-control" ng-model="dogFormData.sex"><option>Female</option><option>Male</option></select></td></tr>
-                                <tr><th width="25%">Color:</th><td><input  class="form-control" type="text" ng-model="dogFormData.color"></td></tr>
-                                <tr><th width="25%">Kennel Size:</th><td><select   class="form-control" ng-model="dogFormData.kennel_size"><option>Small</option><option>Medium</option><option>Large</option></select></td></tr>
-                                <tr><th width="25%">Spayed/Neutered:</th><td><select  class="form-control"  ng-model="dogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
-                                <tr><th width="25%">Behavior:</th><td><select class="form-control" ng-model="dogFormData.behavior">
-                                    <option>People & Dog Friendly</option>
-                                    <option>Dog Aggressive</option>
-                                    <option>People Aggressive</option>
-                                    <option>People & Dog Aggressive</option>
-                                </select></td></tr>
-                                <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input  class="form-control" type="text" ng-model="dogFormData.existing_health_conditions"></td></tr>
-                                <tr><th width="25%">Vacinations:</th><td><table class="table table-bordered">
-                                    <tr><th>Rabies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.rabies" ui-mask="99/99/9999"></td></tr>
-                                    <tr><th>Distemper:</th><td><input  class="form-control" type="text" ng-model="dogFormData.distemper" ui-mask="99/99/9999"></td></tr>
-                                    <tr><th>Parvo:</th><td><input  class="form-control" type="text" ng-model="dogFormData.parvo" ui-mask="99/99/9999"></td></tr>
-                                    <tr><th>Bordetella:</th><td><input  class="form-control" type="text" ng-model="dogFormData.bordetella" ui-mask="99/99/9999"></td></tr>
+                    <div ng-show="clientView">
+                        <legend>Client information</legend>
+                        <!-- CLIENT -->
+                        <table class="table table-bordered">
+                            <!--<tr><th colspan="2">Client</th></tr> -->
+                            <tr><th width="25%">First Name:</th><td>{{formData.first_name}}</td></tr>
+                            <tr><th width="25%">Last Name:</th><td>{{formData.last_name}}</td></tr>
+                            <tr><th width="25%">Phone:</th><td>{{formData.phone | tel}}</td></tr>
+                            <tr><th width="25%">Email:</th><td>{{formData.email}}</td></tr>
+                            <tr><th width="25%">Best Way to Receive Media:</th><td>{{formData.media_reception}}</td></tr>
+                            <tr><th width="25%">Emergency Contact Name:</th><td>{{formData.emergency_name}}</td></tr>
+                            <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone | tel}}</td></tr>
+                            <!-- TODO: Add in the missing Contract select -->
+                            <tr></tr>
+                        </table>
+                        <!-- DOGS -->
+                        <legend>Dog information</legend>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Name</th>
+                                <th>Sex</th>
+                                <th>Age</th>
+                                <th>Breed</th>
+                                <th>Color</th>
+                                <th>Spayed/Neutered</th>
+                                <th>Behavior</th>
+                                <th>Existing Health Cond.</th>
+                                <th>Allergies</th>
+                                <th>Release</th>
+                                <th></th>
+                            </tr>
+                            <tr ng-repeat="dog in clientDogs">
+                                <td>{{dog.name}}</td>
+                                <td>{{dog.sex}}</td>
+                                <td>{{dog.age}}</td>
+                                <td>{{dog.breed}}</td>
+                                <td>{{dog.color}}</td>
+                                <td>{{dog.spayed_neutered}}</td>
+                                <td>{{dog.behavior}}</td>
+                                <td>{{dog.existing_health_conditions}}</td>
+                                <td>{{dog.allergies}}</td>
+                                <td>{{dog.release_command}}</td>
+                                <td width="80px"><button class="btn btn-sm btn-danger" ng-click="removeDog($index,dog.id);">Remove</button></td>
+                            </tr>
+                            <tr ><td colspan="11"><button class="btn  btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
+                            <tr class="collapse well" id="trAddDogger"><td colspan="11">
+                                <table class="table table-bordered">
+                                    <tr><th colspan="2">Dog Information</th></tr>
+                                    <tr><th width="25%">Name:</th><td><input class="form-control" type="text" ng-model="dogFormData.name"></td></tr>
+                                    <tr><th width="25%">Age:</th><td><input  class="form-control" type="text" ng-model="dogFormData.age"></td></tr>
+                                    <tr><th width="25%">Breed:</th><td><input  class="form-control" type="text" ng-model="dogFormData.breed"></td></tr>
+                                    <tr><th width="25%">Sex:</th><td><select   class="form-control" ng-model="dogFormData.sex"><option>Female</option><option>Male</option></select></td></tr>
+                                    <tr><th width="25%">Color:</th><td><input  class="form-control" type="text" ng-model="dogFormData.color"></td></tr>
+                                    <tr><th width="25%">Kennel Size:</th><td><select   class="form-control" ng-model="dogFormData.kennel_size"><option>Small</option><option>Medium</option><option>Large</option></select></td></tr>
+                                    <tr><th width="25%">Spayed/Neutered:</th><td><select  class="form-control"  ng-model="dogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
+                                    <tr><th width="25%">Behavior:</th><td><select class="form-control" ng-model="dogFormData.behavior">
+                                        <option>People & Dog Friendly</option>
+                                        <option>Dog Aggressive</option>
+                                        <option>People Aggressive</option>
+                                        <option>People & Dog Aggressive</option>
+                                    </select></td></tr>
+                                    <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input  class="form-control" type="text" ng-model="dogFormData.existing_health_conditions"></td></tr>
+                                    <tr><th width="25%">Vacinations:</th><td><table class="table table-bordered">
+                                        <tr><th>Rabies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.rabies" ui-mask="99/99/9999"></td></tr>
+                                        <tr><th>Distemper:</th><td><input  class="form-control" type="text" ng-model="dogFormData.distemper" ui-mask="99/99/9999"></td></tr>
+                                        <tr><th>Parvo:</th><td><input  class="form-control" type="text" ng-model="dogFormData.parvo" ui-mask="99/99/9999"></td></tr>
+                                        <tr><th>Bordetella:</th><td><input  class="form-control" type="text" ng-model="dogFormData.bordetella" ui-mask="99/99/9999"></td></tr>
+                                    </table>
+                                    </td></tr>
+                                    <tr><th width="25%">Allergies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.allergies"></td></tr>
+                                    <tr><th width="25%">Release Command:</th><td><input  class="form-control" type="text" ng-model="dogFormData.release_command"></td></tr>
+                                    <tr><th>Notes:</th><td><textarea rows="4" class="form-control" type="text" ng-model="dogFormData.notes"></textarea></td></tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <button class="btn btn-sm btn-primary" ng-click="saveDog()" onclick="$('#trAddDogger').collapse('toggle');">Save</button>
+                                            <button class="btn btn-sm btn-danger" onclick="$('#trAddDogger').collapse('toggle');">Cancel</button>
+                                        </td>
+                                    </tr>
+                                    <!-- TODO: Call function to populate the client dropdown -->
+                                    <button class="btn btn-sm btn-primary" ng-click="divClientAdd=false;">Complete</button>
+                                    </tr>
                                 </table>
-                                </td></tr>
-                                <tr><th width="25%">Allergies:</th><td><input  class="form-control" type="text" ng-model="dogFormData.allergies"></td></tr>
-                                <tr><th width="25%">Release Command:</th><td><input  class="form-control" type="text" ng-model="dogFormData.release_command"></td></tr>
-                                <tr><th>Notes:</th><td><textarea rows="4" class="form-control" type="text" ng-model="dogFormData.notes"></textarea></td></tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <button class="btn btn-sm btn-primary" ng-click="saveDog()" onclick="$('#trAddDogger').collapse('toggle');">Save</button>
-                                        <button class="btn btn-sm btn-danger" onclick="$('#trAddDogger').collapse('toggle');">Cancel</button>
-                                    </td>
-                                </tr>
-                                </tr>
-                            </table>
-                        </td></tr>
-                    </table>
-                </div>
-            </td></div></tr>
+                            </td></tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
             <tr><th>Cost:</th><td colspan="2"><input class="form-control" ng-model="train_cost" type="text"></td></tr>
 
             <!--
@@ -154,6 +158,7 @@
             -->
         </table>
         <!-- Dogger List -->
+        <!-- TODO: Needs a ng-hide tag -->
         <table class="table table-bordered table-condensed">
             <tr><th colspan="7">*Needs* Reservations</th></tr>
             <tr ng-repeat="dog in dogList">
