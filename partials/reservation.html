@@ -41,7 +41,6 @@
                     <option value="addNew">-- New Client --</option>
                 </select>
             </td><td width="55px"><button type="button" class="btn btn-sm btn-warning" ng-click="divClientAdd=true;inlineClientDogInsert();">Add Client/Dog</button></td></tr>
-            <!-- TODO: Functionality -->
             <tr ng-show="divClientAdd">
                 <td colspan="3">
                     <div ng-show="clientNew">
@@ -56,7 +55,7 @@
                             <tr><th width="25%">Emergency Contact Name:</th><td><input type="text" class="form-control"  ng-model="formData.emergency_name"></td></tr>
                             <tr><th width="25%">Emergency Contact Phone:</th><td><input type="text" class="form-control" ng-model="formData.emergency_phone" ui-mask="(999) 999-9999"></td></tr>
                             <!-- TODO: On Jan 1, reset all clients to NO for Boarding Agreements. -->
-                            <tr><th width="25%">Current Boarding Agreement:</th><td><select  class="form-control"  ng-model="dogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
+                            <tr><th width="25%">Current Boarding Agreement:</th><td><select  class="form-control"  ng-model="formData.boarding_agreement"><option>Yes</option><option>No</option></select></td></tr>
                             <tr><td colspan="2">
                                 <button class="btn btn-sm btn-primary" ng-click="saveClient();">Save</button>
                                 <button class="btn btn-sm btn-danger" ng-click="divClientAdd=false;">Cancel</button>
@@ -76,8 +75,8 @@
                             <tr><th width="25%">Best Way to Receive Media:</th><td>{{formData.media_reception}}</td></tr>
                             <tr><th width="25%">Emergency Contact Name:</th><td>{{formData.emergency_name}}</td></tr>
                             <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone | tel}}</td></tr>
-                            <!-- TODO: Add in the missing Contract select -->
-                            <tr></tr>
+                            <tr><th width="25%">Current Boarding Agreement:</th><td>{{formData.emergency_phone | tel}}</td></tr>
+                            <tr><th width="25%">Current Boarding Agreement:</th><td>{{formData.boarding_agreement}}</td></tr>
                         </table>
                         <!-- DOGS -->
                         <legend>Dog information</legend>
@@ -142,12 +141,10 @@
                                             <button class="btn btn-sm btn-danger" onclick="$('#trAddDogger').collapse('toggle');">Cancel</button>
                                         </td>
                                     </tr>
-                                    <!-- TODO: Call function to populate the client dropdown -->
-                                    <button class="btn btn-sm btn-primary" ng-click="divClientAdd=false;">Complete</button>
-                                    </tr>
                                 </table>
                             </td></tr>
                         </table>
+                        <button class="btn btn-sm btn-primary" ng-click="divClientAdd=false;fetchClients();">Complete</button>
                     </div>
                 </td>
             </tr>
@@ -158,8 +155,7 @@
             -->
         </table>
         <!-- Dogger List -->
-        <!-- TODO: Needs a ng-hide tag -->
-        <table class="table table-bordered table-condensed">
+        <table class="table table-bordered table-condensed" ng-show="resNeeded">
             <tr><th colspan="7">*Needs* Reservations</th></tr>
             <tr ng-repeat="dog in dogList">
                 <td>{{dog.name}}</td>
@@ -171,11 +167,9 @@
                     <option>Board/Board & Tune Mix</option>
                 </select></td>
                 <td><input class="form-control" type="text" ng-model="training_amt" placeholder="Training Amount"></td>
-                <!-- TODO: Addition of medication. Text Notes -->
                 <td><input class="form-control" type="text" ng-model="medication" placeholder="Medication Info"></td>
                 <td><input class="form-control" type="text" ng-model="notes" placeholder="Notes..." multiple></td>
-                <!-- TODO: Slice out the dog from the list and put into a new table with an Edit button -->
-                <!-- TODO: Addition of a transfer section to move a dog from one kennel to another -->
+                <!-- TODO: If last dog is sliced hide resNeeded -->
                 <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,medication,$index);">Save</button></td>
             </tr>
         </table>
@@ -188,7 +182,7 @@
                 <td>{{dogConf.medication}}</td>
                 <td>{{dogConf.notes}}</td>
                 <!-- TODO: Edit Functionality -->
-                <td><button class="btn btn-sm">Edit</button></td>
+                <td><button class="btn btn-sm" ng-click="editDogReservation(dogConf.reservation_id);">Edit</button></td>
                 <!-- TODO: Transfer Functionality -->
                 <td><button class="btn btn-sm">Transfer</button></td>
             </tr>

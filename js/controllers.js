@@ -216,11 +216,20 @@ angular.module('myApp.controllers', []).
         $scope.clientList = {};
 
         $scope.divClientAdd = false;
-
+        $scope.resNeeded = false;
 
         $scope.checkinDoneFx = function (newDate, oldDate) {
-            $scope.checkinDone = true;
-            $scope.checkinNeed = false;
+            var dateNow = new Date();
+            var dateIn = new Date(newDate);
+
+            if ( dateNow > dateIn ) {
+                alert('Cannot make reservations in the past.');
+                $scope.checkin.date = '';
+            }
+            else{
+                $scope.checkinDone = true;
+                $scope.checkinNeed = false;
+            }
         };
 
         $scope.checkoutDoneFx = function (newDate, oldDate) {
@@ -313,6 +322,7 @@ angular.module('myApp.controllers', []).
             })
                 .success( function(data) {
                     $scope.dogList = data;
+                    $scope.resNeeded = true;
                 })
                 .error( function(data) {
                     console.log('Error: '.concat(data));
@@ -353,8 +363,13 @@ angular.module('myApp.controllers', []).
                         }
                     ).success( function(data) {
                             $scope.dogListConfirmed = data;
+                            console.log('idx'.concat(idx));
+                            console.log('lng'.concat($scope.dogList.length));
                             $scope.dogList.splice(idx);
                             $scope.confirmedRes = true;
+                            if ($scope.dogList.length == 0){
+                                $scope.resNeeded = false;
+                            }
                         }).error( function(data) {
                             console.log('Error: '.concat(data));
                         });
@@ -362,6 +377,28 @@ angular.module('myApp.controllers', []).
                 }).error( function(data) {
                     console.log('Error: '.concat(data));
                 });
+        };
+
+        $scope.editDogReservation = function (res_id) {
+            console.log('editDogReservation'.concat(res_id));
+
+            var resObj = {};
+            resObj.reservation_id = res_id;
+            resObj.master_id = $scope.masterReservationId;
+            resObj.client_id = $scope.clientName.id;
+            $http({
+                    method: 'POST',
+                    url: 'api/index.php/reserveremove',
+                    data: resObj
+                }
+            ).success( function (data) {
+                    $scope.dogList = data;
+                    $scope.resNeeded = true;
+
+                })
+                .error (function (data) {
+                console.log('Error: '.concat(data));
+            });
         };
 
         $scope.inlineClientDogInsert = function () {

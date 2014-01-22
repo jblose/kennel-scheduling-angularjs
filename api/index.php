@@ -75,7 +75,7 @@ $app->get('/clientdogs/:id', function($id) use ($app,$db) {
 $app->post('/clientinsert', function () use ($app,$db) {
     $reqbody = json_decode($app->request()->getBody());
     var_dump($reqbody);
-    $sql = "insert into rsak.client(id,last_name, first_name,email,phone,emergency_name,emergency_phone,media_reception) values (:id,:last_name,:first_name,:email,:phone,:emergency_name,:emergency_phone,:media_reception)";
+    $sql = "insert into rsak.client(id,last_name, first_name,email,phone,emergency_name,emergency_phone,media_reception, boarding_agreement) values (:id,:last_name,:first_name,:email,:phone,:emergency_name,:emergency_phone,:media_reception,:boarding_agreement)";
 
     $frmt_phone = '('.substr($reqbody->{'phone'},0,3).') '.substr($reqbody->{'phone'},3,3).'-'.substr($reqbody->{'phone'},6);
     $frmt_emergency_phone = '('.substr($reqbody->{'emergency_phone'},0,3).') '.substr($reqbody->{'emergency_phone'},3,3).'-'.substr($reqbody->{'emergency_phone'},6);
@@ -91,6 +91,7 @@ $app->post('/clientinsert', function () use ($app,$db) {
         $stmt->bindParam("emergency_name",$reqbody->{'emergency_name'});
         $stmt->bindParam("emergency_phone",$frmt_emergency_phone);
         $stmt->bindParam("media_reception",$reqbody->{'media_reception'});
+   		$stmt->bindParam("boarding_agreement",$reqbody->{'boarding_agreement'});
    		$stmt->execute();
    		$db = null;
    		echo '{"success":{"clientid":'. $reqbody->{'clientid'} .'}}';
@@ -323,8 +324,49 @@ $app->post('/reserveinsert', function () use ($app, $db) {
     }
 });
 
+$app->post('/reserveremove', function () use ($app, $db) {
+    $reqbody = json_decode($app->request()->getBody());
+    var_dump($reqbody);
+    $sql =  "delete from rsak.reservation_id_x where reservation_id = :reservation_id";
+     try {
+             $db = getConnection();
+             $stmt = $db->prepare($sql);
+             $stmt->bindParam("reservation_id",$reqbody->{'reservation_id'});
+             $stmt->execute();
+             $db = null;
+         } catch(PDOException $e) {
+             echo '{"error":{"text":'. $e->getMessage() .'}}';
+         }
+    $sql =  "delete from rsak.reservation where reservation_id = :reservation_id";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("reservation_id",$reqbody->{'reservation_id'});
+        $stmt->execute();
+        $db = null;
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+    $sql = "select d.* from rsak.dog d join rsak.client_dog_x cdx on (d.id = cdx.dog_id) where cdx.client_id = :clientid";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam("clientid",$clientid);
+        $stmt->execute();
+        $dogs = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($dogs);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+});
+
+
 $app->get('/fetchresconfirm/:masterid', function ($masterid) use ($app, $db) {
-    $sql = "select d.name as dog_name, k.name as kennel_name, concat(r.training,' : ', r.training_amt) as training, r.medication as medication, r.notes as notes from rsak.reservation_id_x rix " .
+    $sql = "select r.reservation_id as reservation_id, rix.master_id as master_id, d.name as dog_name, k.name as kennel_name, concat(r.training,' : ', r.training_amt) as training, r.medication as medication, r.notes as notes from rsak.reservation_id_x rix " .
         "join rsak.reservation r on (rix.reservation_id = r.reservation_id) " .
         "join rsak.dog d on (r.dog_id = d.id) " .
         "join rsak.kennel k on (r.kennel_id = k.kennel_id) " .
