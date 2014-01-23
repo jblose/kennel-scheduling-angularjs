@@ -21,13 +21,12 @@ $app->get('/clientidfetch', function () use ($app, $db) {
 });
 
 $app->get('/clientsearch/:param', function ($param) use ($app, $db) {
-    //$sql = "select id,last_name,first_name,email from rsak.client where lower(last_name) like lower(:param) order by first_name";
-    $sql = "select c.id,c.last_name,c.first_name,c.email,group_concat( d.name separator ', ')  as dognames from rsak.client c join rsak.client_dog_x cdx on (c.id = cdx.client_id) join rsak.dog d on (cdx.dog_id = d.id) where lower(c.last_name) like lower('%blose%') order by c.last_name,c.first_name";
+    $sql = "select c.id,c.last_name,c.first_name,c.email,group_concat( d.name separator ', ')  as dognames from rsak.client c join rsak.client_dog_x cdx on (c.id = cdx.client_id) join rsak.dog d on (cdx.dog_id = d.id) where lower(c.last_name) like lower(:last_name) order by c.last_name,c.first_name";
     $param = '%'.$param.'%';
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam("param",$param);
+        $stmt->bindParam("last_name",$param);
 
         $stmt->execute();
         $clients = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -215,7 +214,6 @@ $app->get('/availkennels', function () use ($app, $db) {
 });
 
 $app->get('/fetchclients', function () use ($app, $db) {
-     //$sql = "select id, concat(last_name,', ',first_name) as full_name from rsak.client where id > 0 order by concat(last_name,', ',first_name) ";
     $sql = "select c.id, concat(c.last_name,', ',c.first_name, ' - ', group_concat( d.name separator ', ')) as full_name " .
             "from rsak.client c " .
             "join rsak.client_dog_x cdx on (c.id = cdx.client_id) " .
@@ -326,7 +324,6 @@ $app->post('/reserveinsert', function () use ($app, $db) {
 
 $app->post('/reserveremove', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
-    var_dump($reqbody);
     $sql =  "delete from rsak.reservation_id_x where reservation_id = :reservation_id";
      try {
              $db = getConnection();
@@ -348,12 +345,23 @@ $app->post('/reserveremove', function () use ($app, $db) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 
-    $sql = "select d.* from rsak.dog d join rsak.client_dog_x cdx on (d.id = cdx.dog_id) where cdx.client_id = :clientid";
+    $sql = "select d.* from rsak.dog d " .
+            "join rsak.client_dog_x cdx on (d.id = cdx.dog_id) " .
+            "where cdx.client_id = :clientid " .
+            "and d.id not in ( " .
+            "select d.id from rsak.dog d " .
+            "join rsak.client_dog_x cdx on (d.id = cdx.dog_id) " .
+            "join rsak.reservation r on (r.dog_id = d.id) " .
+            "join rsak.reservation_id_x rix on (rix.reservation_id = r.reservation_id) " .
+            "where cdx.client_id = :clientid " .
+            "and rix.master_id = :masterid)";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
 
-        $stmt->bindParam("clientid",$clientid);
+        $stmt->bindParam("clientid",$reqbody->{'client_id'});
+        $stmt->bindParam("masterid",$reqbody->{'master_id'});
+
         $stmt->execute();
         $dogs = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
@@ -386,10 +394,6 @@ $app->get('/fetchresconfirm/:masterid', function ($masterid) use ($app, $db) {
 });
 
 $app->get('/fetchreservelist/:size', function ($size) use ($app, $db) {
-    //$sql = "select reservation_id as id, title,url,status as class, check_in as start, check_out as end " .
-    //        "from rsak.reservation r " .
-    //    "join rsak.kennel k on (r.kennel_id = k.kennel_id) " .
-    //    "where k.size = :size";
     $sql =  "select ifnull(reservation_id,0) as id, ifnull(title,'vacant') as title, ifnull(url,'nullurl') as url ,ifnull(status,'event-vacant') as class, ifnull(check_in,(1368723600 *1000)) as start, ifnull(check_out,(1400259600*1000)) as end  " .
             "from rsak.kennel k " .
             "join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
@@ -408,6 +412,24 @@ $app->get('/fetchreservelist/:size', function ($size) use ($app, $db) {
     }
 });
 
+$app->post('/updateDB', function () use ($app, $db) {
+    $reqbody = json_decode($app->request()->getBody());
+
+    $sql = "update rsak.".$reqbody->{'table'}." set ".$reqbody->{'column'}."= :value where ".$reqbody->{'key'}." = :id";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam("value",$reqbody->{'value'});
+        $stmt->bindParam("id",$reqbody->{'id'});
+
+        $stmt->execute();
+        $db = null;
+        echo '{"success": 1}';
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() . '}}';
+    }
+});
 
 $app->run();
 

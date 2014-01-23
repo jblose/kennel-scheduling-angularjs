@@ -1,10 +1,21 @@
-select * from rsak.dog d 
+select d.* from rsak.dog d 
+join rsak.client_dog_x cdx on (d.id = cdx.dog_id) 
+where cdx.client_id = 2
+and d.id not in (
+select d.id from rsak.dog d 
 join rsak.client_dog_x cdx on (d.id = cdx.dog_id)
 join rsak.reservation r on (r.dog_id = d.id)
 join rsak.reservation_id_x rix on (rix.reservation_id = r.reservation_id)
+where cdx.client_id = 2 
+and rix.master_id = 7);
 
 
-
+/*
+master:5
+client:2
+in:1390505400000
+out:1390681800000
+*/
 
 
 

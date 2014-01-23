@@ -12,6 +12,10 @@ angular.module('myApp.controllers', []).
         $scope.formData = {};
         $scope.dogFormData = {};
         $scope.clientList = {};
+        $scope.value_edit = '';
+
+        $scope.editFirstName = false;
+
 
         $scope.clientIdFetch = function() {
             $http({
@@ -158,6 +162,29 @@ angular.module('myApp.controllers', []).
                     console.log('Error: '.concat(data));
                 }
             );
+        }
+
+        $scope.updateDB = function (tab,col) {
+            var updateObj = {};
+            updateObj.table = tab;
+            updateObj.column = col;
+            updateObj.value = $scope.value_edit;
+
+            if (tab.localeCompare('client') == 0){
+                 updateObj.key = 'id';
+                 updateObj.id = $scope.formData.clientid;
+            }
+
+            $http({
+                    method: 'POST',
+                    url: 'api/index.php/updateDB',
+                    data: updateObj
+                }).success( function(data) {
+                    $scope.selectClient($scope.formData.clientid);
+                }).error( function(data) {
+                    console.log('Error: '.concat(data));
+                });
+            $scope.value_edit = '';
         }
 
         $scope.processAction = function () {
@@ -363,8 +390,6 @@ angular.module('myApp.controllers', []).
                         }
                     ).success( function(data) {
                             $scope.dogListConfirmed = data;
-                            console.log('idx'.concat(idx));
-                            console.log('lng'.concat($scope.dogList.length));
                             $scope.dogList.splice(idx,1);
                             $scope.confirmedRes = true;
                             if ($scope.dogList.length == 0){
@@ -379,9 +404,7 @@ angular.module('myApp.controllers', []).
                 });
         };
 
-        $scope.editDogReservation = function (res_id) {
-            console.log('editDogReservation'.concat(res_id));
-
+        $scope.editDogReservation = function (res_id, idx) {
             var resObj = {};
             resObj.reservation_id = res_id;
             resObj.master_id = $scope.masterReservationId;
@@ -392,6 +415,7 @@ angular.module('myApp.controllers', []).
                     data: resObj
                 }
             ).success( function (data) {
+                    $scope.dogListConfirmed.splice(idx,1);
                     $scope.dogList = data;
                     $scope.resNeeded = true;
 
@@ -547,9 +571,11 @@ angular.module('myApp.controllers', []).
         }
 
     }])
+
     .controller('ResViewCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
         <!-- TODO: Implement the receiving of id and display of details -->
     }])
+
     .controller('VacSearchCtrl', ['$scope','$http', function($scope,$http) {
 
         $scope.availKennels = function () {
