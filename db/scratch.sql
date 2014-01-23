@@ -1,3 +1,15 @@
+select * from rsak.dog d 
+join rsak.client_dog_x cdx on (d.id = cdx.dog_id)
+join rsak.reservation r on (r.dog_id = d.id)
+join rsak.reservation_id_x rix on (rix.reservation_id = r.reservation_id)
+
+
+
+
+
+
+
+
 select d.name as dog_name, k.name as kennel_name, concat(r.training,' - ', r.training_amt) as training, r.notes as notes from rsak.reservation_id_x rix 
 join rsak.reservation r on (rix.reservation_id = r.reservation_id)
 join rsak.dog d on (r.dog_id = d.id)

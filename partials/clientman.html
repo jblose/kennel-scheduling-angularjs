@@ -25,7 +25,6 @@
         <tr><th width="25%">Best Way to Receive Media:</th><td><input type="text" class="form-control"  ng-model="formData.media_reception"></td></tr>
         <tr><th width="25%">Emergency Contact Name:</th><td><input type="text" class="form-control"  ng-model="formData.emergency_name"></td></tr>
         <tr><th width="25%">Emergency Contact Phone:</th><td><input type="text" class="form-control" ng-model="formData.emergency_phone" ui-mask="(999) 999-9999"></td></tr>
-        <!-- TODO: On Jan 1, reset all clients to NO for Boarding Agreements. -->
         <tr><th width="25%">Current Boarding Agreement:</th><td><select  class="form-control"  ng-model="formData.boarding_agreement"><option>Yes</option><option>No</option></select></td></tr>
         <tr><td colspan="2">
             <button class="btn btn-sm btn-primary" ng-click="saveClient();">Save</button>

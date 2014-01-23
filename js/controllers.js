@@ -365,7 +365,7 @@ angular.module('myApp.controllers', []).
                             $scope.dogListConfirmed = data;
                             console.log('idx'.concat(idx));
                             console.log('lng'.concat($scope.dogList.length));
-                            $scope.dogList.splice(idx);
+                            $scope.dogList.splice(idx,1);
                             $scope.confirmedRes = true;
                             if ($scope.dogList.length == 0){
                                 $scope.resNeeded = false;
