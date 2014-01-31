@@ -74,6 +74,7 @@ angular.module('myApp.controllers', []).
                     $scope.formData.media_reception = data.media_reception;
                     $scope.formData.emergency_name = data.emergency_name;
                     $scope.formData.emergency_phone = data.emergency_phone;
+                    $scope.formData.boarding_agreement = data.boarding_agreement;
                     $scope.action = 'view';
                     $scope.processAction();
                 })

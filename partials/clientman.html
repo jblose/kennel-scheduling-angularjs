@@ -61,7 +61,7 @@
 
         <tr><th width="25%">Phone:</th><td><div>{{formData.phone | tel}}</div>
             <div ng-show="editPhone" class="well input-group">
-                <input type="text" class="form-control" ng-model="value_edit" placeholder="Enter new value...">
+                <input type="text" class="form-control" ng-model="value_edit" ui-mask="(999) 999-9999">
                 <span class="input-group-btn">
                     <button class="btn btn-primary" ng-click="updateDB('client','phone');editPhone=false;">Save</button>
                     <button class="btn btn-danger" ng-click="editPhone=false;">Cancel</button>
@@ -102,7 +102,7 @@
 
         <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone | tel}}
             <div ng-show="editEmergencyPhone" class="well input-group">
-                <input type="text" class="form-control" ng-model="value_edit" placeholder="Enter new value...">
+                <input type="text" class="form-control" ng-model="value_edit" ui-mask="(999) 999-9999">
                 <span class="input-group-btn">
                     <button class="btn btn-primary" ng-click="updateDB('client','emergency_phone');editEmergencyPhone=false;">Save</button>
                     <button class="btn btn-danger" ng-click="editEmergencyPhone=false;">Cancel</button>
