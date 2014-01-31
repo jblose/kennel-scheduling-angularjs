@@ -184,6 +184,7 @@ angular.module('myApp.controllers', []).
                 }).error( function(data) {
                     console.log('Error: '.concat(data));
                 });
+
             $scope.value_edit = '';
         }
 
