@@ -76,6 +76,7 @@ angular.module('myApp.controllers', []).
                     $scope.formData.emergency_phone = data.emergency_phone;
                     $scope.formData.boarding_agreement = data.boarding_agreement;
                     $scope.action = 'view';
+                    $scope.clientList = {};
                     $scope.processAction();
                 })
                 .error( function(data) {
@@ -137,6 +138,10 @@ angular.module('myApp.controllers', []).
                     console.log('Error: '.concat(data));
                 });
         };
+
+        $scope.viewEditDog = function(dogid){
+            console.log(dogid);
+        }
 
         $scope.removeDog = function(idx,dogid) {
             $scope.clientDogs.splice(idx,1);

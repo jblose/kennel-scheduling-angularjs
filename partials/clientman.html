@@ -9,6 +9,7 @@
     </div>
 </div>
 
+<!-- TODO: No Client Found message should properly show -->
 <div ng-show="clientResults">
     <legend> Select Customer</legend>
     <table  class="table table-bordered">
@@ -126,9 +127,9 @@
             <th>Age</th>
             <th>Breed</th>
             <th>Color</th>
-            <th>Spayed/Neutered</th>
+            <th>Spayed / Neutered</th>
             <th>Behavior</th>
-            <th>Existing Health Cond.</th>
+            <th>Exist Health Cond.</th>
             <th>Allergies</th>
             <th>Release</th>
             <th></th>
@@ -144,6 +145,8 @@
             <td>{{dog.existing_health_conditions}}</td>
             <td>{{dog.allergies}}</td>
             <td>{{dog.release_command}}</td>
+            <td width="80px"><button class="btn btn-sm btn-primary" ng-click="viewEditDog(dog.id);" data-toggle="modal" data-target="#dogModal">View/Edit</button></td>
+
             <td width="80px"><button class="btn btn-sm btn-danger" ng-click="removeDog($index,dog.id);">Remove</button></td>
         </tr>
         <tr ><td colspan="11"><button class="btn btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
@@ -186,3 +189,49 @@
     </table>
 </div>
 
+<!-- Dog Modal -->
+<div class="modal fade" id="dogModal" tabindex="-1" role="dialog" aria-labelledby="dogModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tr><th colspan="2">Dog Information</th></tr>
+                    <tr><th width="25%">Name:</th><td><input class="form-control" type="text" ng-model="modalDogFormData.name"></td></tr>
+                    <tr><th width="25%">Age:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.age"></td></tr>
+                    <tr><th width="25%">Breed:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.breed"></td></tr>
+                    <tr><th width="25%">Sex:</th><td><select   class="form-control" ng-model="modalDogFormData.sex"><option>Female</option><option>Male</option></select></td></tr>
+                    <tr><th width="25%">Color:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.color"></td></tr>
+                    <tr><th width="25%">Kennel Size:</th><td><select   class="form-control" ng-model="modalDogFormData.kennel_size"><option>Small</option><option>Medium</option><option>Large</option></select></td></tr>
+                    <tr><th width="25%">Spayed/Neutered:</th><td><select  class="form-control"  ng-model="modalDogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
+                    <tr><th width="25%">Behavior:</th><td><select class="form-control" ng-model="modalDogFormData.behavior">
+                        <option>People & Dog Friendly</option>
+                        <option>Dog Aggressive</option>
+                        <option>People Aggressive</option>
+                        <option>People & Dog Aggressive</option>
+                    </select></td></tr>
+                    <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.existing_health_conditions"></td></tr>
+                    <tr><th width="25%">Vacinations:</th><td><table class="table table-bordered">
+                        <tr><th>Rabies:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.rabies" ui-mask="99/99/9999"></td></tr>
+                        <tr><th>Distemper:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.distemper" ui-mask="99/99/9999"></td></tr>
+                        <tr><th>Parvo:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.parvo" ui-mask="99/99/9999"></td></tr>
+                        <tr><th>Bordetella:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.bordetella" ui-mask="99/99/9999"></td></tr>
+                    </table>
+                    </td></tr>
+                    <tr><th width="25%">Allergies:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.allergies"></td></tr>
+                    <tr><th width="25%">Release Command:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.release_command"></td></tr>
+                    <tr><th>Notes:</th><td><textarea rows="4" class="form-control" type="text" ng-model="modalDogFormData.notes"></textarea></td></tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!-- TODO: implement saveModalDog -->
+                <button class="btn btn-sm btn-primary" ng-click="saveModalDog()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

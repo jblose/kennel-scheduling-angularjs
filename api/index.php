@@ -21,7 +21,9 @@ $app->get('/clientidfetch', function () use ($app, $db) {
 });
 
 $app->get('/clientsearch/:param', function ($param) use ($app, $db) {
-    $sql = "select c.id,c.last_name,c.first_name,c.email,group_concat( d.name separator ', ')  as dognames from rsak.client c join rsak.client_dog_x cdx on (c.id = cdx.client_id) join rsak.dog d on (cdx.dog_id = d.id) where lower(c.last_name) like lower(:last_name) order by c.last_name,c.first_name";
+    //TODO: MySQL Function for the group_concat is not working as intended.
+    //$sql = "select c.id,c.last_name,c.first_name,c.email,group_concat( d.name separator ', ')  as dognames from rsak.client c join rsak.client_dog_x cdx on (c.id = cdx.client_id) join rsak.dog d on (cdx.dog_id = d.id) where lower(c.last_name) like lower(:last_name) order by c.last_name,c.first_name";
+    $sql = "select c.id,c.last_name,c.first_name,c.email from rsak.client c where lower(c.last_name) like lower(:last_name) order by c.last_name,c.first_name";
     $param = '%'.$param.'%';
     try{
         $db = getConnection();
