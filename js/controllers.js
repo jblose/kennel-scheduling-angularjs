@@ -140,7 +140,18 @@ angular.module('myApp.controllers', []).
         };
 
         $scope.viewEditDog = function(dogid){
-            console.log(dogid);
+            $http({
+                method: 'GET',
+                url: 'api/index.php/fetchdog/'.concat(dogid)
+            }).success( function(data){
+                    $scope.caughtDog = data;
+                    console.log('1'.concat($scope.caughtDog.name));
+                    console.log('2'.concat($scope.caughtDog.dog.name));
+                    $scope.modalDogFormData.name = $scope.caughtDog.name;
+
+                }).error( function(data) {
+                   console.log('Error: '.concat(data));
+                });
         }
 
         $scope.removeDog = function(idx,dogid) {

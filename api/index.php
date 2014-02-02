@@ -433,6 +433,22 @@ $app->post('/updateDB', function () use ($app, $db) {
     }
 });
 
+$app->get('/fetchdog/:dog_id', function ($dog_id) use ($app, $db) {
+    $sql =  "select d.* from rsak.dog d where id = :id;";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam("id",$dog_id);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($result);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() . '}}';
+    }
+});
+
 $app->run();
 
 function getConnection() {
