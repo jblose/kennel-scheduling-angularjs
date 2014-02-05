@@ -103,7 +103,7 @@ $app->post('/clientinsert', function () use ($app,$db) {
 
 $app->post('/doginsert', function () use ($app, $db) {
     $reqbody = json_decode($app->request()->getBody());
-    $sql = "insert into rsak.dog (id,name,age,breed,sex,color,spayed_neutered,behavior,existing_health_conditions,allergies,release_command,notes,rabies_exp,distemper_exp,parvo_exp,bordetella_exp) VALUES ( :id,:name,:age,:breed,:sex,:color,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command,:notes,:rabies_exp,:distemper_exp,:parvo_exp,:bordetella_exp)";
+    $sql = "insert into rsak.dog (id,name,age,breed,sex,color,kennel_size,spayed_neutered,behavior,existing_health_conditions,allergies,release_command,notes,rabies_exp,distemper_exp,parvo_exp,bordetella_exp) VALUES ( :id,:name,:age,:breed,:sex,:color,:kennel_size,:spayed_neutered,:behavior,:existing_health_conditions,:allergies,:release_command,:notes,:rabies_exp,:distemper_exp,:parvo_exp,:bordetella_exp)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -113,6 +113,7 @@ $app->post('/doginsert', function () use ($app, $db) {
         $stmt->bindParam("breed",$reqbody->{'breed'});
         $stmt->bindParam("sex",$reqbody->{'sex'});
         $stmt->bindParam("color",$reqbody->{'color'});
+        $stmt->bindParam("kennel_size",$reqbody->{'kennel_size'});
         $stmt->bindParam("spayed_neutered",$reqbody->{'spayed_neutered'});
         $stmt->bindParam("behavior",$reqbody->{'behavior'});
         $stmt->bindParam("existing_health_conditions",$reqbody->{'existing_health_conditions'});
@@ -424,6 +425,45 @@ $app->post('/updateDB', function () use ($app, $db) {
 
         $stmt->bindParam("value",$reqbody->{'value'});
         $stmt->bindParam("id",$reqbody->{'id'});
+
+        $stmt->execute();
+        $db = null;
+        echo '{"success": 1}';
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() . '}}';
+    }
+});
+
+$app->post('/updatedog', function () use ($app, $db) {
+    $reqbody = json_decode($app->request()->getBody());
+
+
+    $sql = "update rsak.dog set name = :name, breed = :breed, age = :age, sex = :sex, color = :color, " .
+            "kennel_size = :kennel_size, spayed_neutered = :spayed_neutered, behavior = :behavior, " .
+            "existing_health_conditions = :existing_health_conditions, allergies = :allergies, " .
+            "release_command = :release_command, notes = :notes, rabies_exp = :rabies_exp, " .
+            "distemper_exp = :distemper_exp, parvo_exp = :parvo_exp, bordetella_exp = :bordetella_exp where id = :id";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id",$reqbody->{'id'});
+
+        $stmt->bindParam("name",$reqbody->{'name'});
+        $stmt->bindParam("breed",$reqbody->{'breed'});
+        $stmt->bindParam("age",$reqbody->{'age'});
+        $stmt->bindParam("sex",$reqbody->{'sex'});
+        $stmt->bindParam("color",$reqbody->{'color'});
+        $stmt->bindParam("kennel_size",$reqbody->{'kennel_size'});
+        $stmt->bindParam("spayed_neutered",$reqbody->{'spayed_neutered'});
+        $stmt->bindParam("behavior",$reqbody->{'behavior'});
+        $stmt->bindParam("existing_health_conditions",$reqbody->{'existing_health_conditions'});
+        $stmt->bindParam("allergies",$reqbody->{'allergies'});
+        $stmt->bindParam("release_command",$reqbody->{'release_command'});
+        $stmt->bindParam("notes",$reqbody->{'notes'});
+        $stmt->bindParam("rabies_exp",$reqbody->{'rabies_exp'});
+        $stmt->bindParam("distemper_exp",$reqbody->{'distemper_exp'});
+        $stmt->bindParam("parvo_exp",$reqbody->{'parvo_exp'});
+        $stmt->bindParam("bordetella_exp",$reqbody->{'bordetella_exp'});
 
         $stmt->execute();
         $db = null;

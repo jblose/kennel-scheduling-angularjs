@@ -11,6 +11,7 @@ angular.module('myApp.controllers', []).
 
         $scope.formData = {};
         $scope.dogFormData = {};
+        $scope.modalDogFormData = {};
         $scope.clientList = {};
         $scope.value_edit = '';
 
@@ -139,20 +140,56 @@ angular.module('myApp.controllers', []).
                 });
         };
 
+        $scope.saveModalDog = function () {
+            $http({
+                    method: 'POST',
+                    url: 'api/index.php/updatedog',
+                    data: $scope.modalDogFormData
+                }
+            ).success( function(data) {
+                    $http({
+                            method: 'GET',
+                            url: 'api/index.php/clientdogs/'.concat($scope.formData.clientid)
+                        }
+                    ).success( function(data) {
+                            $scope.clientDogs = data;
+                            $scope.dogFormData = {};
+                        })
+                        .error( function(data) {
+                            console.log('Error: '.concat(data));
+                        });
+
+                }).error( function(data) {
+                    console.log('Error: '.concat(data));
+                });
+        };
+
         $scope.viewEditDog = function(dogid){
             $http({
                 method: 'GET',
                 url: 'api/index.php/fetchdog/'.concat(dogid)
             }).success( function(data){
                     $scope.caughtDog = data;
-                    console.log('1'.concat($scope.caughtDog.name));
-                    console.log('2'.concat($scope.caughtDog.dog.name));
-                    $scope.modalDogFormData.name = $scope.caughtDog.name;
-
+                    $scope.modalDogFormData.id = $scope.caughtDog[0].id;
+                    $scope.modalDogFormData.name = $scope.caughtDog[0].name;
+                    $scope.modalDogFormData.breed = $scope.caughtDog[0].breed;
+                    $scope.modalDogFormData.age = $scope.caughtDog[0].age;
+                    $scope.modalDogFormData.sex = $scope.caughtDog[0].sex;
+                    $scope.modalDogFormData.color = $scope.caughtDog[0].color;
+                    $scope.modalDogFormData.spayed_neutered = $scope.caughtDog[0].spayed_neutered;
+                    $scope.modalDogFormData.behavior = $scope.caughtDog[0].behavior;
+                    $scope.modalDogFormData.existing_health_conditions = $scope.caughtDog[0].existing_health_conditions;
+                    $scope.modalDogFormData.allergies = $scope.caughtDog[0].allergies;
+                    $scope.modalDogFormData.release_command = $scope.caughtDog[0].release_command;
+                    $scope.modalDogFormData.notes = $scope.caughtDog[0].notes;
+                    $scope.modalDogFormData.rabies_exp = $scope.caughtDog[0].rabies_exp;
+                    $scope.modalDogFormData.distemper_exp = $scope.caughtDog[0].distemper_exp;
+                    $scope.modalDogFormData.parvo_exp = $scope.caughtDog[0].parvo_exp;
+                    $scope.modalDogFormData.bordetella_exp = $scope.caughtDog[0].bordetella_exp;
                 }).error( function(data) {
-                   console.log('Error: '.concat(data));
+                    console.log('Error: '.concat(data));
                 });
-        }
+        };
 
         $scope.removeDog = function(idx,dogid) {
             $scope.clientDogs.splice(idx,1);
@@ -188,15 +225,15 @@ angular.module('myApp.controllers', []).
             updateObj.value = $scope.value_edit;
 
             if (tab.localeCompare('client') == 0){
-                 updateObj.key = 'id';
-                 updateObj.id = $scope.formData.clientid;
+                updateObj.key = 'id';
+                updateObj.id = $scope.formData.clientid;
             }
 
             $http({
-                    method: 'POST',
-                    url: 'api/index.php/updateDB',
-                    data: updateObj
-                }).success( function(data) {
+                method: 'POST',
+                url: 'api/index.php/updateDB',
+                data: updateObj
+            }).success( function(data) {
                     $scope.selectClient($scope.formData.clientid);
                 }).error( function(data) {
                     console.log('Error: '.concat(data));

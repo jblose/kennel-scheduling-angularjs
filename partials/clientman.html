@@ -133,6 +133,7 @@
             <th>Allergies</th>
             <th>Release</th>
             <th></th>
+            <th></th>
         </tr>
         <tr ng-repeat="dog in clientDogs track by $index">
             <td>{{dog.name}}</td>
@@ -149,7 +150,7 @@
 
             <td width="80px"><button class="btn btn-sm btn-danger" ng-click="removeDog($index,dog.id);">Remove</button></td>
         </tr>
-        <tr ><td colspan="11"><button class="btn btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
+        <tr ><td colspan="12"><button class="btn btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
         <tr class="collapse well" id="trAddDogger"><td colspan="11">
             <table class="table table-bordered">
                 <tr><th colspan="2">Dog Information</th></tr>
@@ -193,10 +194,12 @@
 <div class="modal fade" id="dogModal" tabindex="-1" role="dialog" aria-labelledby="dogModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+            <!--
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
             </div>
+            -->
             <div class="modal-body">
                 <table class="table table-bordered">
                     <tr><th colspan="2">Dog Information</th></tr>
@@ -229,8 +232,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <!-- TODO: implement saveModalDog -->
-                <button class="btn btn-sm btn-primary" ng-click="saveModalDog()">Save</button>
+                <button class="btn btn-sm btn-primary" ng-click="saveModalDog();" data-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
