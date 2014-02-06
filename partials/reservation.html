@@ -66,16 +66,83 @@
                         <legend>Client information</legend>
                         <!-- CLIENT -->
                         <table class="table table-bordered">
-                            <!--<tr><th colspan="2">Client</th></tr> -->
-                            <tr><th width="25%">First Name:</th><td>{{formData.first_name}}</td></tr>
-                            <tr><th width="25%">Last Name:</th><td>{{formData.last_name}}</td></tr>
-                            <tr><th width="25%">Phone:</th><td>{{formData.phone | tel}}</td></tr>
-                            <tr><th width="25%">Email:</th><td>{{formData.email}}</td></tr>
-                            <tr><th width="25%">Best Way to Receive Media:</th><td>{{formData.media_reception}}</td></tr>
-                            <tr><th width="25%">Emergency Contact Name:</th><td>{{formData.emergency_name}}</td></tr>
-                            <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone | tel}}</td></tr>
-                            <tr><th width="25%">Current Boarding Agreement:</th><td>{{formData.emergency_phone | tel}}</td></tr>
-                            <tr><th width="25%">Current Boarding Agreement:</th><td>{{formData.boarding_agreement}}</td></tr>
+                            <tr><th width="25%">First Name:</th><td><div>{{formData.first_name}}</div>
+                                <div ng-show="editFirstName" class="well input-group">
+                                    <input type="text" class="form-control" ng-model="value_edit" placeholder="Enter new value...">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="updateDB('client','first_name');editFirstName=false;">Save</button>
+                    <button class="btn btn-danger" ng-click="editFirstName=false;">Cancel</button>
+                </span>
+                                </div></td>
+                                <td width="50px"><button class="btn btn-sm btn-warning" ng-click="editFirstName=true;">Edit</button></td></tr>
+
+                            <tr><th width="25%">Last Name:</th><td><div>{{formData.last_name}}</div>
+                                <div ng-show="editLastName" class="well input-group">
+                                    <input type="text" class="form-control" ng-model="value_edit" placeholder="Enter new value...">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="updateDB('client','last_name');editLastName=false;">Save</button>
+                    <button class="btn btn-danger" ng-click="editLastName=false;">Cancel</button>
+                </span>
+                                </div></td>
+                                <td width="50px"><button class="btn btn-sm btn-warning" ng-click="editLastName=true;">Edit</button></td></tr>
+
+                            <tr><th width="25%">Phone:</th><td><div>{{formData.phone | tel}}</div>
+                                <div ng-show="editPhone" class="well input-group">
+                                    <input type="text" class="form-control" ng-model="value_edit" ui-mask="(999) 999-9999">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="updateDB('client','phone');editPhone=false;">Save</button>
+                    <button class="btn btn-danger" ng-click="editPhone=false;">Cancel</button>
+                </span>
+                                </div></td>
+                                <td width="50px"><button class="btn btn-sm btn-warning" ng-click="editPhone=true;">Edit</button></td></tr>
+
+
+                            <tr><th width="25%">Email:</th><td><div>{{formData.email}}</div>
+                                <div ng-show="editEmail" class="well input-group">
+                                    <input type="text" class="form-control" ng-model="value_edit" placeholder="Enter new value...">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="updateDB('client','email');editEmail=false;">Save</button>
+                    <button class="btn btn-danger" ng-click="editEmail=false;">Cancel</button>
+                </span>
+                                </div></td>
+                                <td width="50px"><button class="btn btn-sm btn-warning" ng-click="editEmail=true;">Edit</button></td></tr>
+
+                            <tr><th width="25%">Best Way to Receive Media:</th><td><div>{{formData.media_reception}}</div>
+                                <div ng-show="editMediaReception" class="well input-group">
+                                    <input type="text" class="form-control" ng-model="value_edit" placeholder="Enter new value...">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="updateDB('client','media_reception');editMediaReception=false;">Save</button>
+                    <button class="btn btn-danger" ng-click="editMediaReception=false;">Cancel</button>
+                </span>
+                                </div>
+                            </td><td width="50px"><button class="btn btn-sm btn-warning" ng-click="editMediaReception=true;">Edit</button></td></tr>
+
+                            <tr><th width="25%">Emergency Contact Name:</th><td><div>{{formData.emergency_name}}</div>
+                                <div ng-show="editEmergencyContact" class="well input-group">
+                                    <input type="text" class="form-control" ng-model="value_edit" placeholder="Enter new value...">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="updateDB('client','emergency_name');editEmergencyContact=false;">Save</button>
+                    <button class="btn btn-danger" ng-click="editEmergencyContact=false;">Cancel</button>
+                </span>
+                                </div>
+                            </td><td width="50px"><button class="btn btn-sm btn-warning" ng-click="editEmergencyContact=true;">Edit</button></td></tr>
+
+                            <tr><th width="25%">Emergency Contact Phone:</th><td>{{formData.emergency_phone | tel}}
+                                <div ng-show="editEmergencyPhone" class="well input-group">
+                                    <input type="text" class="form-control" ng-model="value_edit" ui-mask="(999) 999-9999">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="updateDB('client','emergency_phone');editEmergencyPhone=false;">Save</button>
+                    <button class="btn btn-danger" ng-click="editEmergencyPhone=false;">Cancel</button>
+                </span>
+                                </div></td><td width="50px"><button class="btn btn-sm btn-warning" ng-click="editEmergencyPhone=true;">Edit</button></td></tr>
+
+                            <tr><th width="25%">Current Boarding Agreement:</th><td>{{formData.boarding_agreement}}<div ng-show="editCurrentBoardingAgree" class="well input-group">
+                                <select class="form-control" ng-model="value_edit"><option>Yes</option><option>No</option></select>
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="updateDB('client','boarding_agreement');editCurrentBoardingAgree=false;">Save</button>
+                    <button class="btn btn-danger" ng-click="editCurrentBoardingAgree=false;">Cancel</button>
+                </span>
+                            </div></td><td width="50px"><button class="btn btn-sm btn-warning" ng-click="editCurrentBoardingAgree=true;">Edit</button></td></tr>
                         </table>
                         <!-- DOGS -->
                         <legend>Dog information</legend>
@@ -86,14 +153,15 @@
                                 <th>Age</th>
                                 <th>Breed</th>
                                 <th>Color</th>
-                                <th>Spayed/Neutered</th>
+                                <th>Spayed / Neutered</th>
                                 <th>Behavior</th>
-                                <th>Existing Health Cond.</th>
+                                <th>Exist Health Cond.</th>
                                 <th>Allergies</th>
                                 <th>Release</th>
                                 <th></th>
+                                <th></th>
                             </tr>
-                            <tr ng-repeat="dog in clientDogs">
+                            <tr ng-repeat="dog in clientDogs track by $index">
                                 <td>{{dog.name}}</td>
                                 <td>{{dog.sex}}</td>
                                 <td>{{dog.age}}</td>
@@ -104,9 +172,11 @@
                                 <td>{{dog.existing_health_conditions}}</td>
                                 <td>{{dog.allergies}}</td>
                                 <td>{{dog.release_command}}</td>
+                                <td width="80px"><button class="btn btn-sm btn-primary" ng-click="viewEditDog(dog.id);" data-toggle="modal" data-target="#dogModal">View/Edit</button></td>
+
                                 <td width="80px"><button class="btn btn-sm btn-danger" ng-click="removeDog($index,dog.id);">Remove</button></td>
                             </tr>
-                            <tr ><td colspan="11"><button class="btn  btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
+                            <tr ><td colspan="12"><button class="btn btn-sm btn-default" ng-click="dogIdFetch();" onclick="$('#trAddDogger').collapse('toggle');">Add Dog</button></td></tr>
                             <tr class="collapse well" id="trAddDogger"><td colspan="11">
                                 <table class="table table-bordered">
                                     <tr><th colspan="2">Dog Information</th></tr>
@@ -139,6 +209,7 @@
                                             <button class="btn btn-sm btn-primary" ng-click="saveDog()" onclick="$('#trAddDogger').collapse('toggle');">Save</button>
                                             <button class="btn btn-sm btn-danger" onclick="$('#trAddDogger').collapse('toggle');">Cancel</button>
                                         </td>
+                                    </tr>
                                     </tr>
                                 </table>
                             </td></tr>
@@ -185,5 +256,54 @@
                 <td><button class="btn btn-sm">Transfer</button></td>
             </tr>
         </table>
+    <button class="btn btn-default" ng-click="completeReservation();">Complete Reservation</button>
+    </div>
+</div>
+
+<!-- Dog Modal -->
+<div class="modal fade" id="dogModal" tabindex="-1" role="dialog" aria-labelledby="dogModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            -->
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tr><th colspan="2">Dog Information</th></tr>
+                    <tr><th width="25%">Name:</th><td><input class="form-control" type="text" ng-model="modalDogFormData.name"></td></tr>
+                    <tr><th width="25%">Age:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.age"></td></tr>
+                    <tr><th width="25%">Breed:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.breed"></td></tr>
+                    <tr><th width="25%">Sex:</th><td><select   class="form-control" ng-model="modalDogFormData.sex"><option>Female</option><option>Male</option></select></td></tr>
+                    <tr><th width="25%">Color:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.color"></td></tr>
+                    <tr><th width="25%">Kennel Size:</th><td><select   class="form-control" ng-model="modalDogFormData.kennel_size"><option>Small</option><option>Medium</option><option>Large</option></select></td></tr>
+                    <tr><th width="25%">Spayed/Neutered:</th><td><select  class="form-control"  ng-model="modalDogFormData.spayed_neutered"><option>Yes</option><option>No</option></select></td></tr>
+                    <tr><th width="25%">Behavior:</th><td><select class="form-control" ng-model="modalDogFormData.behavior">
+                        <option>People & Dog Friendly</option>
+                        <option>Dog Aggressive</option>
+                        <option>People Aggressive</option>
+                        <option>People & Dog Aggressive</option>
+                    </select></td></tr>
+                    <tr><th width="25%">Pre-Existing Health Conditions:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.existing_health_conditions"></td></tr>
+                    <tr><th width="25%">Vacinations:</th><td><table class="table table-bordered">
+                        <tr><th>Rabies:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.rabies" ui-mask="99/99/9999"></td></tr>
+                        <tr><th>Distemper:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.distemper" ui-mask="99/99/9999"></td></tr>
+                        <tr><th>Parvo:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.parvo" ui-mask="99/99/9999"></td></tr>
+                        <tr><th>Bordetella:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.bordetella" ui-mask="99/99/9999"></td></tr>
+                    </table>
+                    </td></tr>
+                    <tr><th width="25%">Allergies:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.allergies"></td></tr>
+                    <tr><th width="25%">Release Command:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.release_command"></td></tr>
+                    <tr><th>Notes:</th><td><textarea rows="4" class="form-control" type="text" ng-model="modalDogFormData.notes"></textarea></td></tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-sm btn-primary" ng-click="saveModalDog();" data-dismiss="modal">Save</button>
+            </div>
+        </div>
     </div>
 </div>
