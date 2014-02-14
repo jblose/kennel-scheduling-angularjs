@@ -284,6 +284,9 @@ angular.module('myApp.controllers', []).
         $scope.reservationId = {};
         $scope.masterReservationId = {};
 
+
+
+        //TODO: Initialize the dates to today and next week.
         $scope.checkinDone = false;
         $scope.checkinNeed = true;
         $scope.checkoutDone = false;
