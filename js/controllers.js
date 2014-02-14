@@ -284,9 +284,6 @@ angular.module('myApp.controllers', []).
         $scope.reservationId = {};
         $scope.masterReservationId = {};
 
-
-
-        //TODO: Initialize the dates to today and next week.
         $scope.checkinDone = false;
         $scope.checkinNeed = true;
         $scope.checkoutDone = false;
@@ -297,6 +294,13 @@ angular.module('myApp.controllers', []).
         $scope.checkin = {};
         $scope.checkout = {};
 
+        //TODO: Initialize the dates to today and next week.
+        /*
+        var checkDate = new Date();
+        $scope.checkin.date = checkDate.getDate();
+        checkDate.setDate(new Date()+7);
+        $scope.checkout.date = checkDate.getDate();
+        */
         $scope.formData = {};
         $scope.dogFormData = {};
         $scope.modalDogFormData = {};
@@ -431,7 +435,7 @@ angular.module('myApp.controllers', []).
             resObj.check_out    = Date.parse($scope.checkout.date);
             resObj.status       = 'Scheduled';
             resObj.title        = $scope.dogList[idx].name.concat(' - ',cliname);
-            resObj.url          = '#/resview/'.concat($scope.reservationId);
+            resObj.url          = 'REMOVE';
             resObj.cost         = $scope.train_cost;
             resObj.training     = training;
             resObj.training_amt = training_amt;
@@ -720,6 +724,10 @@ angular.module('myApp.controllers', []).
             $scope.value_edit = '';
         }
 
+        $scope.completeReservation = function (){
+            $location.path('/reservation/'.concat($scope.masterReservationId));
+        };
+
         $scope.processAction = function () {
             if ($scope.action.localeCompare('new') == 0){
                 $scope.clientIdFetch();
@@ -745,7 +753,19 @@ angular.module('myApp.controllers', []).
     }])
 
     .controller('ResViewCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
-        <!-- TODO: Implement the receiving of id and display of details -->
+        $scope.reservationId = $routeParams.resid.toString();
+        $scope.reservationView = {};
+
+        $scope.initResView = function (){
+            $http({
+                method: 'GET',
+                url: 'api/index.php/reservfetch/'.concat($scope.reservationId)
+            }).success( function(data){
+                    $scope.reservationView = data;
+                }).error( function(data) {
+                    console.log('Error: '.concat(data));
+                });
+        };
     }])
 
     .controller('VacSearchCtrl', ['$scope','$http', function($scope,$http) {

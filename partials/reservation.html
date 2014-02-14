@@ -8,7 +8,7 @@
                 <td colspan="2" ng-show="checkinNeed">
                     <div class="dropdown">
                         <a class="dropdown-toggle my-toggle-select" id="checkin" role="button" data-toggle="dropdown" >
-                            <input type="text" class="form-control" data-ng-model="checkin.date">
+                            <input type="text" class="form-control" data-ng-model="checkin.date" required>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="checkin">
                             <datetimepicker data-ng-model="checkin.date"
@@ -24,7 +24,7 @@
                 <td colspan="2" ng-show="checkoutNeed">
                     <div class="dropdown">
                         <a class="dropdown-toggle my-toggle-select" id="checkout" role="button" data-toggle="dropdown" >
-                            <input type="text" class="form-control" data-ng-model="checkout.date">
+                            <input type="text" class="form-control" data-ng-model="checkout.date" required>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="checkout">
                             <datetimepicker data-ng-model="checkout.date"
@@ -256,7 +256,7 @@
                 <td><button class="btn btn-sm">Transfer</button></td>
             </tr>
         </table>
-    <button class="btn btn-default" ng-click="completeReservation();">Complete Reservation</button>
+    <button class="btn btn-primary" ng-click="completeReservation();">Complete Reservation</button>
     </div>
 </div>
 

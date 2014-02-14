@@ -183,17 +183,21 @@ $app->get('/dogidfetch', function () use ($app, $db) {
     }
 });
 
-$app->get('/reservfetch', function () use ($app, $db) {
-   $sql = "";
+$app->get('/reservfetch/:resid', function ($resid) use ($app, $db) {
+   $sql = "select r.check_in, r.check_out, r.status, d.* FROM rsak.reservation_id_x rix " .
+          "join rsak.reservation r on (rix.reservation_id = r.reservation_id) " .
+          "join rsak.client c on (r.client_id = c.id) " .
+          "join rsak.dog d on (r.dog_id = d.id) where master_id = :master_id";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
+        $stmt->bindParam("master_id",$resid);
 
         $stmt->execute();
-        $reservs = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $reservation = $stmt->fetchObject();
 
         $db = null;
-        echo json_encode($reservs);
+        echo json_encode($reservation);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
