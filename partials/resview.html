@@ -1,7 +1,8 @@
-<div>
+<div ng-init="initResView();">
     <legend>Reservation Details</legend>
     <!-- TODO: Establish Color coding: Scheduled, Checked-in, No-Show, See-Notes, Complete(Checked-out) -->
-
+    <!-- TODO: A way to get here from a search screen -->
+<!--
     <label>Status:</label>
     <select>
         <option>Scheduled</option>
@@ -10,9 +11,17 @@
         <option>See-Notes</option>
         <option>Complete(Checked-out)</option>
     </select>
+-->
 
+    <table class="table table-bordered">
+        <tr><th colspan="3">Client</th></tr>
+        <tr><th>Main Contact:</th><td>{{reservationView.last_name}}, {{reservationView.first_name}}</td><td>{{reservationView.phone}}</td></tr>
+        <tr><th>Emergency Contact:</th><td>{{reservationView.emergency_name}}</td><td>{{reservationView.emergency_phone}}</td></tr>
+    </table>
 
-    <table>
-                  <tr><th>Client</th></tr><td></td>
+    <table class="table table-bordered">
+        <tr><th colspan="3">Dogs</th></tr>
+        <!-- <div ng-repeat="res in reservationView"></div> -->
+        <tr ng-repeat="res in reservationView"><th>Name:</th><td>{{res.name}}</td></tr>
     </table>
 </div>

@@ -184,7 +184,7 @@ $app->get('/dogidfetch', function () use ($app, $db) {
 });
 
 $app->get('/reservfetch/:resid', function ($resid) use ($app, $db) {
-   $sql = "select r.check_in, r.check_out, r.status, d.* FROM rsak.reservation_id_x rix " .
+   $sql = "select r.check_in, r.check_out, r.status, c.*, d.* FROM rsak.reservation_id_x rix " .
           "join rsak.reservation r on (rix.reservation_id = r.reservation_id) " .
           "join rsak.client c on (r.client_id = c.id) " .
           "join rsak.dog d on (r.dog_id = d.id) where master_id = :master_id";

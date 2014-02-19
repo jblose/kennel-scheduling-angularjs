@@ -759,9 +759,11 @@ angular.module('myApp.controllers', []).
         $scope.initResView = function (){
             $http({
                 method: 'GET',
-                url: 'api/index.php/reservfetch/'.concat($scope.reservationId)
+                url: 'api/index.php/reservfetchclient/'.concat($scope.reservationId)
             }).success( function(data){
+                    console.log('hello - 1');
                     $scope.reservationView = data;
+                    console.log('hello - 2');
                 }).error( function(data) {
                     console.log('Error: '.concat(data));
                 });
