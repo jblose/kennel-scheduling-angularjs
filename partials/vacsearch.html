@@ -2,19 +2,19 @@
     <legend>Vacancy Search</legend>
     <form role="form">
         <div class="form-group">
-            <table>
+            <table class="table table-bordered">
                 <tr>
                     <td>
                         <label>Kennel Size</label>
                         <div>
-                            <select class="form-control" ng-model="kennel_size"><option>Small</option><option>Medium</option><option>Large</option></select>
+                            <select class="form-control" ng-model="avail.kennel_size"><option>Small</option><option>Medium</option><option>Large</option></select>
                         </div>
                     </td>
                     <td>
                         <label>Check-in</label>
                         <div class="dropdown">
                             <a class="dropdown-toggle my-toggle-select" id="checkin" role="button" data-toggle="dropdown" >
-                                <div class="input-append"><input type="text" class="form-control" data-ng-model="checkin.date"><span class="add-on"><i
+                                <div class="input-append"><input type="text" class="form-control" data-ng-model="avail.checkin.date"><span class="add-on"><i
                                         class="icon-calendar"></i></span>
                                 </div>
                             </a>
@@ -27,7 +27,7 @@
                     <td><label>Check-out</label>
                         <div class="dropdown">
                             <a class="dropdown-toggle my-toggle-select" id="checkout" role="button" data-toggle="dropdown" >
-                                <div class="input-append"><input type="text" class="form-control" data-ng-model="checkout.date"><span class="add-on"><i
+                                <div class="input-append"><input type="text" class="form-control" data-ng-model="avail.checkout.date"><span class="add-on"><i
                                         class="icon-calendar"></i></span>
                                 </div>
                             </a>
@@ -47,7 +47,7 @@
     </form>
     <div ng-show="hasResults" class="collapse" id="availKennelDiv">
         <table class="table table-bordered table-condensed">
-            <tr><!--<th></th>--><th>Kennel</th><th>Size</th></tr>
+            <tr><th>Kennel</th><th>Size</th></tr>
             <tr ng-repeat="ak in avk"><!-- <td width="60px"><button class="btn btn-sm" onclick="$('#availKennelDiv').collapse('toggle');" ng-click="primeReservation(ak.name);">Select</button></td>--><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
         </table>
     </div>

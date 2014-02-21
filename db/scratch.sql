@@ -1,3 +1,20 @@
+select * from rsak.kennel k
+join rsak.kennel_attr ka on (k.size = ka.size_name)
+join rsak.reservation r on (k.kennel_id = r.kennel_id)
+where r.check_in <= 1396800000000 
+/*and r.check_out >= 1397316600000 */
+and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = 'medium');
+
+select r.check_in, r.check_out, r.status, c.first_name, c.last_name,c.phone, c.emergency_name,c.emergency_phone FROM rsak.reservation_id_x rix
+join rsak.reservation r on (rix.reservation_id = r.reservation_id)
+join rsak.client c on (r.client_id = c.id) 
+where master_id = 5 limit 1;
+
+select d.name, d.sex, d.color, d.behavior,r.training,r.training_amt FROM rsak.reservation_id_x rix
+join rsak.reservation r on (rix.reservation_id = r.reservation_id)
+join rsak.dog d on (r.dog_id = d.id) where master_id = 5;
+
+
 select d.* from rsak.dog d 
 join rsak.client_dog_x cdx on (d.id = cdx.dog_id) 
 where cdx.client_id = 2

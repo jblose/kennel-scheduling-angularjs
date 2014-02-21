@@ -754,16 +754,25 @@ angular.module('myApp.controllers', []).
 
     .controller('ResViewCtrl', ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
         $scope.reservationId = $routeParams.resid.toString();
-        $scope.reservationView = {};
+        $scope.reservationViewClient = {};
+        $scope.reservationViewDog = {};
 
         $scope.initResView = function (){
             $http({
                 method: 'GET',
                 url: 'api/index.php/reservfetchclient/'.concat($scope.reservationId)
             }).success( function(data){
-                    console.log('hello - 1');
-                    $scope.reservationView = data;
-                    console.log('hello - 2');
+                    $scope.reservationViewClient = data;
+                    $http({
+                        method: 'GET',
+                        url: 'api/index.php/reservfetchdog/'.concat($scope.reservationId)
+                    }).success( function(data){
+
+                            $scope.reservationViewDog = data;
+
+                        }).error( function(data) {
+                            console.log('Error: '.concat(data));
+                        });
                 }).error( function(data) {
                     console.log('Error: '.concat(data));
                 });
@@ -775,12 +784,14 @@ angular.module('myApp.controllers', []).
         $scope.availKennels = function () {
             $http({
                     method: 'GET',
-                    url: 'api/index.php/availkennels'
+                    url: 'api/index.php/availkennels',
+                    data: $scope.avail
                 }
             ).success( function(data) {
                     $scope.avk = data;
                     $scope.hasResults = "true";
 
+                 /*
                     $http({
                         method: 'GET',
                         url: 'api/index.php/fetchclients'
@@ -791,6 +802,7 @@ angular.module('myApp.controllers', []).
                         .error( function(data) {
                             console.log('Error: '.concat(data));
                         })
+                 */
                 })
                 .error( function(data) {
                     console.log('Error: '.concat(data));

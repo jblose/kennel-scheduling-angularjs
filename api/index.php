@@ -183,11 +183,11 @@ $app->get('/dogidfetch', function () use ($app, $db) {
     }
 });
 
-$app->get('/reservfetch/:resid', function ($resid) use ($app, $db) {
-   $sql = "select r.check_in, r.check_out, r.status, c.*, d.* FROM rsak.reservation_id_x rix " .
-          "join rsak.reservation r on (rix.reservation_id = r.reservation_id) " .
-          "join rsak.client c on (r.client_id = c.id) " .
-          "join rsak.dog d on (r.dog_id = d.id) where master_id = :master_id";
+$app->get('/reservfetchclient/:resid', function ($resid) use ($app, $db) {
+   $sql = "select r.check_in, r.check_out, r.status, c.first_name, c.last_name,c.phone, c.emergency_name,c.emergency_phone FROM rsak.reservation_id_x rix " .
+           "join rsak.reservation r on (rix.reservation_id = r.reservation_id) " .
+           "join rsak.client c on (r.client_id = c.id) " .
+           "where master_id = :master_id limit 1";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -203,14 +203,38 @@ $app->get('/reservfetch/:resid', function ($resid) use ($app, $db) {
     }
 });
 
+$app->get('/reservfetchdog/:resid', function ($resid) use ($app, $db) {
+   $sql = "select d.name, d.sex, d.color, d.behavior,r.training,r.training_amt FROM rsak.reservation_id_x rix " .
+           "join rsak.reservation r on (rix.reservation_id = r.reservation_id) " .
+           "join rsak.dog d on (r.dog_id = d.id) where master_id = :master_id";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("master_id",$resid);
+
+        $stmt->execute();
+        $reservation = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $db = null;
+        echo json_encode($reservation);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+});
+
 $app->get('/availkennels', function () use ($app, $db) {
     //TODO: Will eventually need a where clause based on availabiltiy.
     //TODO: Drop Down Search Kennels available by size increasing
-    $sql = "select kennel_id,name,size from rsak.kennel";
+    $reqbody = json_decode($app->request()->getBody());
+    $sql= "select k.kennel_id, k.name, k.size from rsak.kennel k " .
+           "join rsak.kennel_attr ka on (k.size = ka.size_name) " .
+           "join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
+           "and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = :req_size)";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
 
+        $stmt->bindParam("req_size",$reqbody->{'kennel_size'});
         $stmt->execute();
         $avkens = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
