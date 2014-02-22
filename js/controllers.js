@@ -435,7 +435,7 @@ angular.module('myApp.controllers', []).
             resObj.check_out    = Date.parse($scope.checkout.date);
             resObj.status       = 'Scheduled';
             resObj.title        = $scope.dogList[idx].name.concat(' - ',cliname);
-            resObj.url          = 'REMOVE';
+            resObj.url          = '#/reservation/'.concat($scope.masterReservationId);
             resObj.cost         = $scope.train_cost;
             resObj.training     = training;
             resObj.training_amt = training_amt;
