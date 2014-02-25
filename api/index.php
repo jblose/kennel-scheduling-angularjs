@@ -226,10 +226,12 @@ $app->get('/availkennels', function () use ($app, $db) {
     //TODO: Will eventually need a where clause based on availabiltiy.
     //TODO: Drop Down Search Kennels available by size increasing
     $reqbody = json_decode($app->request()->getBody());
-    $sql= "select k.kennel_id, k.name, k.size from rsak.kennel k " .
+    $sql= "select k.kennel_id, k.name, k.size from rsak.kennel k ";
+     /* .
            "join rsak.kennel_attr ka on (k.size = ka.size_name) " .
            "join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
            "and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = :req_size)";
+    */
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
