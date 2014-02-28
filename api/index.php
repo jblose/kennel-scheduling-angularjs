@@ -226,14 +226,20 @@ $app->get('/availkennels', function () use ($app, $db) {
     //TODO: Will eventually need a where clause based on availabiltiy.
     //TODO: Drop Down Search Kennels available by size increasing
     $reqbody = json_decode($app->request()->getBody());
+     var_dump($reqbody);
     $sql= "select k.kennel_id, k.name, k.size from rsak.kennel k " .
-           "join rsak.kennel_attr ka on (k.size = ka.size_name) " .
-           "join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
-           "and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = :req_size)";
+          "join rsak.kennel_attr ka on (k.size = ka.size_name) " .
+          "where k.kennel_id not in ( " .
+          "select k.kennel_id from rsak.kennel k " .
+          "join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
+          "where (r.check_out >= :check_out and r.check_in <= :check_in )) " .
+          "and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = :req_size)";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
 
+        $stmt->bindParam("check_out",$reqbody->{'check_in'});
+        $stmt->bindParam("check_in",$reqbody->{'check_in'});
         $stmt->bindParam("req_size",$reqbody->{'kennel_size'});
         $stmt->execute();
         $avkens = $stmt->fetchAll(PDO::FETCH_OBJ);

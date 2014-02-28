@@ -1,3 +1,29 @@
+SELECT * FROM rsak.reservation where reservation_id = 26;
+
+
+/* #/reservation/18 1393857000000	1393986600000 */
+/* REQUEST: ( 2014-Mar-04 9:00) 1393923600000,(Fri Mar 07 2014 14:30:00 GMT-0500 (Eastern Standard Time)) 1394200800000 */
+
+select k.kennel_id, k.name, k.size from rsak.kennel k 
+join rsak.kennel_attr ka on (k.size = ka.size_name)
+where k.kennel_id not in (
+select k.kennel_id from rsak.kennel k
+join rsak.reservation r on (k.kennel_id = r.kennel_id)
+where (r.check_out >= 1393923600000 and r.check_in <= 1393923600000 ))
+and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = 'medium'); /* Request check in greater than kennel checkout */
+
+ /* >= r.check_in) /* check_in is after kennel is emptied OR check_out is before kennel is filled*/
+/* 
+*/;
+
+
+
+
+
+
+
+
+
 select * from rsak.kennel k
 join rsak.kennel_attr ka on (k.size = ka.size_name)
 join rsak.reservation r on (k.kennel_id = r.kennel_id)
@@ -146,3 +172,23 @@ where k.size = 'small';
 
 
 /* insert into rsak.reservation (client_id, dog_id, kennel_id, check_in, check_out, status, title, url, cost, training, training_amt, notes) values ( */
+
+
+/* NEED TO PRELOAD KENNELS */
+/*
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('29', '0', '0', '1', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('30', '0', '0', '2', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('31', '0', '0', '3', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('32', '0', '0', '4', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('33', '0', '0', '5', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('34', '0', '0', '6', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('35', '0', '0', '7', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('36', '0', '0', '8', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('37', '0', '0', '9', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('38', '0', '0', '10', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('39', '0', '0', '11', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('40', '0', '0', '12', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('41', '0', '0', '13', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('42', '0', '0', '14', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `rsak`.`reservation` (`reservation_id`, `client_id`, `dog_id`, `kennel_id`, `check_in`, `check_out`, `status`, `title`, `url`, `cost`, `training`, `training_amt`, `notes`, `medication`) VALUES ('43', '0', '0', '15', '233640000000', '233640000000', '0', '0', '0', '0', '0', '0', '0', '0');
+*/

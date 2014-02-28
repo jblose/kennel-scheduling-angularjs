@@ -290,6 +290,7 @@ angular.module('myApp.controllers', []).
         $scope.checkoutNeed = true;
 
         $scope.confirmedRes = false;
+        $scope.confirmReady = false;
 
         $scope.checkin = {};
         $scope.checkout = {};
@@ -459,6 +460,7 @@ angular.module('myApp.controllers', []).
                             $scope.confirmedRes = true;
                             if ($scope.dogList.length == 0){
                                 $scope.resNeeded = false;
+                                $scope.confirmReady = true;
                             }
                         }).error( function(data) {
                             console.log('Error: '.concat(data));
@@ -471,6 +473,9 @@ angular.module('myApp.controllers', []).
 
         $scope.editDogReservation = function (res_id, idx) {
             var resObj = {};
+
+            $scope.confirmReady = false;
+
             resObj.reservation_id = res_id;
             resObj.master_id = $scope.masterReservationId;
             resObj.client_id = $scope.clientName.id;
@@ -725,6 +730,7 @@ angular.module('myApp.controllers', []).
         }
 
         $scope.completeReservation = function (){
+            //TODO: Check that all fields have been populated and that the to-be-scheduled queue is empty
             $location.path('/reservation/'.concat($scope.masterReservationId));
         };
 
@@ -782,13 +788,19 @@ angular.module('myApp.controllers', []).
     .controller('VacSearchCtrl', ['$scope','$http', function($scope,$http) {
 
         $scope.availKennels = function () {
+            var availReq = {};
+            availReq.kennel_size = $scope.kennel_size;
+            availReq.check_in     = Date.parse($scope.checkin.date);
+            availReq.check_out    = Date.parse($scope.checkout.date);
             $http({
                     method: 'GET',
                     url: 'api/index.php/availkennels',
-                    data: $scope.avail
+                    data: availReq
                 }
             ).success( function(data) {
+                    //TODO: Test for empty JSON return.
                     $scope.avk = data;
+                    console.log($scope.avk);
                     $scope.hasResults = "true";
 
                  /*

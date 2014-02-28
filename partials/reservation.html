@@ -232,14 +232,14 @@
                 <td><select class="form-control" ng-model="kennelname" ng-options="ak.name for ak in avk"></select></td>
                 <td><select class="form-control" ng-model="training">
                     <option>Boarding</option>
-                    <option>Board & Tune</option>
+                    <option>Board & Tune</option>                                                        x`
                     <option>Board & Train</option>
                     <option>Board/Board & Tune Mix</option>
                 </select></td>
                 <td><input class="form-control" type="text" ng-model="training_amt" placeholder="Training Amount"></td>
                 <td><input class="form-control" type="text" ng-model="medication" placeholder="Medication Info"></td>
                 <td><input class="form-control" type="text" ng-model="notes" placeholder="Notes..." multiple></td>
-                <td><button class="btn btn-sm btn-default" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,medication,$index);">Save</button></td>
+                <td><button class="btn btn-sm btn-primary" ng-click="saveDogRes(dog.id,kennelname.kennel_id,training,training_amt,notes,medication,$index);">Save</button></td>
             </tr>
         </table>
         <table class="table table-bordered table-condensed" ng-show="confirmedRes">
@@ -255,7 +255,7 @@
                 <td><button class="btn btn-sm">Transfer</button></td>
             </tr>
         </table>
-    <button class="btn btn-primary" ng-click="completeReservation();">Complete Reservation</button>
+    <button class="btn btn-primary" ng-click="completeReservation();" ng-show="confirmReady">Complete Reservation</button>
     </div>
 </div>
 
