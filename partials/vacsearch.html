@@ -48,7 +48,7 @@
     <div ng-show="hasResults" class="collapse" id="availKennelDiv">
         <table class="table table-bordered table-condensed">
             <tr><th>Kennel</th><th>Size</th></tr>
-            <tr ng-repeat="ak in avk"><!-- <td width="60px"><button class="btn btn-sm" onclick="$('#availKennelDiv').collapse('toggle');" ng-click="primeReservation(ak.name);">Select</button></td>--><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
+            <tr ng-repeat="ak in avk track by $index"><td>{{ak.name}}</td><td>{{ak.size}}</td></tr>
         </table>
     </div>
 </div>

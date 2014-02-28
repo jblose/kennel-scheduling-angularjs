@@ -222,18 +222,17 @@ $app->get('/reservfetchdog/:resid', function ($resid) use ($app, $db) {
     }
 });
 
-$app->get('/availkennels', function () use ($app, $db) {
+$app->post('/availkennels', function () use ($app, $db) {
     //TODO: Will eventually need a where clause based on availabiltiy.
     //TODO: Drop Down Search Kennels available by size increasing
     $reqbody = json_decode($app->request()->getBody());
-     var_dump($reqbody);
-    $sql= "select k.kennel_id, k.name, k.size from rsak.kennel k " .
-          "join rsak.kennel_attr ka on (k.size = ka.size_name) " .
-          "where k.kennel_id not in ( " .
-          "select k.kennel_id from rsak.kennel k " .
-          "join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
-          "where (r.check_out >= :check_out and r.check_in <= :check_in )) " .
-          "and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = :req_size)";
+    $sql = "select k.kennel_id, k.name, k.size from rsak.kennel k " .
+            "join rsak.kennel_attr ka on (k.size = ka.size_name) " .
+            "where k.kennel_id not in ( " .
+            "select k.kennel_id from rsak.kennel k " .
+            "join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
+            "where (r.check_out >= :check_out and r.check_in <= :check_in )) " .
+            "and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = :req_size)";
 
     try{
         $db = getConnection();

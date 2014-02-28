@@ -229,6 +229,7 @@
             <tr><th colspan="7">*Needs* Reservations</th></tr>
             <tr ng-repeat="dog in dogList track by $index">
                 <td>{{dog.name}}</td>
+                <!-- TODO: Change this into a kennel selection form, or someway to change flow -->
                 <td><select class="form-control" ng-model="kennelname" ng-options="ak.name for ak in avk"></select></td>
                 <td><select class="form-control" ng-model="training">
                     <option>Boarding</option>

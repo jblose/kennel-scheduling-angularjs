@@ -390,9 +390,13 @@ angular.module('myApp.controllers', []).
         };
 
         $scope.availKennels = function () {
+            $scope.availReq.kennel_size = $scope.kennel_size.toLowerCase();
+            $scope.availReq.check_in     = Date.parse($scope.checkin.date);
+            $scope.availReq.check_out    = Date.parse($scope.checkout.date);
             $http({
-                    method: 'GET',
-                    url: 'api/index.php/availkennels'
+                    method: 'POST',
+                    url: 'api/index.php/availkennels',
+                    data:   $scope.availReq
                 }
             ).success( function(data) {
                     $scope.avk = data;
@@ -786,21 +790,19 @@ angular.module('myApp.controllers', []).
     }])
 
     .controller('VacSearchCtrl', ['$scope','$http', function($scope,$http) {
-
+        $scope.availReq = {};
         $scope.availKennels = function () {
-            var availReq = {};
-            availReq.kennel_size = $scope.kennel_size;
-            availReq.check_in     = Date.parse($scope.checkin.date);
-            availReq.check_out    = Date.parse($scope.checkout.date);
+
+            $scope.availReq.kennel_size = $scope.kennel_size.toLowerCase();
+            $scope.availReq.check_in     = Date.parse($scope.checkin.date);
+            $scope.availReq.check_out    = Date.parse($scope.checkout.date);
             $http({
-                    method: 'GET',
+                    method: 'POST',
                     url: 'api/index.php/availkennels',
-                    data: availReq
+                    data:   $scope.availReq
                 }
             ).success( function(data) {
-                    //TODO: Test for empty JSON return.
                     $scope.avk = data;
-                    console.log($scope.avk);
                     $scope.hasResults = "true";
 
                  /*
