@@ -234,6 +234,7 @@ $app->get('/availkennels', function () use ($app, $db) {
           "join rsak.reservation r on (k.kennel_id = r.kennel_id) " .
           "where (r.check_out >= :check_out and r.check_in <= :check_in )) " .
           "and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = :req_size)";
+
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
