@@ -9,8 +9,8 @@ join rsak.kennel_attr ka on (k.size = ka.size_name)
 where k.kennel_id not in (
 select k.kennel_id from rsak.kennel k
 join rsak.reservation r on (k.kennel_id = r.kennel_id)
-where (r.check_out >= 1393923600000 and r.check_in <= 1393923600000 ))
-and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = 'medium'); /* Request check in greater than kennel checkout */
+where (r.check_out >= 0		 and r.check_in <= 0 ))
+and ka.size_val >= (select size_val from rsak.kennel_attr where size_name = 'small'); /* Request check in greater than kennel checkout */
 
  /* >= r.check_in) /* check_in is after kennel is emptied OR check_out is before kennel is filled*/
 /* 
