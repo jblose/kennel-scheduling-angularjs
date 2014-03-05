@@ -731,6 +731,37 @@ angular.module('myApp.controllers', []).
                 });
 
             $scope.value_edit = '';
+        };
+        $scope.availKennels = function () {
+
+            $scope.availReq.kennel_size = $scope.kennel_size.toLowerCase();
+            $scope.availReq.check_in     = Date.parse($scope.checkin.date);
+            $scope.availReq.check_out    = Date.parse($scope.checkout.date);
+            $http({
+                    method: 'POST',
+                    url: 'api/index.php/availkennels',
+                    data:   $scope.availReq
+                }
+            ).success( function(data) {
+                    $scope.avk = data;
+                    $scope.hasResults = "true";
+
+                    /*
+                     $http({
+                     method: 'GET',
+                     url: 'api/index.php/fetchclients'
+                     })
+                     .success( function(data) {
+                     $scope.clientList = data;
+                     })
+                     .error( function(data) {
+                     console.log('Error: '.concat(data));
+                     })
+                     */
+                })
+                .error( function(data) {
+                    console.log('Error: '.concat(data));
+                })
         }
 
         $scope.completeReservation = function (){
