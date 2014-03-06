@@ -292,6 +292,8 @@ angular.module('myApp.controllers', []).
         $scope.confirmedRes = false;
         $scope.confirmReady = false;
 
+        $scope.availReq = {};
+
         $scope.checkin = {};
         $scope.checkout = {};
 
@@ -389,6 +391,7 @@ angular.module('myApp.controllers', []).
                 })
         };
 
+/*
         $scope.availKennels = function () {
             $scope.availReq.kennel_size = $scope.kennel_size.toLowerCase();
             $scope.availReq.check_in     = Date.parse($scope.checkin.date);
@@ -411,7 +414,7 @@ angular.module('myApp.controllers', []).
             $scope.$apply();
 
         };
-
+*/
         $scope.loadDogs = function () {
             $http({
                 method: 'GET',
@@ -732,9 +735,10 @@ angular.module('myApp.controllers', []).
 
             $scope.value_edit = '';
         };
-        $scope.availKennels = function () {
 
-            $scope.availReq.kennel_size = $scope.kennel_size.toLowerCase();
+        $scope.availKennels = function (ken_size) {
+console.log('availKennels:'.concat(ken_size));
+            $scope.availReq.kennel_size = ken_size.toLowerCase();
             $scope.availReq.check_in     = Date.parse($scope.checkin.date);
             $scope.availReq.check_out    = Date.parse($scope.checkout.date);
             $http({
@@ -743,6 +747,7 @@ angular.module('myApp.controllers', []).
                     data:   $scope.availReq
                 }
             ).success( function(data) {
+                    console.log('availKennels: success');
                     $scope.avk = data;
                     $scope.hasResults = "true";
 

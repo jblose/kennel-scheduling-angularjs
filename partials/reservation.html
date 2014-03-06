@@ -37,7 +37,7 @@
 </tr>
 <tr>
     <th>Client</th><td>
-    <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs();" ng-focus="availKennels();">
+    <select class="form-control" ng-model="clientName" ng-options="c.full_name for c in clientList" ng-change="loadDogs();">
         <option value="addNew">-- New Client --</option>
     </select>
 </td><td width="55px"><button type="button" class="btn btn-sm btn-warning" ng-click="divClientAdd=true;inlineClientDogInsert();">Add Client/Dog</button></td></tr>
@@ -231,8 +231,8 @@
         <td>{{dog.name}}</td>
         <!-- TODO: Change this into a kennel selection form, or someway to change flow -->
         <!-- <td><select class="form-control" ng-model="kennelname" ng-options="ak.name for ak in avk"></select></td> -->
-        <td><button class="btn btn-sm btn-primary" ng-click="<?>" data-toggle="modal" data-target="#dogModal">Select Kennel</button></td>
-        <td><select class="form-control" ng-model="kennelname" ng-options="ak.name for ak in avk"></select></td>
+        <td><button class="btn btn-sm btn-primary" ng-click="availKennels(dog.kennel_size);" data-toggle="modal" data-target="#kennelModal">Select Kennel</button></td>
+        <td>{{kennelname}}</td>
         <td><select class="form-control" ng-model="training">
             <option>Boarding</option>
             <option>Board & Tune</option>                                                        x`
@@ -299,7 +299,6 @@
                     <tr><th width="25%">Allergies:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.allergies"></td></tr>
                     <tr><th width="25%">Release Command:</th><td><input  class="form-control" type="text" ng-model="modalDogFormData.release_command"></td></tr>
                     <tr><th>Notes:</th><td><textarea rows="4" class="form-control" type="text" ng-model="modalDogFormData.notes"></textarea></td></tr>
-
                 </table>
             </div>
             <div class="modal-footer">
