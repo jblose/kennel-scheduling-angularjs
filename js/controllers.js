@@ -462,6 +462,7 @@ angular.module('myApp.controllers', []).
                             url: 'api/index.php/fetchresconfirm/'.concat($scope.masterReservationId)
                         }
                     ).success( function(data) {
+                            $scope.kennelname.name = '';
                             $scope.dogListConfirmed = data;
                             $scope.dogList.splice(idx,1);
                             $scope.confirmedRes = true;
